@@ -1,0 +1,355 @@
+Start
+setoption name Ponder value false
+
+isready
+
+TX: readyok
+uci
+
+TX: id evanchess
+position fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+
+Saw position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+
+go movetime 120000
+
+bestmove b8a6
+isready
+
+TX: readyok
+position fen r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
+
+Saw position: r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
+
+go movetime 120000
+
+bestmove g8f6
+isready
+
+TX: readyok
+position fen r1bqkb1r/pppppppp/n4n2/8/3PP3/2N5/PPP2PPP/R1BQKBNR b KQkq - 2 3
+
+Saw position: r1bqkb1r/pppppppp/n4n2/8/3PP3/2N5/PPP2PPP/R1BQKBNR b KQkq - 2 3
+
+go movetime 120000
+
+bestmove b7b6
+isready
+
+TX: readyok
+position fen r1bqkb1r/p1pppppp/np3n2/8/3PP3/2N2N2/PPP2PPP/R1BQKB1R b KQkq - 1 4
+
+Saw position: r1bqkb1r/p1pppppp/np3n2/8/3PP3/2N2N2/PPP2PPP/R1BQKB1R b KQkq - 1 4
+
+go movetime 120000
+
+bestmove b6b5
+isready
+
+TX: readyok
+position fen r1bqkb1r/p1pppppp/n4n2/1B6/3PP3/2N2N2/PPP2PPP/R1BQK2R b KQkq - 0 5
+
+Saw position: r1bqkb1r/p1pppppp/n4n2/1B6/3PP3/2N2N2/PPP2PPP/R1BQK2R b KQkq - 0 5
+
+go movetime 120000
+
+bestmove f6d5
+isready
+
+TX: readyok
+position fen r1bqkb1r/p1pppppp/n7/1B1N4/3PP3/5N2/PPP2PPP/R1BQK2R b KQkq - 0 6
+
+Saw position: r1bqkb1r/p1pppppp/n7/1B1N4/3PP3/5N2/PPP2PPP/R1BQK2R b KQkq - 0 6
+
+go movetime 120000
+
+bestmove c8b7
+isready
+
+TX: readyok
+position fen r2qkb1r/pbpppppp/n7/1B1N4/3PP3/5N2/PPP2PPP/R1BQ1RK1 b kq - 2 7
+
+Saw position: r2qkb1r/pbpppppp/n7/1B1N4/3PP3/5N2/PPP2PPP/R1BQ1RK1 b kq - 2 7
+
+go movetime 120000
+
+bestmove c7c5
+isready
+
+TX: readyok
+position fen r2qkb1r/pb1ppppp/n7/1BpN4/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 1 8
+
+Saw position: r2qkb1r/pb1ppppp/n7/1BpN4/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 1 8
+
+go movetime 120000
+
+bestmove f7f6
+isready
+
+TX: readyok
+position fen r2qkb1r/pb1pp1pp/B4p2/2pN4/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 0 9
+
+Saw position: r2qkb1r/pb1pp1pp/B4p2/2pN4/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 0 9
+
+go movetime 120000
+
+bestmove d8c8
+isready
+
+TX: readyok
+position fen r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+Saw position: r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+go movetime 120000
+
+bestmove c5c4
+isready
+
+TX: readyok
+position fen r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+Saw position: r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+go movetime 120000
+
+bestmove b7d5
+isready
+
+TX: readyok
+position fen r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+Saw position: r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+go movetime 120000
+
+bestmove b7e4
+isready
+
+TX: readyok
+position fen r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+Saw position: r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+go movetime 120000
+
+bestmove b7c6
+isready
+
+TX: readyok
+position fen r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+Saw position: r1q1kb1r/pbNpp1pp/B4p2/2p5/3PPB2/5N2/PPP2PPP/R2Q1RK1 b kq - 2 10
+
+go movetime 120000
+
+bestmove c8c7
+isready
+
+TX: readyok
+position fen r3kb1r/pbBpp1pp/B4p2/2p5/3PP3/5N2/PPP2PPP/R2Q1RK1 b kq - 0 11
+
+Saw position: r3kb1r/pbBpp1pp/B4p2/2p5/3PP3/5N2/PPP2PPP/R2Q1RK1 b kq - 0 11
+
+go movetime 120000
+
+bestmove d7d5
+isready
+
+TX: readyok
+position fen r3kb1r/pbB1p1pp/5p2/1Bpp4/3PP3/5N2/PPP2PPP/R2Q1RK1 b kq - 1 12
+
+Saw position: r3kb1r/pbB1p1pp/5p2/1Bpp4/3PP3/5N2/PPP2PPP/R2Q1RK1 b kq - 1 12
+
+go movetime 120000
+
+bestmove a8b8
+isready
+
+TX: readyok
+position fen r3kb1r/pbB1p1pp/5p2/1Bpp4/3PP3/5N2/PPP2PPP/R2Q1RK1 b kq - 1 12
+
+Saw position: r3kb1r/pbB1p1pp/5p2/1Bpp4/3PP3/5N2/PPP2PPP/R2Q1RK1 b kq - 1 12
+
+go movetime 120000
+
+bestmove e8f7
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove g7g5
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove e7e6
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove a8d8
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove g7g6
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove c5c4
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove d5e4
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove e7e6
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove a7a5
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove f6f5
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove h8g8
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove a8e8
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove a8e8
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove h7h5
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove b7a6
+isready
+
+TX: readyok
+position fen r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+Saw position: r4b1r/pbB1pkpp/5p2/1BppN3/3PP3/8/PPP2PPP/R2Q1RK1 b - - 3 13
+
+go movetime 120000
+
+bestmove f7e6
+isready
+
+TX: readyok
+position fen r4b1r/pbB1p1pp/4kp2/1BppN3/3PP1Q1/8/PPP2PPP/R4RK1 b - - 5 14
+
+Saw position: r4b1r/pbB1p1pp/4kp2/1BppN3/3PP1Q1/8/PPP2PPP/R4RK1 b - - 5 14
+
+go movetime 120000
+
+bestmove a8c8
+isready
+
+TX: readyok
+position fen r4b1r/pbB1p1pp/4kp2/1BppN3/3PP1Q1/8/PPP2PPP/R4RK1 b - - 5 14
+
+Saw position: r4b1r/pbB1p1pp/4kp2/1BppN3/3PP1Q1/8/PPP2PPP/R4RK1 b - - 5 14
+
+go movetime 120000
+
+bestmove h7h5
+isready
+
+TX: readyok
+position fen r4b1r/pbB1p1pp/4kp2/1BppN3/3PP1Q1/8/PPP2PPP/R4RK1 b - - 5 14
+
+Saw position: r4b1r/pbB1p1pp/4kp2/1BppN3/3PP1Q1/8/PPP2PPP/R4RK1 b - - 5 14
+
+go movetime 120000
+
