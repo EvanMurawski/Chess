@@ -101,6 +101,38 @@ class BoardRep:
     def numbersToAlg(move_squares):
         return BoardRep.NUMBER_TO_ALG[move_squares[0]] + BoardRep.NUMBER_TO_ALG[move_squares[1]]
 
+    #Returns true if the player to move is in check
+    @staticmethod
+    def isInCheck(board):
+        flip_move_board = BoardRep(board.array, not board.whitemove, board.whitecastle, board.blackcastle)
+        next_boards = flip_move_board.getPseudoLegalMoves()
+        if board.whitemove:
+            player_king = BoardRep.WHITE_KING
+        else:
+            player_king = BoardRep.BLACK_KING
+
+        found_check = False
+        for next_board in next_boards:
+            if player_king not in next_board[:][0].array:
+                found_check = True
+
+        return found_check
+
+    #returns true if the player who moved previously is in check (i.e. illegal move)
+    @staticmethod
+    def isInCheckOtherPlayer(board):
+        next_boards = board.getPseudoLegalMoves()
+        if board.whitemove:
+            player_king = BoardRep.BLACK_KING
+        else:
+            player_king = BoardRep.WHITE_KING
+
+        found_check = False
+        for next_board in next_boards:
+            if player_king not in next_board[:][0].array:
+                found_check = True
+
+        return found_check
 
     def print(self):
         line = ""
@@ -122,7 +154,7 @@ class BoardRep:
         movedPiece = newArray[oldSquare]
         newArray[oldSquare] = self.EMPTY
         newArray[newSquare] = movedPiece
-        newBoard = BoardRep(newArray, self.whitecastle, self.blackcastle, not self.whitemove)
+        newBoard = BoardRep(newArray, not self.whitemove, self.whitecastle, self.blackcastle)
         return newBoard
 
     def squareHasEnemyPiece(self, square):
@@ -246,3 +278,14 @@ class BoardRep:
                         result.extend(moves)
 
         return result
+
+    def getLegalMoves(self):
+        pseudo_legal_moves = self.getPseudoLegalMoves()
+        legal_moves = []
+
+        for move in pseudo_legal_moves:
+            if not BoardRep.isInCheckOtherPlayer(move[:][0]):
+                legal_moves.append(move)
+
+        return legal_moves
+
