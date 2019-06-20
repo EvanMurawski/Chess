@@ -64,6 +64,9 @@ class BoardRep:
                      48: "a2", 49: "b2",50: "c2", 51: "d2", 52: "e2", 53: "f2", 54: "g2", 55: "h2",
                      56: "a1", 57: "b1",58: "c1", 59: "d1", 60: "e1", 61: "f1", 62: "g1", 63: "h1"}
 
+    PIECE_VALUES = {EMPTY: 0, WHITE_PAWN: 1, WHITE_KNIGHT: 3, WHITE_BISHOP: 3.5, WHITE_ROOK: 5, WHITE_QUEEN: 9, WHITE_KING: 100,
+                    BLACK_PAWN: -1, BLACK_KNIGHT: -3, BLACK_BISHOP: -3.5, BLACK_ROOK: -5, BLACK_QUEEN: -9, BLACK_KING: -100}
+
     def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None):
 
         self.whitecastle = self.BOTH_CASTLE
@@ -148,6 +151,16 @@ class BoardRep:
         else:
             return self.BLACK_PIECES
 
+    def getScore(self):
+        return self.getMaterial()
+
+    def getMaterial(self):
+        material = 0
+        for piece in self.array:
+            material += self.PIECE_VALUES[piece]
+
+        return material
+
     #TODO check if move is castling, check for queen promotion
     def getBoard(self, oldSquare, newSquare):
         newArray = self.array[:]
@@ -167,8 +180,7 @@ class BoardRep:
             return piece in self.WHITE_PIECES
 
 
-
-    #TODO fix for black moves, add en passant
+    #TODO add en passant
     def getPseudoLegalPawnMoves(self, square):
         result = []
         if self.whitemove:
@@ -214,6 +226,7 @@ class BoardRep:
 
         return result
 
+    #TODO add castling
     def getPseudoLegalKingMoves(self, square):
         result = []
         for offset in self.KING_OFFSETS:
