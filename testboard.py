@@ -1,9 +1,11 @@
 from BoardRep import BoardRep
 from FENUtil import FENUtil
+from Tree import Tree
+from Node import Node
+from MiniMax import MiniMax
 
 
-
-my_fen_board = FENUtil.fenToBoard("2r4r/p1kp1Rp1/B1p3Nn/3P3p/5B2/3P4/PPP2PPP/RN1Q2K1 b - - 2 15")
+my_fen_board = FENUtil.fenToBoard("r1b1kbnr/pppp1ppp/2n5/4p1q1/4PP2/3P4/PPP3PP/RNBQKBNR w KQkq - 1 4")
 my_fen_board.print()
 
 
@@ -29,3 +31,13 @@ if(BoardRep.isInCheckOtherPlayer(my_fen_board)):
     print("illegal")
 else:
     print("not illegal")
+
+
+root_node = Node(my_fen_board)
+Tree.buildTree(root_node, 3, 0)
+
+best_node = MiniMax.minimaxMove(root_node)
+best_move = best_node.move_squares
+
+move_string = BoardRep.numbersToAlg(best_move)
+print("bestmove " + move_string)

@@ -4,6 +4,10 @@ from BoardRep import BoardRep
 import random
 import traceback
 
+from Node import Node
+from Tree import Tree
+from MiniMax import MiniMax
+
 def writelog(message):
     logfile = open("/home/evan/Code/Chess/log.txt", "a")
     logfile.write(message + "\n")
@@ -16,6 +20,37 @@ def handleuci(line):
         return
     else:
         return
+
+def randomMove():
+    possible_next_boards = current_board.getLegalMoves()
+    i = random.randint(0, len(possible_next_boards) - 1)
+    move_string = BoardRep.numbersToAlg(possible_next_boards[i][1])
+    writelog("legalmoves")
+    writelog(str(len(possible_next_boards)))
+
+    for i in range(0, len(possible_next_boards)):
+        writelog(BoardRep.numbersToAlg(possible_next_boards[i][1]))
+
+    print("bestmove " + move_string)
+    writelog("bestmove " + move_string)
+
+def minimaxMove():
+    possible_next_boards = current_board.getLegalMoves()
+    writelog("legalmoves")
+    writelog(str(len(possible_next_boards)))
+    for i in range(0, len(possible_next_boards)):
+        writelog(BoardRep.numbersToAlg(possible_next_boards[i][1]))
+
+    root_node = Node(current_board)
+    Tree.buildTree(root_node, 5, 0)
+
+    best_node = MiniMax.minimaxMove(root_node)
+    best_move = best_node.move_squares
+
+    move_string = BoardRep.numbersToAlg(best_move)
+    print("bestmove " + move_string)
+    writelog("bestmove " + move_string)
+
 
 
 writelog("Start")
@@ -39,17 +74,7 @@ try:
             writelog("Saw position: " + fen_position)
             current_board = FENUtil.fenToBoard(fen_position)
         elif line.startswith("go"):
-            possible_next_boards = current_board.getLegalMoves()
-            i = random.randint(0, len(possible_next_boards) - 1)
-            move_string = BoardRep.numbersToAlg(possible_next_boards[i][1])
-            writelog("legalmoves")
-            writelog(str(len(possible_next_boards)))
-
-            for i in range(0, len(possible_next_boards)):
-                writelog(BoardRep.numbersToAlg(possible_next_boards[i][1]))
-
-            print("bestmove " + move_string)
-            writelog("bestmove " + move_string)
+            minimaxMove()
 
 
         sys.stdout.flush()
