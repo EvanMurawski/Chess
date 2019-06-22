@@ -3,12 +3,13 @@ from BoardRep import BoardRep
 class Node:
 
 
-    def __init__(self, board, move_squares = None, previous_node = None, next_nodes = None):
+    def __init__(self, board, move_squares = None, previous_node = None, next_nodes = None, best_node_idx = None):
         self.board = board
         self.next_nodes = next_nodes
         self.move_squares = move_squares
 
         self.score = BoardRep.getScore(board)
+        self.best_node_idx = best_node_idx
 
 
     def setNextNodes(self, moves):

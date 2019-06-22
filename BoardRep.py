@@ -100,6 +100,10 @@ class BoardRep:
         else:
             self.whitemove = whitemove
 
+        self.ischeckmate = None
+        self.legalmoves = None
+
+
     @staticmethod
     def numbersToAlg(move_squares):
         return BoardRep.NUMBER_TO_ALG[move_squares[0]] + BoardRep.NUMBER_TO_ALG[move_squares[1]]
@@ -145,6 +149,13 @@ class BoardRep:
                 print(line)
                 line = ""
 
+    def isCheckmate(self):
+        if self.ischeckmate is None:
+            self.ischeckmate = not self.getLegalMoves() and BoardRep.isInCheck(self)
+
+        return self.ischeckmate
+
+
     def getCurrentSidePieces(self):
         if self.whitemove:
             return self.WHITE_PIECES
@@ -152,6 +163,13 @@ class BoardRep:
             return self.BLACK_PIECES
 
     def getScore(self):
+        if self.isCheckmate() and self.whitemove:
+            return -999
+        elif self.isCheckmate() and not self.whitemove:
+
+            return 999
+
+
         return self.getMaterial()
 
     def getMaterial(self):
@@ -293,6 +311,9 @@ class BoardRep:
         return result
 
     def getLegalMoves(self):
+        if self.legalmoves is not None:
+            return self.legalmoves
+
         pseudo_legal_moves = self.getPseudoLegalMoves()
         legal_moves = []
 
@@ -300,5 +321,6 @@ class BoardRep:
             if not BoardRep.isInCheckOtherPlayer(move[:][0]):
                 legal_moves.append(move)
 
+        self.legalmoves = legal_moves
         return legal_moves
 

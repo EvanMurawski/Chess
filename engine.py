@@ -42,7 +42,7 @@ def minimaxMove():
         writelog(BoardRep.numbersToAlg(possible_next_boards[i][1]))
 
     root_node = Node(current_board)
-    Tree.buildTree(root_node, 5, 0)
+    Tree.buildTree(root_node, 3, 0)
 
     best_node = MiniMax.minimaxMove(root_node)
     best_move = best_node.move_squares

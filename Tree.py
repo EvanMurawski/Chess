@@ -6,7 +6,7 @@ class Tree():
             return
 
         next_moves = rootNode.board.getLegalMoves()
-        rootNode.setNextNodes(next_moves)
-
-        for node in rootNode.next_nodes:
-            Tree.buildTree(node, depth, current_depth+1)
+        if next_moves:
+            rootNode.setNextNodes(next_moves)
+            for node in rootNode.next_nodes:
+                Tree.buildTree(node, depth, current_depth+1)
