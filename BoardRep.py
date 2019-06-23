@@ -1,5 +1,12 @@
 class BoardRep:
 
+    numboards = 0
+    numgetpseudo= 0
+    numgetlegal= 0
+    numgetcheck= 0
+    numgetothercheck = 0
+    numgetcheckmate= 0
+
     MAILBOX = [ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1,  0,  1,  2,  3,  4,  5,  6,  7, -1,
@@ -102,7 +109,9 @@ class BoardRep:
 
         self.ischeckmate = None
         self.legalmoves = None
+        self.pseudolegalmoves = None
 
+        BoardRep.numboards += 1
 
     @staticmethod
     def numbersToAlg(move_squares):
@@ -111,6 +120,7 @@ class BoardRep:
     #Returns true if the player to move is in check
     @staticmethod
     def isInCheck(board):
+        BoardRep.numgetcheck += 1
         flip_move_board = BoardRep(board.array, not board.whitemove, board.whitecastle, board.blackcastle)
         next_boards = flip_move_board.getPseudoLegalMoves()
         if board.whitemove:
@@ -126,8 +136,10 @@ class BoardRep:
         return found_check
 
     #returns true if the player who moved previously is in check (i.e. illegal move)
+    #todo think of a better way to calculate this.
     @staticmethod
     def isInCheckOtherPlayer(board):
+        BoardRep.numgetothercheck += 1
         next_boards = board.getPseudoLegalMoves()
         if board.whitemove:
             player_king = BoardRep.BLACK_KING
@@ -150,6 +162,7 @@ class BoardRep:
                 line = ""
 
     def isCheckmate(self):
+        BoardRep.numgetcheckmate += 1
         if self.ischeckmate is None:
             self.ischeckmate = not self.getLegalMoves() and BoardRep.isInCheck(self)
 
@@ -279,6 +292,7 @@ class BoardRep:
 
     #write test cases
     def getPseudoLegalMoves(self):
+        BoardRep.numgetpseudo += 1
         result = []
         for squareNumber in range(0,64):
             piece = self.array[squareNumber]
@@ -311,6 +325,7 @@ class BoardRep:
         return result
 
     def getLegalMoves(self):
+        BoardRep.numgetlegal += 1
         if self.legalmoves is not None:
             return self.legalmoves
 

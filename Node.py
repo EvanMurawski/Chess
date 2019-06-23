@@ -2,6 +2,7 @@ from BoardRep import BoardRep
 
 class Node:
 
+    numnodes = 0
 
     def __init__(self, board, move_squares = None, previous_node = None, next_nodes = None, best_node_idx = None):
         self.board = board
@@ -10,7 +11,7 @@ class Node:
 
         self.score = BoardRep.getScore(board)
         self.best_node_idx = best_node_idx
-
+        Node.numnodes += 1
 
     def setNextNodes(self, moves):
         self.next_nodes = []
@@ -18,3 +19,7 @@ class Node:
             new_node = Node(move[:][0], move[:][1], self)
             self.next_nodes.append(new_node)
 
+
+    def buildNextLayer(self):
+        next_moves = self.board.getLegalMoves()
+        self.setNextNodes(next_moves)

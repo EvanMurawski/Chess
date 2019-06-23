@@ -3,10 +3,12 @@ from FENUtil import FENUtil
 from BoardRep import BoardRep
 import random
 import traceback
+import time
 
 from Node import Node
 from Tree import Tree
 from MiniMax import MiniMax
+from AlphaBeta import AlphaBeta
 
 def writelog(message):
     logfile = open("/home/evan/Code/Chess/log.txt", "a")
@@ -42,9 +44,12 @@ def minimaxMove():
         writelog(BoardRep.numbersToAlg(possible_next_boards[i][1]))
 
     root_node = Node(current_board)
-    Tree.buildTree(root_node, 3, 0)
 
-    best_node = MiniMax.minimaxMove(root_node)
+    t = time.time()
+    writelog("start analyzing")
+    best_node = MiniMax.minimaxMove(root_node,3)
+    writelog("done analyzing" + str(time.time() - t))
+
     best_move = best_node.move_squares
 
     move_string = BoardRep.numbersToAlg(best_move)

@@ -3,9 +3,10 @@ from FENUtil import FENUtil
 from Tree import Tree
 from Node import Node
 from MiniMax import MiniMax
+from AlphaBeta import AlphaBeta
 
 
-my_fen_board = FENUtil.fenToBoard("8/8/8/1kp4R/1n6/p7/8/1K4r1 w - - 2 79")
+my_fen_board = FENUtil.fenToBoard("r1bqkbnr/pppppppp/n7/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2")
 my_fen_board.print()
 
 
@@ -27,10 +28,10 @@ else:
     print("not check")
 
 
-if(BoardRep.isInCheckOtherPlayer(my_fen_board)):
-    print("illegal")
-else:
-    print("not illegal")
+# if(BoardRep.isInCheckOtherPlayer(my_fen_board)):
+#     print("illegal")
+# else:
+#     print("not illegal")
 
 if(my_fen_board.isCheckmate()):
     print("checkmate")
@@ -39,17 +40,24 @@ else:
 
 print(str(my_fen_board.getScore()))
 
-# root_node = Node(my_fen_board)
-# Tree.buildTree(root_node, 3, 0)
-#
-# best_node = MiniMax.minimaxMove(root_node)
-# best_move = best_node.move_squares
-#
-# move_string = BoardRep.numbersToAlg(best_move)
-# print("bestmove " + move_string)
-#
-#
-#
+root_node = Node(my_fen_board)
+
+best_node = AlphaBeta.alphabetaMove(root_node, 3)
+best_move = best_node.move_squares
+
+move_string = BoardRep.numbersToAlg(best_move)
+print("bestmove " + move_string)
+
+print("number nodes: " + str(Node.numnodes))
+print("number boards: " + str(BoardRep.numboards))
+print("num getcheck " + str(BoardRep.numgetcheck))
+print("num getothercheck " + str(BoardRep.numgetothercheck))
+print("num getcheckmate " + str(BoardRep.numgetcheckmate))
+print("num getpseudo" + str(BoardRep.numgetpseudo))
+print("num getlegal " + str(BoardRep.numgetlegal))
+
+
+
 # node_to_consider = best_node
 # best_node_idx = node_to_consider.best_node_idx
 # while best_node_idx is not None:

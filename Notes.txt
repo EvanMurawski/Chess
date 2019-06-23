@@ -1,0 +1,56 @@
+a8a7
+not check
+not illegal
+not checkmate
+0.0
+bestmove a2a3
+number nodes: 18915
+number boards: 13899374
+num getcheck 424833
+num getcheckmate 37833
+num getpseudo443748
+num getlegal 19538
+
+a8a7
+not check
+not checkmate
+0.0
+bestmove a2a3
+number nodes: 18915
+number boards: 13899344
+num getcheck 1
+num getothercheck 424831
+num getcheckmate 37833
+num getpseudo443747
+num getlegal 19538
+
+
+
+a8a7
+not check
+not checkmate
+0.0
+bestmove a2a3
+number nodes: 19078
+number boards: 428676
+num getcheck 428523
+num getcheckmate 38159
+num getpseudo19083
+num getlegal 19705
+
+a8a7
+not check
+not checkmate
+0.0
+bestmove a2a3
+number nodes: 19078
+number boards: 428676
+num getcheck 5
+num getothercheck 428518 -> How to reduce this?
+num getcheckmate 38159
+num getpseudo19083
+num getlegal 19705
+
+
+
+
