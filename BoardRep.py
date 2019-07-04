@@ -2,6 +2,7 @@ class BoardRep:
 
     numboards = 0
     numgetpseudo= 0
+    numgetpseudocaptures=0
     numgetlegal= 0
     numgetcheck= 0
     numgetothercheck = 0
@@ -122,36 +123,26 @@ class BoardRep:
     def isInCheck(board):
         BoardRep.numgetcheck += 1
         flip_move_board = BoardRep(board.array, not board.whitemove, board.whitecastle, board.blackcastle)
-        next_boards = flip_move_board.getPseudoLegalMoves()
-        if board.whitemove:
-            player_king = BoardRep.WHITE_KING
-        else:
-            player_king = BoardRep.BLACK_KING
+        next_boards = flip_move_board.getPseudoLegalCaptures()
+        if not next_boards:
+            return False
 
-        found_check = False
-        for next_board in next_boards:
-            if player_king not in next_board[:][0].array:
-                found_check = True
-
-        return found_check
+        return True
 
     #returns true if the player who moved previously is in check (i.e. illegal move)
     #todo think of a better way to calculate this.
     @staticmethod
     def isInCheckOtherPlayer(board):
         BoardRep.numgetothercheck += 1
-        next_boards = board.getPseudoLegalMoves()
-        if board.whitemove:
-            player_king = BoardRep.BLACK_KING
-        else:
-            player_king = BoardRep.WHITE_KING
+        next_boards = board.getPseudoLegalCaptures()
 
-        found_check = False
-        for next_board in next_boards:
-            if player_king not in next_board[:][0].array:
-                found_check = True
+        if not next_boards:
+            #print("legal move")
+            return False
 
-        return found_check
+        #print("illegal move")
+        return True
+
 
     def print(self):
         line = ""
@@ -164,7 +155,12 @@ class BoardRep:
     def isCheckmate(self):
         BoardRep.numgetcheckmate += 1
         if self.ischeckmate is None:
-            self.ischeckmate = not self.getLegalMoves() and BoardRep.isInCheck(self)
+
+            if not BoardRep.isInCheck(self):
+                self.ischeckmate = False
+                return False
+
+            self.ischeckmate = not self.getLegalMoves()
 
         return self.ischeckmate
 
@@ -210,6 +206,15 @@ class BoardRep:
         else:
             return piece in self.WHITE_PIECES
 
+    def squareHasEnemyKing(self, square):
+        return self.isEnemyKing(self.array[square])
+
+    def isEnemyKing(self, piece):
+        if self.whitemove:
+            return piece == self.BLACK_KING
+        else:
+            return piece == self.WHITE_KING
+
 
     #TODO add en passant
     def getPseudoLegalPawnMoves(self, square):
@@ -242,6 +247,23 @@ class BoardRep:
         return result
 
 
+    def getPseudoLegalPawnCaptures(self, square):
+        result = []
+        if self.whitemove:
+            factor = -1
+        else:
+            factor = 1
+
+        #if can move diagonally
+        new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 9]
+        if new_square != -1 and self.squareHasEnemyKing(new_square):
+            result.append([self.getBoard(square, new_square), [square, new_square]])
+        new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 11]
+        if new_square != -1 and self.squareHasEnemyKing(new_square):
+            result.append([self.getBoard(square, new_square), [square, new_square]])
+
+        return result
+
     def getPseudoLegalRBQMoves(self, square, offsets):
         result = []
         for offset in offsets:
@@ -253,6 +275,21 @@ class BoardRep:
                     result.append([self.getBoard(square, new_square), [square, new_square]])
                     break
                 else:
+                    break
+
+        return result
+
+    def getPseudoLegalRBQCaptures(self, square, offsets):
+        result = []
+        for offset in offsets:
+            for i in range(1,8):
+                new_square = self.MAILBOX[self.TO_MAILBOX[square] + offset*i]
+                if new_square != -1 and self.squareHasEnemyKing(new_square):
+                    result.append([self.getBoard(square, new_square), [square, new_square]])
+                    break
+                elif new_square != -1 and self.squareHasEnemyPiece(new_square):
+                    break
+                elif not (new_square != -1 and self.array[new_square] == self.EMPTY):
                     break
 
         return result
@@ -269,6 +306,16 @@ class BoardRep:
 
         return result
 
+
+    def getPseudoLegalKingCaptures(self, square):
+        result = []
+        for offset in self.KING_OFFSETS:
+            new_square = self.MAILBOX[self.TO_MAILBOX[square] + offset]
+            if new_square != -1 and self.squareHasEnemyKing(new_square):
+                result.append([self.getBoard(square, new_square), [square, new_square]])
+
+        return result
+
     def getPseudoLegalKnightMoves(self, square):
         result = []
         for offset in self.KNIGHT_OFFSETS:
@@ -280,6 +327,14 @@ class BoardRep:
 
         return result
 
+    def getPseudoLegalKnightCaptures(self, square):
+        result = []
+        for offset in self.KNIGHT_OFFSETS:
+            new_square = self.MAILBOX[self.TO_MAILBOX[square] + offset]
+            if new_square != -1 and self.squareHasEnemyKing(new_square):
+                result.append([self.getBoard(square, new_square), [square, new_square]])
+
+        return result
 
     def getPseudoLegalRookMoves(self, square):
         return self.getPseudoLegalRBQMoves(square, self.ROOK_OFFSETS)
@@ -289,6 +344,16 @@ class BoardRep:
 
     def getPseudoLegalQueenMoves(self, square):
         return self.getPseudoLegalRBQMoves(square, self.QUEEN_OFFSETS)
+
+
+    def getPseudoLegalRookCaptures(self, square):
+        return self.getPseudoLegalRBQCaptures(square, self.ROOK_OFFSETS)
+
+    def getPseudoLegalBishopCaptures(self, square):
+        return self.getPseudoLegalRBQCaptures(square, self.BISHOP_OFFSETS)
+
+    def getPseudoLegalQueenCaptures(self, square):
+        return self.getPseudoLegalRBQCaptures(square, self.QUEEN_OFFSETS)
 
     #write test cases
     def getPseudoLegalMoves(self):
@@ -323,6 +388,40 @@ class BoardRep:
                         result.extend(moves)
 
         return result
+
+    #write test cases
+    def getPseudoLegalCaptures(self):
+        BoardRep.numgetpseudocaptures += 1
+        result = []
+        for squareNumber in range(0,64):
+            piece = self.array[squareNumber]
+            if piece in self.getCurrentSidePieces():
+                if piece == self.WHITE_PAWN or piece == self.BLACK_PAWN:
+                    moves = self.getPseudoLegalPawnCaptures(squareNumber)
+                    if moves is not None:
+                        result.extend(moves)
+                elif piece == self.WHITE_ROOK or piece == self.BLACK_ROOK:
+                    moves = self.getPseudoLegalRookCaptures(squareNumber)
+                    if moves is not None:
+                        result.extend(moves)
+                elif piece == self.WHITE_BISHOP or piece == self.BLACK_BISHOP:
+                    moves = self. getPseudoLegalBishopCaptures(squareNumber)
+                    if moves is not None:
+                        result.extend(moves)
+                elif piece == self.WHITE_QUEEN or piece == self.BLACK_QUEEN:
+                    moves = self. getPseudoLegalQueenCaptures(squareNumber)
+                    if moves is not None:
+                        result.extend(moves)
+                elif piece == self.WHITE_KNIGHT or piece == self.BLACK_KNIGHT:
+                    moves = self.getPseudoLegalKnightCaptures(squareNumber)
+                    if moves is not None:
+                        result.extend(moves)
+                elif piece == self.WHITE_KING or piece == self.BLACK_KING:
+                    moves = self.getPseudoLegalKingCaptures(squareNumber)
+                    if moves is not None:
+                        result.extend(moves)
+        return result
+
 
     def getLegalMoves(self):
         BoardRep.numgetlegal += 1

@@ -1,1049 +1,782 @@
-Start
-setoption name Ponder value false
-
 isready
 
 TX: readyok
-uci
+position fen rnbqkbnr/pppp1ppp/8/4p3/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2
 
-TX: id evanchess
-position fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
-
-Saw position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
-
-go movetime 120000
-
-legalmoves
-20
-b8a6
-b8c6
-g8f6
-g8h6
-a7a6
-a7a5
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-start analyzing
-done analyzing36.609119176864624
-bestmove b8a6
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
-
-Saw position: r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing57.72192978858948
-bestmove a8b8
-isready
-
-TX: readyok
-position fen 1rbqkbnr/pppppppp/n7/8/2PPP3/8/PP3PPP/RNBQKBNR b KQk - 0 3
-
-Saw position: 1rbqkbnr/pppppppp/n7/8/2PPP3/8/PP3PPP/RNBQKBNR b KQk - 0 3
-
-go movetime 120000
-
-legalmoves
-19
-b8a8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6c5
-a6b4
-start analyzing
-done analyzing51.36592936515808
-bestmove b8a8
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/2PPP3/5N2/PP3PPP/RNBQKB1R b KQk - 2 4
-
-Saw position: r1bqkbnr/pppppppp/n7/8/2PPP3/5N2/PP3PPP/RNBQKB1R b KQk - 2 4
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing50.05484199523926
-bestmove a8b8
-stop
-
-quit
-
-exit
-
-quit
-
-Start
-setoption name Ponder value false
-
-isready
-
-TX: readyok
-uci
-
-TX: id evanchess
-position fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
-
-Saw position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
-
-go movetime 120000
-
-legalmoves
-20
-b8a6
-b8c6
-g8f6
-g8h6
-a7a6
-a7a5
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-start analyzing
-done analyzing10.278795957565308
-bestmove b8a6
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
-
-Saw position: r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing18.53750491142273
-bestmove a8b8
-isready
-
-TX: readyok
-position fen 1rbqkbnr/pppppppp/n7/8/2PPP3/8/PP3PPP/RNBQKBNR b KQk - 0 3
-
-Saw position: 1rbqkbnr/pppppppp/n7/8/2PPP3/8/PP3PPP/RNBQKBNR b KQk - 0 3
-
-go movetime 120000
-
-legalmoves
-19
-b8a8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6c5
-a6b4
-start analyzing
-done analyzing15.82270336151123
-bestmove b8a8
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/2PPP3/5N2/PP3PPP/RNBQKB1R b KQk - 2 4
-
-Saw position: r1bqkbnr/pppppppp/n7/8/2PPP3/5N2/PP3PPP/RNBQKB1R b KQk - 2 4
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing15.350650072097778
-bestmove a8b8
-isready
-
-TX: readyok
-position fen 1rbqkbnr/pppppppp/n7/8/2PPP3/3B1N2/PP3PPP/RNBQK2R b KQk - 4 5
-
-Saw position: 1rbqkbnr/pppppppp/n7/8/2PPP3/3B1N2/PP3PPP/RNBQK2R b KQk - 4 5
-
-go movetime 120000
-
-legalmoves
-19
-b8a8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6c5
-a6b4
-start analyzing
-done analyzing15.897274732589722
-bestmove b8a8
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/2PPP3/3B1N2/PP3PPP/RNBQ1RK1 b k - 6 6
-
-Saw position: r1bqkbnr/pppppppp/n7/8/2PPP3/3B1N2/PP3PPP/RNBQ1RK1 b k - 6 6
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing14.692420482635498
-bestmove a8b8
-isready
-
-TX: readyok
-position fen 1rbqkbnr/pppppppp/n7/8/2PPP3/2NB1N2/PP3PPP/R1BQ1RK1 b k - 8 7
-
-Saw position: 1rbqkbnr/pppppppp/n7/8/2PPP3/2NB1N2/PP3PPP/R1BQ1RK1 b k - 8 7
-
-go movetime 120000
-
-legalmoves
-19
-b8a8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6c5
-a6b4
-start analyzing
-done analyzing18.070201873779297
-bestmove b8a8
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/2PPPB2/2NB1N2/PP3PPP/R2Q1RK1 b k - 10 8
-
-Saw position: r1bqkbnr/pppppppp/n7/8/2PPPB2/2NB1N2/PP3PPP/R2Q1RK1 b k - 10 8
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing29.032169818878174
-bestmove a8b8
-isready
-
-TX: readyok
-position fen 1rbqkbnr/pppppppp/n7/8/2PPPB2/2NB1N2/PP2QPPP/R4RK1 b k - 12 9
-
-Saw position: 1rbqkbnr/pppppppp/n7/8/2PPPB2/2NB1N2/PP2QPPP/R4RK1 b k - 12 9
-
-go movetime 120000
-
-legalmoves
-19
-b8a8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6c5
-a6b4
-start analyzing
-done analyzing27.21575355529785
-bestmove b8a8
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/1PPPPB2/2NB1N2/P3QPPP/R4RK1 b k - 0 10
-
-Saw position: r1bqkbnr/pppppppp/n7/8/1PPPPB2/2NB1N2/P3QPPP/R4RK1 b k - 0 10
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing29.881196975708008
-bestmove a8b8
-isready
-
-TX: readyok
-position fen 1rbqkbnr/pppppppp/n7/8/1PPPPB2/2NB1N2/P3QPPP/1R3RK1 b k - 2 11
-
-Saw position: 1rbqkbnr/pppppppp/n7/8/1PPPPB2/2NB1N2/P3QPPP/1R3RK1 b k - 2 11
-
-go movetime 120000
-
-legalmoves
-19
-b8a8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6c5
-a6b4
-start analyzing
-done analyzing26.521487951278687
-bestmove b8a8
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n2B4/8/1PPPP3/2NB1N2/P3QPPP/1R3RK1 b k - 4 12
-
-Saw position: r1bqkbnr/pppppppp/n2B4/8/1PPPP3/2NB1N2/P3QPPP/1R3RK1 b k - 4 12
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-c7d6
-e7e6
-e7e5
-e7d6
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing23.15919542312622
-bestmove a8b8
-stop
-
-quit
-
-exit
-
-quit
-
-Start
-setoption name Ponder value false
-
-isready
-
-TX: readyok
-uci
-
-TX: id evanchess
-position fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
-
-Saw position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
-
-go movetime 120000
-
-legalmoves
-20
-b8a6
-b8c6
-g8f6
-g8h6
-a7a6
-a7a5
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-start analyzing
-done analyzing10.280389308929443
-bestmove b8a6
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
-
-Saw position: r1bqkbnr/pppppppp/n7/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing18.4845130443573
-bestmove a6b4
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/8/8/1n1PP3/2P5/PP3PPP/RNBQKBNR b KQkq - 0 3
-
-Saw position: r1bqkbnr/pppppppp/8/8/1n1PP3/2P5/PP3PPP/RNBQKBNR b KQkq - 0 3
-
-go movetime 120000
-
-legalmoves
-25
-a8b8
-g8f6
-g8h6
-a7a6
-a7a5
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-b4a6
-b4c6
-b4d5
-b4d3
-b4a2
-b4c2
-start analyzing
-done analyzing26.7068932056427
-bestmove b4a6
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n7/8/3PP3/2P2N2/PP3PPP/RNBQKB1R b KQkq - 2 4
-
-Saw position: r1bqkbnr/pppppppp/n7/8/3PP3/2P2N2/PP3PPP/RNBQKB1R b KQkq - 2 4
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing17.69206166267395
-bestmove a8b8
-isready
-
-TX: readyok
-position fen 1rbqkbnr/pppppppp/n7/8/3PPB2/2P2N2/PP3PPP/RN1QKB1R b KQk - 4 5
-
-Saw position: 1rbqkbnr/pppppppp/n7/8/3PPB2/2P2N2/PP3PPP/RN1QKB1R b KQk - 4 5
-
-go movetime 120000
-
-legalmoves
-19
-b8a8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-d7d6
-d7d5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6c5
-a6b4
-start analyzing
-done analyzing21.595601320266724
-bestmove b8a8
-isready
-
-TX: readyok
-position fen r1bqkbnr/pppppppp/n2B4/8/3PP3/2P2N2/PP3PPP/RN1QKB1R b KQk - 6 6
-
-Saw position: r1bqkbnr/pppppppp/n2B4/8/3PP3/2P2N2/PP3PPP/RN1QKB1R b KQk - 6 6
-
-go movetime 120000
-
-legalmoves
-20
-a8b8
-g8f6
-g8h6
-b7b6
-b7b5
-c7c6
-c7c5
-c7d6
-e7e6
-e7e5
-e7d6
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-start analyzing
-done analyzing20.024203300476074
-bestmove c7d6
-isready
-
-TX: readyok
-position fen r1bqkbnr/pp1ppppp/n2p4/8/2BPP3/2P2N2/PP3PPP/RN1QK2R b KQk - 1 7
-
-Saw position: r1bqkbnr/pp1ppppp/n2p4/8/2BPP3/2P2N2/PP3PPP/RN1QK2R b KQk - 1 7
+Saw position: rnbqkbnr/pppp1ppp/8/4p3/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2
 
 go movetime 120000
 
 legalmoves
 21
-a8b8
-d8c7
-d8b6
-d8a5
-g8f6
-g8h6
-b7b6
-b7b5
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c7
-a6c5
-a6b4
-d6d5
+a4a5
+b2b3
+b2b4
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+g1f3
+g1h3
 start analyzing
-done analyzing18.724778175354004
-bestmove d8c7
+done analyzing0.19503545761108398
+bestmove b2b3
 isready
 
 TX: readyok
-position fen r1b1kbnr/ppqppppp/n2p4/8/2BPP3/2P2N2/PP2QPPP/RN2K2R b KQk - 3 8
+position fen rnbqkbnr/ppp2ppp/8/3pp3/P7/1P6/2PPPPPP/RNBQKBNR w KQkq - 0 3
 
-Saw position: r1b1kbnr/ppqppppp/n2p4/8/2BPP3/2P2N2/PP2QPPP/RN2K2R b KQk - 3 8
+Saw position: rnbqkbnr/ppp2ppp/8/3pp3/P7/1P6/2PPPPPP/RNBQKBNR w KQkq - 0 3
+
+go movetime 120000
+
+legalmoves
+22
+a4a5
+b3b4
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+g1f3
+g1h3
+start analyzing
+done analyzing0.24129271507263184
+bestmove b3b4
+isready
+
+TX: readyok
+position fen rnbqkb1r/ppp2ppp/5n2/3pp3/PP6/8/2PPPPPP/RNBQKBNR w KQkq - 1 4
+
+Saw position: rnbqkb1r/ppp2ppp/5n2/3pp3/PP6/8/2PPPPPP/RNBQKBNR w KQkq - 1 4
+
+go movetime 120000
+
+legalmoves
+22
+a4a5
+b4b5
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+g1f3
+g1h3
+start analyzing
+done analyzing0.22969532012939453
+bestmove b4b5
+isready
+
+TX: readyok
+position fen rnbqkb1r/p1p2ppp/1p3n2/1P1pp3/P7/8/2PPPPPP/RNBQKBNR w KQkq - 0 5
+
+Saw position: rnbqkb1r/p1p2ppp/1p3n2/1P1pp3/P7/8/2PPPPPP/RNBQKBNR w KQkq - 0 5
+
+go movetime 120000
+
+legalmoves
+21
+a4a5
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+g1f3
+g1h3
+start analyzing
+done analyzing0.22803735733032227
+bestmove c2c3
+isready
+
+TX: readyok
+position fen rnbqkb1r/p4ppp/1pp2n2/1P1pp3/P7/2P5/3PPPPP/RNBQKBNR w KQkq - 0 6
+
+Saw position: rnbqkb1r/p4ppp/1pp2n2/1P1pp3/P7/2P5/3PPPPP/RNBQKBNR w KQkq - 0 6
+
+go movetime 120000
+
+legalmoves
+22
+b5c6
+a4a5
+c3c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+c1b2
+c1a3
+d1c2
+d1b3
+g1f3
+g1h3
+start analyzing
+done analyzing0.2517275810241699
+bestmove a4a5
+isready
+
+TX: readyok
+position fen rnbqk2r/p4ppp/1pp2n2/PPbpp3/8/2P5/3PPPPP/RNBQKBNR w KQkq - 1 7
+
+Saw position: rnbqk2r/p4ppp/1pp2n2/PPbpp3/8/2P5/3PPPPP/RNBQKBNR w KQkq - 1 7
 
 go movetime 120000
 
 legalmoves
 25
-a8b8
-e8d8
-g8f6
-g8h6
-b7b6
-b7b5
-c7b8
-c7d8
-c7b6
-c7a5
-c7c6
-c7c5
-c7c4
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-a6b8
-a6c5
-a6b4
-d6d5
+a5a6
+a5b6
+b5c6
+c3c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+a1a4
+b1a3
+c1b2
+c1a3
+d1c2
+d1b3
+d1a4
+g1f3
+g1h3
 start analyzing
-done analyzing22.091872215270996
-bestmove a6b8
+done analyzing0.37201380729675293
+bestmove a5b6
 isready
 
 TX: readyok
-position fen rnb1kbnr/ppqppppp/3p4/8/2BPP3/2P2N2/PP2QPPP/RN3RK1 b k - 5 9
+position fen r1bqk2r/p2n1ppp/1Pp2n2/1Pbpp3/8/2P5/3PPPPP/RNBQKBNR w KQkq - 1 8
 
-Saw position: rnb1kbnr/ppqppppp/3p4/8/2BPP3/2P2N2/PP2QPPP/RN3RK1 b k - 5 9
-
-go movetime 120000
-
-legalmoves
-24
-b8a6
-b8c6
-e8d8
-g8f6
-g8h6
-a7a6
-a7a5
-b7b6
-b7b5
-c7d8
-c7b6
-c7a5
-c7c6
-c7c5
-c7c4
-e7e6
-e7e5
-f7f6
-f7f5
-g7g6
-g7g5
-h7h6
-h7h5
-d6d5
-start analyzing
-done analyzing20.014797687530518
-bestmove g8f6
-isready
-
-TX: readyok
-position fen rnb1kb1r/ppqppppp/3p1n2/4P3/2BP4/2P2N2/PP2QPPP/RN3RK1 b k - 0 10
-
-Saw position: rnb1kb1r/ppqppppp/3p1n2/4P3/2BP4/2P2N2/PP2QPPP/RN3RK1 b k - 0 10
-
-go movetime 120000
-
-legalmoves
-26
-b8a6
-b8c6
-e8d8
-h8g8
-a7a6
-a7a5
-b7b6
-b7b5
-c7d8
-c7b6
-c7a5
-c7c6
-c7c5
-c7c4
-e7e6
-g7g6
-g7g5
-h7h6
-h7h5
-d6d5
-d6e5
-f6g8
-f6d5
-f6h5
-f6e4
-f6g4
-start analyzing
-done analyzing25.95023012161255
-bestmove d6e5
-isready
-
-TX: readyok
-position fen rnb1kb1r/ppqppppp/5n2/4P3/2B5/2P2N2/PP2QPPP/RN3RK1 b k - 0 11
-
-Saw position: rnb1kb1r/ppqppppp/5n2/4P3/2B5/2P2N2/PP2QPPP/RN3RK1 b k - 0 11
+Saw position: r1bqk2r/p2n1ppp/1Pp2n2/1Pbpp3/8/2P5/3PPPPP/RNBQKBNR w KQkq - 1 8
 
 go movetime 120000
 
 legalmoves
 28
-b8a6
-b8c6
-e8d8
-h8g8
-a7a6
-a7a5
-b7b6
-b7b5
-c7d8
-c7b6
-c7a5
-c7c6
-c7c5
-c7c4
-c7d6
-c7e5
-d7d6
-d7d5
-e7e6
-g7g6
-g7g5
-h7h6
-h7h5
-f6g8
-f6d5
-f6h5
-f6e4
-f6g4
+b6b7
+b6a7
+b5c6
+c3c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+a1a4
+a1a5
+a1a6
+a1a7
+b1a3
+c1b2
+c1a3
+d1c2
+d1b3
+d1a4
+g1f3
+g1h3
 start analyzing
-done analyzing30.13854670524597
-bestmove f6g8
+done analyzing0.3590712547302246
+bestmove b6a7
 isready
 
 TX: readyok
-position fen rnb1kbnr/ppqppppp/8/4P1N1/2B5/2P5/PP2QPPP/RN3RK1 b k - 2 12
+position fen r1b1k2r/P2n1ppp/1qp2n2/1Pbpp3/8/2P5/3PPPPP/RNBQKBNR w KQkq - 1 9
 
-Saw position: rnb1kbnr/ppqppppp/8/4P1N1/2B5/2P5/PP2QPPP/RN3RK1 b k - 2 12
+Saw position: r1b1k2r/P2n1ppp/1qp2n2/1Pbpp3/8/2P5/3PPPPP/RNBQKBNR w KQkq - 1 9
 
 go movetime 120000
 
 legalmoves
 25
-b8a6
-b8c6
-e8d8
-g8f6
-g8h6
-a7a6
-a7a5
-b7b6
-b7b5
-c7d8
-c7b6
-c7a5
-c7c6
-c7c5
-c7c4
-c7d6
-c7e5
-d7d6
-d7d5
-e7e6
-f7f6
-f7f5
-g7g6
-h7h6
-h7h5
+b5c6
+c3c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+a1a4
+a1a5
+a1a6
+b1a3
+c1b2
+c1a3
+d1c2
+d1b3
+d1a4
+g1f3
+g1h3
 start analyzing
-done analyzing34.3313467502594
-bestmove h7h6
+done analyzing0.34508705139160156
+bestmove c3c4
+stop
+
+quit
+
+exit
+
+quit
+
+Start
+setoption name Ponder value false
+
 isready
 
 TX: readyok
-position fen rnb1kbnr/ppqppNp1/7p/4P3/2B5/2P5/PP2QPPP/RN3RK1 b k - 0 13
+uci
 
-Saw position: rnb1kbnr/ppqppNp1/7p/4P3/2B5/2P5/PP2QPPP/RN3RK1 b k - 0 13
+TX: id evanchess
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+
+Saw position: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 
 go movetime 120000
 
 legalmoves
-24
-b8a6
-b8c6
-e8d8
-e8f7
-g8f6
-h8h7
-a7a6
-a7a5
-b7b6
-b7b5
-c7d8
-c7b6
-c7a5
-c7c6
-c7c5
-c7c4
-c7d6
-c7e5
-d7d6
-d7d5
-e7e6
-g7g6
-g7g5
-h6h5
+20
+a2a3
+a2a4
+b2b3
+b2b4
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+b1a3
+b1c3
+g1f3
+g1h3
 start analyzing
+done analyzing1.9694559574127197
+bestmove a2a4
+isready
+
+TX: readyok
+position fen rnbqkbnr/ppp1pppp/8/3p4/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2
+
+Saw position: rnbqkbnr/ppp1pppp/8/3p4/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2
+
+go movetime 120000
+
+legalmoves
+21
+a4a5
+b2b3
+b2b4
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+g1f3
+g1h3
+start analyzing
+done analyzing3.2835912704467773
+bestmove b2b3
+isready
+
+TX: readyok
+position fen rnbqkbnr/ppp2ppp/8/3pp3/P7/1P6/2PPPPPP/RNBQKBNR w KQkq - 0 3
+
+Saw position: rnbqkbnr/ppp2ppp/8/3pp3/P7/1P6/2PPPPPP/RNBQKBNR w KQkq - 0 3
+
+go movetime 120000
+
+legalmoves
+22
+a4a5
+b3b4
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+g1f3
+g1h3
+start analyzing
+done analyzing5.997185945510864
+bestmove b3b4
+isready
+
+TX: readyok
+position fen rnbqkbnr/1pp2ppp/8/p2pp3/PP6/8/2PPPPPP/RNBQKBNR w KQkq - 0 4
+
+Saw position: rnbqkbnr/1pp2ppp/8/p2pp3/PP6/8/2PPPPPP/RNBQKBNR w KQkq - 0 4
+
+go movetime 120000
+
+legalmoves
+22
+b4b5
+b4a5
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+g1f3
+g1h3
+start analyzing
+done analyzing6.66081690788269
+bestmove b4a5
+isready
+
+TX: readyok
+position fen 1nbqkbnr/1pp2ppp/8/r2pp3/P7/8/2PPPPPP/RNBQKBNR w KQk - 0 5
+
+Saw position: 1nbqkbnr/1pp2ppp/8/r2pp3/P7/8/2PPPPPP/RNBQKBNR w KQk - 0 5
+
+go movetime 120000
+
+legalmoves
+20
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+g1f3
+g1h3
+start analyzing
+done analyzing7.259615182876587
+bestmove c2c4
+isready
+
+TX: readyok
+position fen 1nbqkb1r/1pp2ppp/5n2/r2pp3/P1P5/8/3PPPPP/RNBQKBNR w KQk - 1 6
+
+Saw position: 1nbqkb1r/1pp2ppp/5n2/r2pp3/P1P5/8/3PPPPP/RNBQKBNR w KQk - 1 6
+
+go movetime 120000
+
+legalmoves
+22
+c4c5
+c4d5
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+d1c2
+d1b3
+g1f3
+g1h3
+start analyzing
+done analyzing6.924233675003052
+bestmove c4d5
+isready
+
+TX: readyok
+position fen 1nbqkb1r/1pp2ppp/8/r2np3/P7/8/3PPPPP/RNBQKBNR w KQk - 0 7
+
+Saw position: 1nbqkb1r/1pp2ppp/8/r2np3/P7/8/3PPPPP/RNBQKBNR w KQk - 0 7
+
+go movetime 120000
+
+legalmoves
+20
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+c1b2
+c1a3
+d1c2
+d1b3
+g1f3
+g1h3
+start analyzing
+done analyzing12.338430404663086
+bestmove d2d4
+isready
+
+TX: readyok
+position fen 2bqkb1r/1pp2ppp/2n5/r2np3/P2P4/8/4PPPP/RNBQKBNR w KQk - 1 8
+
+Saw position: 2bqkb1r/1pp2ppp/2n5/r2np3/P2P4/8/4PPPP/RNBQKBNR w KQk - 1 8
+
+go movetime 120000
+
+legalmoves
+28
+d4e5
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+b1d2
+c1b2
+c1a3
+c1d2
+c1e3
+c1f4
+c1g5
+c1h6
+d1c2
+d1b3
+d1d2
+d1d3
+e1d2
+g1f3
+g1h3
+start analyzing
+done analyzing19.703747987747192
+bestmove e2e3
+isready
+
+TX: readyok
+position fen 2bqk2r/1pp1bppp/2n5/r2np3/P2P4/4P3/5PPP/RNBQKBNR w KQk - 1 9
+
+Saw position: 2bqk2r/1pp1bppp/2n5/r2np3/P2P4/4P3/5PPP/RNBQKBNR w KQk - 1 9
+
+go movetime 120000
+
+legalmoves
+34
+d4e5
+e3e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+b1d2
+c1b2
+c1a3
+c1d2
+d1c2
+d1b3
+d1d2
+d1d3
+d1e2
+d1f3
+d1g4
+d1h5
+e1d2
+e1e2
+f1e2
+f1d3
+f1c4
+f1b5
+f1a6
+g1f3
+g1h3
+g1e2
+start analyzing
+done analyzing23.28273057937622
+bestmove e3e4
+isready
+
+TX: readyok
+position fen 2bqk2r/1pp1bppp/2n2n2/r3p3/P2PP3/8/5PPP/RNBQKBNR w KQk - 1 10
+
+Saw position: 2bqk2r/1pp1bppp/2n2n2/r3p3/P2PP3/8/5PPP/RNBQKBNR w KQk - 1 10
+
+go movetime 120000
+
+legalmoves
+38
+d4d5
+d4e5
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+b1d2
+c1b2
+c1a3
+c1d2
+c1e3
+c1f4
+c1g5
+c1h6
+d1c2
+d1b3
+d1d2
+d1d3
+d1e2
+d1f3
+d1g4
+d1h5
+e1d2
+e1e2
+f1e2
+f1d3
+f1c4
+f1b5
+f1a6
+g1f3
+g1h3
+g1e2
+start analyzing
+Start
+setoption name Ponder value false
+
+isready
+
+TX: readyok
+uci
+
+TX: id evanchess
+position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+
+Saw position: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+
+go movetime 120000
+
+legalmoves
+20
+a2a3
+a2a4
+b2b3
+b2b4
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+b1a3
+b1c3
+g1f3
+g1h3
+start analyzing
+done analyzing32.25522518157959
+bestmove d4e5
+done analyzing25.880226612091064
+bestmove a2a4
+isready
+
+TX: readyok
+position fen rnbqkbnr/ppp1pppp/8/3p4/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2
+
+Saw position: rnbqkbnr/ppp1pppp/8/3p4/P7/8/1PPPPPPP/RNBQKBNR w KQkq - 0 2
+
+go movetime 120000
+
+legalmoves
+21
+a4a5
+b2b3
+b2b4
+c2c3
+c2c4
+d2d3
+d2d4
+e2e3
+e2e4
+f2f3
+f2f4
+g2g3
+g2g4
+h2h3
+h2h4
+a1a2
+a1a3
+b1a3
+b1c3
+g1f3
+g1h3
+start analyzing
+done analyzing53.59122443199158
+bestmove b2b3
+stop
+
+quit
+
+exit
+
+quit
+

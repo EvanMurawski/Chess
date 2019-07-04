@@ -6,7 +6,7 @@ from MiniMax import MiniMax
 from AlphaBeta import AlphaBeta
 
 
-my_fen_board = FENUtil.fenToBoard("r1bqkbnr/pppppppp/n7/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 1 2")
+my_fen_board = FENUtil.fenToBoard("rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2")
 my_fen_board.print()
 
 
@@ -54,6 +54,7 @@ print("num getcheck " + str(BoardRep.numgetcheck))
 print("num getothercheck " + str(BoardRep.numgetothercheck))
 print("num getcheckmate " + str(BoardRep.numgetcheckmate))
 print("num getpseudo" + str(BoardRep.numgetpseudo))
+print("num getpseudocaptures" + str(BoardRep.numgetpseudocaptures))
 print("num getlegal " + str(BoardRep.numgetlegal))
 
 

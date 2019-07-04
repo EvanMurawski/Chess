@@ -54,3 +54,72 @@ num getlegal 19705
 
 
 
+Alpha-beta (whitemove):
+a8a7
+not check
+not checkmate
+0.0
+bestmove a2a4
+number nodes: 2568
+number boards: 6009
+num getcheck 2569
+num getothercheck 3021
+num getcheckmate 5139
+num getpseudo102
+num getpseudocaptures5590
+num getlegal 103
+
+Process finished with exit code 0
+
+Minimax (whitemove):
+
+a8a7
+not check
+not checkmate
+0.0
+bestmove d1f3
+number nodes: 25690
+number boards: 68263
+num getcheck 25691
+num getothercheck 34493
+num getcheckmate 51383
+num getpseudo1149
+num getpseudocaptures60184
+num getlegal 1154
+
+Process finished with exit code 0
+
+Minimax (blackmove)
+a8a7
+not check
+not checkmate
+0.0
+bestmove b8a6
+number nodes: 13781
+number boards: 28763
+num getcheck 13782
+num getothercheck 14409
+num getcheckmate 27565
+num getpseudo637
+num getpseudocaptures28191
+num getlegal 642
+
+Process finished with exit code 0
+
+
+alphabeta (blackmove)
+a8a7
+not check
+not checkmate
+0.0
+bestmove b8a6
+number nodes: 13781
+number boards: 28763
+num getcheck 13782
+num getothercheck 14409
+num getcheckmate 27565
+num getpseudo637
+num getpseudocaptures28191
+num getlegal 642
+
+Process finished with exit code 0

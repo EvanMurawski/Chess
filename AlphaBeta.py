@@ -54,7 +54,7 @@ class AlphaBeta:
             next_node_value = AlphaBeta.minValue(next_node, targetdepth, currentdepth+1, alpha, beta)
             if next_node_value > beta:
                 best_node_idx = idx
-                value = next_node_value
+                return next_node_value
             idx += 1
             alpha = max(alpha, value)
 
@@ -76,7 +76,7 @@ class AlphaBeta:
             next_node_value = AlphaBeta.maxValue(next_node, targetdepth, currentdepth+1, alpha, beta)
             if next_node_value < alpha:
                 best_node_idx = idx
-                value = next_node_value
+                return next_node_value
             idx += 1
             beta = min(beta, value)
         #node.best_node_idx = best_node_idx
