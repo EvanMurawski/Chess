@@ -42,7 +42,7 @@ print(str(my_fen_board.getScore()))
 
 root_node = Node(my_fen_board)
 
-best_node = AlphaBeta.alphabetaMove(root_node, 3)
+best_node = AlphaBeta.alphabetaMove(root_node, 4)
 best_move = best_node.move_squares
 
 move_string = BoardRep.numbersToAlg(best_move)

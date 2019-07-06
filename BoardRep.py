@@ -1,3 +1,5 @@
+import random
+
 class BoardRep:
 
     numboards = 0
@@ -179,7 +181,7 @@ class BoardRep:
             return 999
 
 
-        return self.getMaterial()
+        return self.getMaterial() + random.uniform(-0.1,0.1)
 
     def getMaterial(self):
         material = 0
