@@ -20,8 +20,8 @@ class AlphaBeta:
                     print("found")
 
                 node.minimax = AlphaBeta.minValue(node, targetdepth, currentdepth+1, best_score, b)
-                #print("move; " + BoardRep.numbersToAlg(node.move_squares))
-                #print("score: " + str(node.minimax) + "\n\n")
+                print("move; " + BoardRep.numbersToAlg(node.move_squares))
+                print("score: " + str(node.minimax) + "\n\n")
                 if best_node is None or node.minimax > best_node.minimax:
                     best_node = node
                     best_score = node.minimax
@@ -43,6 +43,7 @@ class AlphaBeta:
     def maxValue(node, targetdepth, currentdepth, alpha, beta):
         if targetdepth == currentdepth:
             return node.score
+            print("depth")
 
         value = -99999
 
@@ -51,7 +52,7 @@ class AlphaBeta:
             node.buildNextLayer()
 
         for next_node in node.next_nodes:
-            next_node_value = AlphaBeta.minValue(next_node, targetdepth, currentdepth+1, alpha, beta)
+            next_node_value = max(value, AlphaBeta.minValue(next_node, targetdepth, currentdepth+1, alpha, beta))
             if next_node_value > beta:
                 best_node_idx = idx
                 return next_node_value
@@ -73,7 +74,7 @@ class AlphaBeta:
             node.buildNextLayer()
 
         for next_node in node.next_nodes:
-            next_node_value = AlphaBeta.maxValue(next_node, targetdepth, currentdepth+1, alpha, beta)
+            next_node_value = min(value, AlphaBeta.maxValue(next_node, targetdepth, currentdepth+1, alpha, beta))
             if next_node_value < alpha:
                 best_node_idx = idx
                 return next_node_value

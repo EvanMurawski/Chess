@@ -1,5 +1,5 @@
 import random
-
+import time
 class BoardRep:
 
     numboards = 0
@@ -9,6 +9,13 @@ class BoardRep:
     numgetcheck= 0
     numgetothercheck = 0
     numgetcheckmate= 0
+    getlegalmovestime = 0
+    getpseudolegaltime = 0
+    getcheckmatetime = 0
+    getchecktime = 0
+    getotherchecktime = 0
+    getpseudocapturestime = 0
+
 
     MAILBOX = [ -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -123,27 +130,35 @@ class BoardRep:
     #Returns true if the player to move is in check
     @staticmethod
     def isInCheck(board):
+        start_time = time.time()
         BoardRep.numgetcheck += 1
         flip_move_board = BoardRep(board.array, not board.whitemove, board.whitecastle, board.blackcastle)
         next_boards = flip_move_board.getPseudoLegalCaptures()
         if not next_boards:
+            BoardRep.getchecktime += time.time() - start_time
             return False
-
+        BoardRep.getchecktime += time.time() - start_time
         return True
 
     #returns true if the player who moved previously is in check (i.e. illegal move)
     #todo think of a better way to calculate this.
     @staticmethod
     def isInCheckOtherPlayer(board):
+        start_time = time.time()
         BoardRep.numgetothercheck += 1
-        next_boards = board.getPseudoLegalCaptures()
-
-        if not next_boards:
-            #print("legal move")
-            return False
-
-        #print("illegal move")
-        return True
+        result = board.hasPseudoLegalCaptures()
+        BoardRep.getotherchecktime += time.time() - start_time
+        return result
+        # next_boards = board.getPseudoLegalCaptures()
+        #
+        # if not next_boards:
+        #     #print("legal move")
+        #     BoardRep.getotherchecktime += time.time() - start_time
+        #     return False
+        #
+        # #print("illegal move")
+        # BoardRep.getotherchecktime += time.time() - start_time
+        # return True
 
 
     def print(self):
@@ -155,15 +170,19 @@ class BoardRep:
                 line = ""
 
     def isCheckmate(self):
+        start_time = time.time()
         BoardRep.numgetcheckmate += 1
         if self.ischeckmate is None:
 
             if not BoardRep.isInCheck(self):
                 self.ischeckmate = False
+                self.getcheckmatetime += time.time() - start_time
+                BoardRep.getcheckmatetime += time.time() - start_time
                 return False
 
             self.ischeckmate = not self.getLegalMoves()
 
+        BoardRep.getcheckmatetime += time.time() - start_time
         return self.ischeckmate
 
 
@@ -220,6 +239,7 @@ class BoardRep:
 
     #TODO add en passant
     def getPseudoLegalPawnMoves(self, square):
+
         result = []
         if self.whitemove:
             factor = -1
@@ -359,6 +379,7 @@ class BoardRep:
 
     #write test cases
     def getPseudoLegalMoves(self):
+        start_time = time.time()
         BoardRep.numgetpseudo += 1
         result = []
         for squareNumber in range(0,64):
@@ -388,11 +409,12 @@ class BoardRep:
                     moves = self.getPseudoLegalKnightMoves(squareNumber)
                     if moves is not None:
                         result.extend(moves)
-
+        BoardRep.getpseudolegaltime += time.time() - start_time
         return result
 
     #write test cases
     def getPseudoLegalCaptures(self):
+        start_time = time.time()
         BoardRep.numgetpseudocaptures += 1
         result = []
         for squareNumber in range(0,64):
@@ -422,12 +444,51 @@ class BoardRep:
                     moves = self.getPseudoLegalKingCaptures(squareNumber)
                     if moves is not None:
                         result.extend(moves)
+
+        BoardRep.getpseudocapturestime += time.time() - start_time
         return result
+
+    def hasPseudoLegalCaptures(self):
+        start_time = time.time()
+        BoardRep.numgetpseudocaptures += 1
+        result = []
+        for squareNumber in range(0,64):
+            piece = self.array[squareNumber]
+            if piece in self.getCurrentSidePieces():
+                if piece == self.WHITE_PAWN or piece == self.BLACK_PAWN:
+                    moves = self.getPseudoLegalPawnCaptures(squareNumber)
+                    if moves:
+                        return True
+                elif piece == self.WHITE_ROOK or piece == self.BLACK_ROOK:
+                    moves = self.getPseudoLegalRookCaptures(squareNumber)
+                    if moves:
+                        return True
+                elif piece == self.WHITE_BISHOP or piece == self.BLACK_BISHOP:
+                    moves = self. getPseudoLegalBishopCaptures(squareNumber)
+                    if moves:
+                        return True
+                elif piece == self.WHITE_QUEEN or piece == self.BLACK_QUEEN:
+                    moves = self. getPseudoLegalQueenCaptures(squareNumber)
+                    if moves:
+                        return True
+                elif piece == self.WHITE_KNIGHT or piece == self.BLACK_KNIGHT:
+                    moves = self.getPseudoLegalKnightCaptures(squareNumber)
+                    if moves:
+                        return True
+                elif piece == self.WHITE_KING or piece == self.BLACK_KING:
+                    moves = self.getPseudoLegalKingCaptures(squareNumber)
+                    if moves:
+                        return True
+
+        BoardRep.getpseudocapturestime += time.time() - start_time
+        return False
 
 
     def getLegalMoves(self):
+        start_time = time.time()
         BoardRep.numgetlegal += 1
         if self.legalmoves is not None:
+            BoardRep.getlegalmovestime += time.time() - start_time
             return self.legalmoves
 
         pseudo_legal_moves = self.getPseudoLegalMoves()
@@ -438,5 +499,7 @@ class BoardRep:
                 legal_moves.append(move)
 
         self.legalmoves = legal_moves
+
+        BoardRep.getlegalmovestime += time.time() - start_time
         return legal_moves
 

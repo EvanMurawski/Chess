@@ -3,8 +3,8 @@ from FENUtil import FENUtil
 from Tree import Tree
 from Node import Node
 from MiniMax import MiniMax
-from AlphaBeta import AlphaBeta
-
+from AlphaBetaNew import AlphaBetaNew
+import time
 
 my_fen_board = FENUtil.fenToBoard("rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2")
 my_fen_board.print()
@@ -42,21 +42,22 @@ print(str(my_fen_board.getScore()))
 
 root_node = Node(my_fen_board)
 
-best_node = AlphaBeta.alphabetaMove(root_node, 4)
+start_time = time.time()
+best_node = AlphaBetaNew.getBestMoveWhite(root_node, 5)
 best_move = best_node.move_squares
+print("elapsed time: " + str(time.time() - start_time) + "\n\n")
 
 move_string = BoardRep.numbersToAlg(best_move)
 print("bestmove " + move_string)
 
 print("number nodes: " + str(Node.numnodes))
 print("number boards: " + str(BoardRep.numboards))
-print("num getcheck " + str(BoardRep.numgetcheck))
-print("num getothercheck " + str(BoardRep.numgetothercheck))
-print("num getcheckmate " + str(BoardRep.numgetcheckmate))
-print("num getpseudo" + str(BoardRep.numgetpseudo))
-print("num getpseudocaptures" + str(BoardRep.numgetpseudocaptures))
-print("num getlegal " + str(BoardRep.numgetlegal))
-
+print("num getcheck " + str(BoardRep.numgetcheck) + "time: " + str(BoardRep.getchecktime))
+print("num getothercheck " + str(BoardRep.numgetothercheck)+ "time: " + str(BoardRep.getotherchecktime))
+print("num getcheckmate " + str(BoardRep.numgetcheckmate)+ "time: " + str(BoardRep.getcheckmatetime))
+print("num getpseudo" + str(BoardRep.numgetpseudo) + "time: " + str(BoardRep.getpseudolegaltime))
+print("num getpseudocaptures" + str(BoardRep.numgetpseudocaptures) + "time " + str(BoardRep.getpseudocapturestime))
+print("num getlegal " + str(BoardRep.numgetlegal) + "time: " + str(BoardRep.getlegalmovestime))
 
 
 # node_to_consider = best_node

@@ -47,7 +47,7 @@ def minimaxMove():
 
     t = time.time()
     writelog("start analyzing")
-    best_node = MiniMax.minimaxMove(root_node,4)
+    best_node = MiniMax.minimaxMove(root_node,5)
     writelog("done analyzing" + str(time.time() - t))
 
     best_move = best_node.move_squares
