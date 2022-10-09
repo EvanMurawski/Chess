@@ -1,3 +1,5 @@
+#todo, keep root node as global variable, check if the next move is already there, pass that node directly as the next root node
+
 import sys
 from FENUtil import FENUtil
 from BoardRep import BoardRep
@@ -9,9 +11,10 @@ from Node import Node
 from Tree import Tree
 from MiniMax import MiniMax
 from AlphaBeta import AlphaBeta
+import AlphaBetaNew
 
 def writelog(message):
-    logfile = open("/home/evan/Code/Chess/log.txt", "a")
+    logfile = open("/home/evan/Code/Chess/log_1.txt", "a")
     logfile.write(message + "\n")
     logfile.close()
 
@@ -56,6 +59,18 @@ def minimaxMove():
     print("bestmove " + move_string)
     writelog("bestmove " + move_string)
 
+def abmove():
+    t = time.time()
+    writelog("start analyzing")
+    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board), 3)
+    writelog("done analyzing" + str(time.time() - t))
+
+    best_move = best_node.move_squares
+
+    move_string = BoardRep.numbersToAlg(best_move)
+    print("bestmove " + move_string)
+    writelog("bestmove " + move_string)
+
 
 
 writelog("Start")
@@ -79,7 +94,7 @@ try:
             writelog("Saw position: " + fen_position)
             current_board = FENUtil.fenToBoard(fen_position)
         elif line.startswith("go"):
-            minimaxMove()
+            abmove()
 
 
         sys.stdout.flush()

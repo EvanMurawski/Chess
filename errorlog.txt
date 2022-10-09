@@ -1,0 +1,70 @@
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "engine.py", line 85, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "engine.py", line 85, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "engine.py", line 88, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "engine.py", line 88, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "engine.py", line 84, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+local variable 'best_node_idx' referenced before assignmentTraceback (most recent call last):
+  File "engine.py", line 82, in <module>
+    minimaxMove()
+  File "engine.py", line 50, in minimaxMove
+    best_node = MiniMax.minimaxMove(root_node,3)
+  File "/home/evan/Code/Chess/MiniMax.py", line 28, in minimaxMove
+    node.minimax = MiniMax.maxValue(node, targetdepth, currentdepth+1)
+  File "/home/evan/Code/Chess/MiniMax.py", line 53, in maxValue
+    next_node_value = MiniMax.minValue(next_node, targetdepth, currentdepth+1)
+  File "/home/evan/Code/Chess/MiniMax.py", line 81, in minValue
+    node.best_node_idx = best_node_idx
+UnboundLocalError: local variable 'best_node_idx' referenced before assignment
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "engine.py", line 85, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+name 'current_board' is not definedTraceback (most recent call last):
+  File "/home/evan/Code/Chess/engine.py", line 95, in <module>
+    abmove()
+  File "/home/evan/Code/Chess/engine.py", line 63, in abmove
+    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board), 3)
+NameError: name 'current_board' is not defined
+name 'current_board' is not definedTraceback (most recent call last):
+  File "/home/evan/Code/Chess/engine.py", line 95, in <module>
+    abmove()
+  File "/home/evan/Code/Chess/engine.py", line 63, in abmove
+    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board), 3)
+NameError: name 'current_board' is not defined
+name 'current_board' is not definedTraceback (most recent call last):
+  File "/home/evan/Code/Chess/engine.py", line 95, in <module>
+    abmove()
+  File "/home/evan/Code/Chess/engine.py", line 63, in abmove
+    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board), 3)
+NameError: name 'current_board' is not defined
+list index out of rangeTraceback (most recent call last):
+  File "engine.py", line 95, in <module>
+    abmove()
+  File "engine.py", line 63, in abmove
+    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board), 3)
+  File "/home/evan/Code/Chess/Node.py", line 12, in __init__
+    self.score = BoardRep.getScore(board)
+  File "/home/evan/Code/Chess/BoardRep.py", line 196, in getScore
+    if self.isCheckmate() and self.whitemove:
+  File "/home/evan/Code/Chess/BoardRep.py", line 177, in isCheckmate
+    if not BoardRep.isInCheck(self):
+  File "/home/evan/Code/Chess/BoardRep.py", line 136, in isInCheck
+    next_boards = flip_move_board.getPseudoLegalCaptures()
+  File "/home/evan/Code/Chess/BoardRep.py", line 421, in getPseudoLegalCaptures
+    piece = self.array[squareNumber]
+IndexError: list index out of range

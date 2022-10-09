@@ -3,10 +3,11 @@ from FENUtil import FENUtil
 from Tree import Tree
 from Node import Node
 from MiniMax import MiniMax
-from AlphaBetaNew import AlphaBetaNew
+import AlphaBetaNew
 import time
 
-my_fen_board = FENUtil.fenToBoard("rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2")
+my_fen_board = FENUtil.fenToBoard("rnb1kbnr/pppp1ppp/8/4p1q1/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3")
+
 my_fen_board.print()
 
 
@@ -43,12 +44,13 @@ print(str(my_fen_board.getScore()))
 root_node = Node(my_fen_board)
 
 start_time = time.time()
-best_node = AlphaBetaNew.getBestMoveWhite(root_node, 5)
+best_node = AlphaBetaNew.getBestMoveMulti(root_node, 3)
 best_move = best_node.move_squares
 print("elapsed time: " + str(time.time() - start_time) + "\n\n")
 
 move_string = BoardRep.numbersToAlg(best_move)
 print("bestmove " + move_string)
+print("score" + str(best_node.score))
 
 print("number nodes: " + str(Node.numnodes))
 print("number boards: " + str(BoardRep.numboards))
