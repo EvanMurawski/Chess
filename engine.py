@@ -37,7 +37,7 @@ def randomMove():
         writelog(BoardRep.numbersToAlg(possible_next_boards[i][1]))
 
     print("bestmove " + move_string)
-    writelog("bestmove " + move_string)
+    writelog("TX: bestmove " + move_string)
 
 def minimaxMove():
     possible_next_boards = current_board.getLegalMoves()
@@ -57,7 +57,7 @@ def minimaxMove():
 
     move_string = BoardRep.numbersToAlg(best_move)
     print("bestmove " + move_string)
-    writelog("bestmove " + move_string)
+    writelog("TX: bestmove " + move_string)
 
 def abmove():
     t = time.time()
@@ -69,7 +69,7 @@ def abmove():
 
     move_string = BoardRep.numbersToAlg(best_move)
     print("bestmove " + move_string)
-    writelog("bestmove " + move_string)
+    writelog("TX: bestmove " + move_string)
 
 
 
@@ -81,7 +81,7 @@ try:
         if not line:
             break
 
-        writelog(line)
+        writelog("RX: " + line)
         if line.startswith("isready"):
             print("readyok")
             writelog("TX: readyok")

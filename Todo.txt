@@ -8,7 +8,8 @@ test cases for obvious moves
 engine:
 use selected node as new root node, don't rebuild
 option for more verbose logging
-
+handle exit command
+handle other commands
 
 alphabetanew:
 options for more verbose logging
@@ -16,7 +17,6 @@ find whose move it is from node instead of function argument
 
 Node:
 clean up
-
 
 boardrep:
 castling
