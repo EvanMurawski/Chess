@@ -72,3 +72,127 @@ RX: exit
 
 RX: quit
 
+Start
+RX: setoption name Ponder value false
+
+RX: isready
+
+TX: readyok
+RX: uci
+
+TX: id evanchess
+RX: position fen rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+
+Saw position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing3.924036979675293
+TX: bestmove g7g6
+RX: stop
+
+RX: quit
+
+RX: exit
+
+RX: quit
+
+Start
+RX: setoption name Ponder value false
+
+RX: isready
+
+TX: readyok
+RX: uci
+
+TX: id evanchess
+RX: position fen rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+
+Saw position: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing1.513066291809082
+TX: bestmove e2e4
+RX: isready
+
+TX: readyok
+RX: position fen rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2
+
+Saw position: rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing3.9127230644226074
+TX: bestmove d1h5
+RX: isready
+
+TX: readyok
+RX: position fen r1bqkbnr/pppp1ppp/2n5/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 2 3
+
+Saw position: r1bqkbnr/pppp1ppp/2n5/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 2 3
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing7.819053888320923
+TX: bestmove f1c4
+RX: isready
+
+TX: readyok
+RX: position fen r1bqkbnr/pppp1p1p/2n3p1/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 4
+
+Saw position: r1bqkbnr/pppp1p1p/2n3p1/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 4
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing10.222484111785889
+TX: bestmove h5f3
+RX: isready
+
+TX: readyok
+RX: position fen r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 5
+
+Saw position: r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 5
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing9.020911455154419
+TX: bestmove f3b3
+RX: isready
+
+TX: readyok
+RX: position fen r1bqkb1r/pppp1p1p/5np1/4p3/2BnP3/1Q6/PPPP1PPP/RNB1K1NR w KQkq - 4 6
+
+Saw position: r1bqkb1r/pppp1p1p/5np1/4p3/2BnP3/1Q6/PPPP1PPP/RNB1K1NR w KQkq - 4 6
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing11.724687099456787
+TX: bestmove c4f7
+RX: isready
+
+TX: readyok
+RX: position fen r1bq1b1r/ppppkB1p/5np1/4p3/3nP3/1Q6/PPPP1PPP/RNB1K1NR w KQ - 1 7
+
+Saw position: r1bq1b1r/ppppkB1p/5np1/4p3/3nP3/1Q6/PPPP1PPP/RNB1K1NR w KQ - 1 7
+
+RX: go movetime 200000
+
+start analyzing
+done analyzing14.733216047286987
+TX: bestmove b3c4
+RX: stop
+
+RX: quit
+
+RX: exit
+
+RX: quit
+
