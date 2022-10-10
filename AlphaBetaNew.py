@@ -36,25 +36,35 @@ def getBestMoveSingle(node, depth, whiteplayer):
     if node.next_nodes is None:
         node.buildNextLayer()
 
-    bestscore = -999999999
+    if whiteplayer:
+        bestscore = -999999999
+    else:
+        bestscore = 999999999
+
     bestnode = None
 
     for childnode in node.next_nodes:
-        value = alphabeta(childnode, depth, -99999, 99999, not whiteplayer)
-        if value > bestscore:
-            bestnode = childnode
-            bestscore = value
+        childscore = alphabeta(childnode, depth, -99999, 99999, not whiteplayer)
+        if whiteplayer:
+            if childscore > bestscore:
+                bestnode = childnode
+                bestscore = childscore
+        else:
+            if childscore < bestscore:
+                bestnode = childnode
+                bestscore = childscore
+
 
         childnode.board.print()
-        print("above value: ", str(value))
+        print("above value: ", str(childscore))
 
     return bestnode
 
 def multiAlphaBetaBlack(node):
-    return alphabeta(node, 3, -99999, 99999, True)
+    return alphabeta(node, 3, -99999, 99999, False)
 
 def multiAlphaBetaWhite(node):
-    return alphabeta(node, 3, -99999, 99999, False)
+    return alphabeta(node, 3, -99999, 99999, True)
 
 def getBestMoveMulti(node, whiteplayer):
     pool = multiprocessing.Pool(processes=8)
@@ -62,24 +72,33 @@ def getBestMoveMulti(node, whiteplayer):
     if node.next_nodes is None:
         node.buildNextLayer()
 
-    bestscore = -999999999
+    if whiteplayer:
+        bestscore = -999999999
+    else:
+        bestscore = 999999999
+
     bestnode = None
 
     inputs = node.next_nodes
 
     if whiteplayer:
-        outputs = pool.map(multiAlphaBetaWhite, inputs)
-    else:
         outputs = pool.map(multiAlphaBetaBlack, inputs)
+    else:
+        outputs = pool.map(multiAlphaBetaWhite, inputs)
 
     for (childnode, childscore) in zip(node.next_nodes, outputs):
 
         #childnode.board.print()
         #print("above value: ", str(childscore))
 
-        if childscore > bestscore:
-            bestnode = childnode
-            bestscore = childscore
+        if whiteplayer:
+            if childscore > bestscore:
+                bestnode = childnode
+                bestscore = childscore
+        else:
+            if childscore < bestscore:
+                bestnode = childnode
+                bestscore = childscore
 
     return bestnode
 

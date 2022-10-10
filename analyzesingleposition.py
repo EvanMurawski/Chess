@@ -12,6 +12,7 @@ if __name__ == "__main__":
     #Configuration
     #-------------------
     depth = 3
+    multithreading = True
     #-------------------
 
 
@@ -45,7 +46,13 @@ if __name__ == "__main__":
     root_node = Node(my_fen_board)
 
     start_time = time.time()
-    best_node = AlphaBetaNew.getBestMoveSingle(root_node, depth, my_fen_board.whitemove)
+
+    if multithreading:
+        best_node = AlphaBetaNew.getBestMoveMulti(root_node, my_fen_board.whitemove)
+    else:
+        best_node = AlphaBetaNew.getBestMoveSingle(root_node, depth, my_fen_board.whitemove)
+
+
     best_move = best_node.move_squares
     move_string = BoardRep.numbersToAlg(best_move)
 
