@@ -12,7 +12,6 @@ option for more verbose logging
 
 alphabetanew:
 options for more verbose logging
-handle black move or white move
 find whose move it is from node instead of function argument
 
 Node:
