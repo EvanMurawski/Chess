@@ -1,0 +1,28 @@
+testboard:
+
+
+
+engine:
+use selected node as new root node, don't rebuild
+option for more verbose logging
+
+
+alphabetanew:
+options for more verbose logging
+handle black move or white move
+
+Node:
+clean up
+
+test:
+add more test cases
+
+boardrep:
+castling
+queen promotion
+en passant
+improve eval function
+
+
+other:
+debug what happened at the end of my game

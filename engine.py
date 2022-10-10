@@ -62,7 +62,7 @@ def minimaxMove():
 def abmove():
     t = time.time()
     writelog("start analyzing")
-    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board), 3)
+    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board))
     writelog("done analyzing" + str(time.time() - t))
 
     best_move = best_node.move_squares
@@ -74,7 +74,6 @@ def abmove():
 
 
 writelog("Start")
-
 fen_position = ""
 try:
     while True:
@@ -96,8 +95,8 @@ try:
         elif line.startswith("go"):
             abmove()
 
-
         sys.stdout.flush()
+
 except Exception as e:
     with open("/home/evan/Code/Chess/errorlog.txt", 'a') as f:
         f.write(str(e))

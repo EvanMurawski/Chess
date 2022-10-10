@@ -7,25 +7,19 @@ import multiprocessing
 #todo, store the score in the node, start searching highest scoring nodes first
 def alphabeta(node, depth, alpha, beta, maximizingplayer):
 
-
-
     if depth == 0:
         return node.score
-
 
     if node.next_nodes is None:
         node.buildNextLayer()
 
-
     if maximizingplayer:
         value = -99999
-
         for childnode in node.next_nodes:
             value = max(value, alphabeta(childnode, depth-1, alpha, beta, False))
             if value >= beta:
                 break
             alpha = max(alpha, value)
-
         return value
 
     else:
@@ -38,8 +32,7 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
         return value
 
 
-def getBestMoveWhite(node, depth):
-
+def getBestMoveSingle(node, depth, whiteplayer):
     if node.next_nodes is None:
         node.buildNextLayer()
 
@@ -47,7 +40,7 @@ def getBestMoveWhite(node, depth):
     bestnode = None
 
     for childnode in node.next_nodes:
-        value = alphabeta(childnode, depth, -99999, 99999, False)
+        value = alphabeta(childnode, depth, -99999, 99999, not whiteplayer)
         if value > bestscore:
             bestnode = childnode
             bestscore = value
@@ -57,10 +50,13 @@ def getBestMoveWhite(node, depth):
 
     return bestnode
 
-def funcformulti(node):
+def multiAlphaBetaBlack(node):
+    return alphabeta(node, 3, -99999, 99999, True)
+
+def multiAlphaBetaWhite(node):
     return alphabeta(node, 3, -99999, 99999, False)
 
-def getBestMoveMulti(node, depth):
+def getBestMoveMulti(node, whiteplayer):
     pool = multiprocessing.Pool(processes=8)
 
     if node.next_nodes is None:
@@ -70,9 +66,14 @@ def getBestMoveMulti(node, depth):
     bestnode = None
 
     inputs = node.next_nodes
-    outputs = pool.map(funcformulti, inputs)
+
+    if whiteplayer:
+        outputs = pool.map(multiAlphaBetaWhite, inputs)
+    else:
+        outputs = pool.map(multiAlphaBetaBlack, inputs)
 
     for (childnode, childscore) in zip(node.next_nodes, outputs):
+
         #childnode.board.print()
         #print("above value: ", str(childscore))
 
