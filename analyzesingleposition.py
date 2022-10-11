@@ -12,7 +12,7 @@ if __name__ == "__main__":
     #Configuration
     #-------------------
     depth = 3
-    multithreading = True
+    multithreading = False
     #-------------------
 
 
@@ -67,5 +67,6 @@ if __name__ == "__main__":
     print("num getpseudo: " + str(BoardRep.numgetpseudo) + " time: " + str(BoardRep.getpseudolegaltime))
     print("num getpseudocaptures: " + str(BoardRep.numgetpseudocaptures) + " time:  " + str(BoardRep.getpseudocapturestime))
     print("num getlegal: " + str(BoardRep.numgetlegal) + " time: " + str(BoardRep.getlegalmovestime))
+
 
 
