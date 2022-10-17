@@ -87,6 +87,16 @@ class BoardRep:
     PIECE_VALUES = {EMPTY: 0, WHITE_PAWN: 1, WHITE_KNIGHT: 3, WHITE_BISHOP: 3.5, WHITE_ROOK: 5, WHITE_QUEEN: 9, WHITE_KING: 100,
                     BLACK_PAWN: -1, BLACK_KNIGHT: -3, BLACK_BISHOP: -3.5, BLACK_ROOK: -5, BLACK_QUEEN: -9, BLACK_KING: -100}
 
+    PIECE_FACTORS = [[1 for square in range(64)] for piece in range(13)]
+    PIECE_FACTORS[1] = [9, 9, 9, 9, 9, 9, 9, 9,
+                        2, 2, 2, 2, 2, 2, 2, 2,
+                        1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5,
+                        1.1, 1.1, 1.1, 1.5, 1.5, 1.1, 1.1, 1.1,
+                        1.05, 1.05, 1.1, 1.4, 1.4, 1, 1.05, 1.05,
+                        1, 1, 1, 1.2, 1.2, 1, 1, 1,
+                        1, 1, 1, 1, 1, 1, 1, 1,
+                        1, 1, 1, 1, 1, 1, 1, 1]
+
     def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None):
 
         self.whitecastle = self.BOTH_CASTLE
@@ -203,12 +213,19 @@ class BoardRep:
 
             return 999
 
+        return self.getWeightedMaterial() + random.uniform(-0.1,0.1)
 
-        return self.getMaterial() + random.uniform(-0.1,0.1)
+    def getWeightedMaterial(self):
+        material = 0
+        for square, piece in enumerate(self.array):
+            material += self.PIECE_VALUES[piece] * self.PIECE_FACTORS[piece][square]
+
+        return material
+
 
     def getMaterial(self):
         material = 0
-        for piece in self.array:
+        for square, piece in enumerate(self.array):
             material += self.PIECE_VALUES[piece]
 
         return material
