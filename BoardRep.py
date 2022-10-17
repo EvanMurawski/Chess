@@ -66,6 +66,9 @@ class BoardRep:
     WHITE_PAWN_START = [48, 49, 50, 51, 52, 53, 54, 55]
     BLACK_PAWN_START = [8,  9, 10, 11, 12, 13, 14, 15]
 
+    WHITE_PAWN_PROMOTION = [0, 1, 2, 3, 4, 5, 6, 7]
+    BLACK_PAWN_PROMOTION = [56, 57, 58, 59, 60, 61, 62, 63]
+
     ROOK_OFFSETS = [-10, -1, 1, 10]
     BISHOP_OFFSETS = [-11, -9, 9, 11]
     QUEEN_OFFSETS = [-11, -10, -9, -1, 1, 9, 10, 11]
@@ -193,6 +196,7 @@ class BoardRep:
             return self.BLACK_PIECES
 
     def getScore(self):
+
         if self.isCheckmate() and self.whitemove:
             return -999
         elif self.isCheckmate() and not self.whitemove:
@@ -209,12 +213,20 @@ class BoardRep:
 
         return material
 
-    #TODO check if move is castling, check for queen promotion
+    #TODO check if move is castling
     def getBoard(self, oldSquare, newSquare):
         newArray = self.array[:]
         movedPiece = newArray[oldSquare]
         newArray[oldSquare] = self.EMPTY
         newArray[newSquare] = movedPiece
+
+        # Check for queen promotion
+        if self.whitemove and newSquare in self.WHITE_PAWN_PROMOTION and movedPiece == self.WHITE_PAWN:
+            newArray[newSquare] = self.WHITE_QUEEN
+
+        if not self.whitemove and newSquare in self.BLACK_PAWN_PROMOTION and movedPiece == self.BLACK_PAWN:
+            newArray[newSquare] = self.BLACK_QUEEN
+
         newBoard = BoardRep(newArray, not self.whitemove, self.whitecastle, self.blackcastle)
         return newBoard
 

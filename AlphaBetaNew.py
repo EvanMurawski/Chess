@@ -45,6 +45,7 @@ def getBestMoveSingle(node, depth, whiteplayer):
 
     for childnode in node.next_nodes:
         childscore = alphabeta(childnode, depth, -99999, 99999, not whiteplayer)
+
         if whiteplayer:
             if childscore > bestscore:
                 bestnode = childnode
