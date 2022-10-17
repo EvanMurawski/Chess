@@ -15,15 +15,17 @@ Canceled: use selected node as new root node, don't rebuild, no time savings
 alphabetanew:
 options for more verbose logging
 find whose move it is from node instead of function argument
+Return the score of the final node reached instead of the selected move node
 
 Node:
 clean up
 
 boardrep:
 castling
-queen promotion
 en passant
 improve eval function
+underpromotion
+
 
 
 other:
