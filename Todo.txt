@@ -15,7 +15,9 @@ Canceled: use selected node as new root node, don't rebuild, no time savings
 alphabetanew:
 options for more verbose logging
 find whose move it is from node instead of function argument
-Return the score of the final node reached instead of the selected move node
+Save the score in the nodes
+Return the final alpha beta score value of the selected node to analyzesignleposition.py so it can show that value
+insted of just the heuristic value of that node
 
 Node:
 clean up
@@ -23,10 +25,11 @@ clean up
 boardrep:
 castling
 en passant
-improve eval function
+add piece factors for other pieces
 underpromotion
 
 
 
 other:
 debug what happened at the end of my game
+Clearly differentiate between heuristic scores and eval scores (return value of alpha bet afunction

@@ -68,3 +68,7 @@ list index out of rangeTraceback (most recent call last):
   File "/home/evan/Code/Chess/BoardRep.py", line 421, in getPseudoLegalCaptures
     piece = self.array[squareNumber]
 IndexError: list index out of range
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "engine.py", line 98, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
