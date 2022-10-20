@@ -10,7 +10,7 @@ engine:
 option for more verbose logging (include evaluation)
 handle exit command
 handle other commands
-Canceled: use selected node as new root node, don't rebuild, no time savings
+Canceled: use selected node as new root node: don't rebuild, no time savings
 
 alphabetanew:
 options for more verbose logging

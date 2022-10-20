@@ -8,7 +8,6 @@ import traceback
 import time
 
 from Node import Node
-from Tree import Tree
 from MiniMax import MiniMax
 from AlphaBeta import AlphaBeta
 import AlphaBetaNew
