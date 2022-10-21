@@ -15,7 +15,7 @@ if __name__ == "__main__":
     #-------------------
 
 
-    my_fen_board = FENUtil.fenToBoard("r1b2bnr/1pp2kpp/p1p5/8/3qP3/8/PPPP1PPP/RNBQK2R w KQ - 0 7")
+    my_fen_board = FENUtil.fenToBoard("r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3")
     my_fen_board.print()
 
     newBoards = my_fen_board.getLegalMoves()

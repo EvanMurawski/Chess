@@ -6,7 +6,6 @@ test cases for obvious moves
 
 
 engine:
-
 option for more verbose logging (include evaluation)
 handle exit command
 handle other commands
@@ -29,7 +28,60 @@ add piece factors for other pieces
 underpromotion
 
 
-
 other:
 debug what happened at the end of my game
 Clearly differentiate between heuristic scores and eval scores (return value of alpha bet afunction
+
+
+Benchmark: single threading, after 2 moves of Ruy Lopez
+Piece factors and random:
+Elapsed time: 21.39950942993164
+Best move: f1b5
+Best move eval: -0.06449458936458466
+Nodes created: 171438
+Boards created: : 467177
+num getcheck: 171439 time: 8.113252639770508
+num getothercheck: 236396 time: 9.857609748840332
+num getcheckmate: 342874 time: 11.462548017501831
+num getpseudo: 7538 time: 1.2290496826171875
+num getpseudocaptures: 407835 time:  15.158922672271729
+num getlegal: 7559 time: 11.19127869606018
+
+Piece factors no random:
+Elapsed time: 19.842148303985596
+Best move: f1b5
+Best move eval: -0.041333333333341216
+Nodes created: 160202
+Boards created: : 434661
+num getcheck: 160203 time: 7.464859485626221
+num getothercheck: 219943 time: 9.077445030212402
+num getcheckmate: 320403 time: 10.538098812103271
+num getpseudo: 7024 time: 1.2031476497650146
+num getpseudocaptures: 380146 time:  13.962384700775146
+num getlegal: 7044 time: 10.379648923873901
+
+No piece factors and random
+Elapsed time: 21.059947967529297
+Best move: f1b5
+Best move eval: -0.029849232939891612
+Nodes created: 172448
+Boards created: : 481795
+num getcheck: 172449 time: 7.973153352737427
+num getothercheck: 244099 time: 10.06938624382019
+num getcheckmate: 344895 time: 11.513067722320557
+num getpseudo: 7742 time: 1.3290793895721436
+num getpseudocaptures: 416548 time:  14.993833780288696
+num getlegal: 7765 time: 11.50846815109253
+
+No piece factors no random
+Elapsed time: 14.891395330429077
+Best move: f1b5
+Best move eval: 0.0
+Nodes created: 124516
+Boards created: : 336302
+num getcheck: 124517 time: 5.844908952713013
+num getothercheck: 170071 time: 6.949820518493652
+num getcheckmate: 249032 time: 8.126296758651733
+num getpseudo: 5443 time: 0.838268518447876
+num getpseudocaptures: 294588 time:  10.894316673278809
+num getlegal: 5460 time: 7.862969160079956

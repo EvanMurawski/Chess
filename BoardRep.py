@@ -8,6 +8,10 @@ class BoardRep:
     piece_factors_file = 'test.csv'
     # IMPORT FILES #
 
+    # CONFIG SWITCHES #
+    use_piece_factors = True
+    # CONFIG SWITCHES
+
     numboards = 0
     numgetpseudo= 0
     numgetpseudocaptures=0
@@ -217,7 +221,9 @@ class BoardRep:
     def getWeightedMaterial(self):
         material = 0
         for square, piece in enumerate(self.array):
-            material += self.PIECE_VALUES[piece] + self.PIECE_FACTORS[piece][square]
+            material += self.PIECE_VALUES[piece]
+            if self.use_piece_factors:
+                material += self.PIECE_FACTORS[piece][square]
 
         return material
 
