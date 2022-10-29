@@ -360,7 +360,31 @@ class BoardRep:
             elif new_square != -1 and self.squareHasEnemyPiece(new_square):
                 result.append([self.getBoard(square, new_square), [square, new_square]])
 
+        if self.whitemove and self.whitecastle in [self.KS_CASTLE, self.BOTH_CASTLE]:
+            potential_castling_board = self.canKingSideCastle(square)
+            if potential_castling_board is not None:
+                result.append([potential_castling_board, [square, 62]])
+
         return result
+
+    # TODO: save check status in board rep so it only has to be calculated once per board
+    # TODO: save kingside and queenside castling squares as constants
+    # TODO: handle castling in getBoard
+    def canKingSideCastle(self, square):
+        if BoardRep.isInCheck(self):
+            return None
+        if self.array[62] != self.EMPTY or self.array[61] != self.EMPTY:
+            return None
+
+        if BoardRep.isInCheck(self.getBoard(square, 61)):
+            return None
+
+        potential_castling_board = self.getBoard(square, 62)
+        if BoardRep.isInCheck(potential_castling_board):
+            return None
+
+        return potential_castling_board
+
 
 
     def getPseudoLegalKingCaptures(self, square):

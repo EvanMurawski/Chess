@@ -27,6 +27,8 @@ en passant
 add piece factors for other pieces
 underpromotion
 
+ideas:
+save pseudolegal moves that turn out to be legal in the tree structure to save time
 
 other:
 debug what happened at the end of my game
