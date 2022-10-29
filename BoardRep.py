@@ -210,9 +210,10 @@ class BoardRep:
 
     def getScore(self):
 
-        if self.isCheckmate() and self.whitemove:
+        checkmate = self.isCheckmate()
+        if checkmate and self.whitemove:
             return -999
-        elif self.isCheckmate() and not self.whitemove:
+        elif checkmate and not self.whitemove:
 
             return 999
 

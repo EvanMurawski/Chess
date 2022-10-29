@@ -8,7 +8,7 @@ import multiprocessing
 def alphabeta(node, depth, alpha, beta, maximizingplayer):
 
     if depth == 0:
-        return node.score
+        return node.getScore()
 
     if node.next_nodes is None:
         node.buildNextLayer()
