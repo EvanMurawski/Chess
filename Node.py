@@ -9,7 +9,6 @@ class Node:
         self.next_nodes = next_nodes
         self.move_squares = move_squares
 
-        self.score = BoardRep.getScore(board)
         self.best_node_idx = best_node_idx
         Node.numnodes += 1
 
@@ -23,3 +22,6 @@ class Node:
     def buildNextLayer(self):
         next_moves = self.board.getLegalMoves()
         self.setNextNodes(next_moves)
+
+    def getScore(self):
+        return BoardRep.getScore(self.board)

@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     print("\nElapsed time: " + str(time.time() - start_time))
     print("Best move: " + move_string)
-    print("Best move eval: " + str(best_node.score))
+    print("Best move eval: " + str(best_node.getScore()))
     print("Nodes created: " + str(Node.numnodes))
     print("Boards created: : " + str(BoardRep.numboards))
     print("num getcheck: " + str(BoardRep.numgetcheck) + " time: " + str(BoardRep.getchecktime))
