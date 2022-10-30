@@ -73,11 +73,25 @@ class BoardRep:
 
     WHITE_PIECES = [WHITE_PAWN, WHITE_KNIGHT, WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, WHITE_KING]
     BLACK_PIECES = [BLACK_PAWN, BLACK_KNIGHT, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, BLACK_KING]
+
+    # Important Squares
+
     WHITE_PAWN_START = [48, 49, 50, 51, 52, 53, 54, 55]
     BLACK_PAWN_START = [8,  9, 10, 11, 12, 13, 14, 15]
 
     WHITE_PAWN_PROMOTION = [0, 1, 2, 3, 4, 5, 6, 7]
     BLACK_PAWN_PROMOTION = [56, 57, 58, 59, 60, 61, 62, 63]
+
+    WHITE_KING_START = 60
+    WHITE_KING_KS_CASTLE = 62
+    WHITE_KING_QS_CASTLE = 58
+
+    BLACK_KING_START = 4
+    BLACK_KING_KS_CASTLE = 6
+    BLACK_KING_QS_CASTLE = 3
+
+    # Important Squares
+
 
     ROOK_OFFSETS = [-10, -1, 1, 10]
     BISHOP_OFFSETS = [-11, -9, 9, 11]
@@ -105,6 +119,12 @@ class BoardRep:
         self.whitecastle = self.BOTH_CASTLE
         self.blackcastle = self.BOTH_CASTLE
         self.whitemove = True
+        self.confirmedlegal = False
+
+        self.ischeckmate = None
+        self.legalmoves = None
+        self.pseudolegalmoves = None
+
 
         if array is None:
             self.array = [self.BLACK_ROOK, self.BLACK_KNIGHT, self.BLACK_BISHOP, self.BLACK_QUEEN, self.BLACK_KING, self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK,
@@ -133,9 +153,7 @@ class BoardRep:
         else:
             self.whitemove = whitemove
 
-        self.ischeckmate = None
-        self.legalmoves = None
-        self.pseudolegalmoves = None
+
 
         BoardRep.numboards += 1
 
@@ -236,12 +254,15 @@ class BoardRep:
 
         return material
 
-    #TODO check if move is castling
+    #TODO handle queenside castling
     def getBoard(self, oldSquare, newSquare):
         newArray = self.array[:]
         movedPiece = newArray[oldSquare]
         newArray[oldSquare] = self.EMPTY
         newArray[newSquare] = movedPiece
+        _whitecastle = self.whitecastle
+        _blackcastle = self.blackcastle
+        _confirmedlegal = False
 
         # Check for queen promotion
         if self.whitemove and newSquare in self.WHITE_PAWN_PROMOTION and movedPiece == self.WHITE_PAWN:
@@ -250,7 +271,64 @@ class BoardRep:
         if not self.whitemove and newSquare in self.BLACK_PAWN_PROMOTION and movedPiece == self.BLACK_PAWN:
             newArray[newSquare] = self.BLACK_QUEEN
 
-        newBoard = BoardRep(newArray, not self.whitemove, self.whitecastle, self.blackcastle)
+        # Handle Kingside Castling
+        if movedPiece == self.WHITE_KING and oldSquare == self.WHITE_KING_START and newSquare == self.WHITE_KING_KS_CASTLE:
+            # move rook
+            newArray[63] = self.EMPTY
+            newArray[61] = self.WHITE_ROOK
+            _whitecastle = self.NO_CASTLE
+
+            _confirmedlegal = True
+
+        elif movedPiece == self.BLACK_KING and oldSquare == self.BLACK_KING_START and newSquare == self.BLACK_KING_KS_CASTLE:
+            # move rook
+            newArray[7] = self.EMPTY
+            newArray[5] = self.BLACK_ROOK
+            _blackcastle = self.NO_CASTLE
+
+            _confirmedlegal = True
+
+
+
+        # Remove castling rights if moved pieces
+
+        # Moved king
+        if movedPiece == self.WHITE_KING:
+            _whitecastle = self.NO_CASTLE
+
+        elif movedPiece == self.BLACK_KING:
+            _blackcastle = self.NO_CASTLE
+
+        # Moved white kingside rook
+        if oldSquare == 63:
+            if _whitecastle == self.BOTH_CASTLE:
+                _whitecastle = self.QS_CASTLE
+            elif _whitecastle == self.KS_CASTLE:
+                _whitecastle = self.NO_CASTLE
+
+        # Moved white queenside rook
+        if oldSquare == 56:
+            if _whitecastle == self.BOTH_CASTLE:
+                _whitecastle = self.KS_CASTLE
+            elif _whitecastle == self.QS_CASTLE:
+                _whitecastle = self.NO_CASTLE
+
+        # Moved black kingside rook
+        if oldSquare == 7:
+            if _blackcastle == self.BOTH_CASTLE:
+                _blackcastle = self.QS_CASTLE
+            elif _blackcastle == self.KS_CASTLE:
+                _blackcastle = self.NO_CASTLE
+
+        # Moved black queenside rook
+        if oldSquare == 0:
+            if _blackcastle == self.BOTH_CASTLE:
+                _blackcastle = self.KS_CASTLE
+            elif _blackcastle == self.QS_CASTLE:
+                _blackcastle = self.NO_CASTLE
+
+        newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle)
+        newBoard.confirmedlegal = _confirmedlegal
         return newBoard
 
     def squareHasEnemyPiece(self, square):
@@ -351,7 +429,6 @@ class BoardRep:
 
         return result
 
-    #TODO add castling
     def getPseudoLegalKingMoves(self, square):
         result = []
         for offset in self.KING_OFFSETS:
@@ -361,10 +438,12 @@ class BoardRep:
             elif new_square != -1 and self.squareHasEnemyPiece(new_square):
                 result.append([self.getBoard(square, new_square), [square, new_square]])
 
-        if self.whitemove and self.whitecastle in [self.KS_CASTLE, self.BOTH_CASTLE]:
+        # Check for castling
+        if (self.whitemove and self.whitecastle in [self.KS_CASTLE, self.BOTH_CASTLE]) or\
+            (not self.whitemove and self.blackcastle in [self.KS_CASTLE, self.BOTH_CASTLE]):
             potential_castling_board = self.canKingSideCastle(square)
             if potential_castling_board is not None:
-                result.append([potential_castling_board, [square, 62]])
+                result.append([potential_castling_board, [square, 62 if self.whitemove else 6]])
 
         return result
 
@@ -372,16 +451,25 @@ class BoardRep:
     # TODO: save kingside and queenside castling squares as constants
     # TODO: handle castling in getBoard
     def canKingSideCastle(self, square):
+
+        if self.whitemove:
+            passthru_square = 61
+            end_square = 62
+        else:
+            passthru_square = 5
+            end_square = 6
+
         if BoardRep.isInCheck(self):
             return None
-        if self.array[62] != self.EMPTY or self.array[61] != self.EMPTY:
+
+        if self.array[end_square] != self.EMPTY or self.array[passthru_square] != self.EMPTY:
             return None
 
-        if BoardRep.isInCheck(self.getBoard(square, 61)):
+        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_square)):
             return None
 
-        potential_castling_board = self.getBoard(square, 62)
-        if BoardRep.isInCheck(potential_castling_board):
+        potential_castling_board = self.getBoard(square, end_square)
+        if BoardRep.isInCheckOtherPlayer(potential_castling_board):
             return None
 
         return potential_castling_board
@@ -542,7 +630,8 @@ class BoardRep:
         BoardRep.getpseudocapturestime += time.time() - start_time
         return False
 
-
+    #TODO: if move is already confirmed legal (e.g. castling is already confirmed legal if it is added to pseudolegal
+    # then append it without checking isincheckotherplayer
     def getLegalMoves(self):
         start_time = time.time()
         BoardRep.numgetlegal += 1
@@ -554,7 +643,9 @@ class BoardRep:
         legal_moves = []
 
         for move in pseudo_legal_moves:
-            if not BoardRep.isInCheckOtherPlayer(move[:][0]):
+            if move[:][0].confirmedlegal:
+                legal_moves.append(move)
+            elif not BoardRep.isInCheckOtherPlayer(move[:][0]):
                 legal_moves.append(move)
 
         self.legalmoves = legal_moves
