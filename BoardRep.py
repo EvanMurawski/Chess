@@ -630,8 +630,7 @@ class BoardRep:
         BoardRep.getpseudocapturestime += time.time() - start_time
         return False
 
-    #TODO: if move is already confirmed legal (e.g. castling is already confirmed legal if it is added to pseudolegal
-    # then append it without checking isincheckotherplayer
+
     def getLegalMoves(self):
         start_time = time.time()
         BoardRep.numgetlegal += 1
