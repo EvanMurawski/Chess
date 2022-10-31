@@ -72,3 +72,7 @@ IndexError: list index out of range
   File "engine.py", line 98, in <module>
     sys.stdout.flush()
 BrokenPipeError: [Errno 32] Broken pipe
+[Errno 32] Broken pipeTraceback (most recent call last):
+  File "/home/evan/Code/Chess/engine.py", line 97, in <module>
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe

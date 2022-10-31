@@ -16,21 +16,22 @@ options for more verbose logging
 find whose move it is from node instead of function argument
 Save the score in the nodes
 Return the final alpha beta score value of the selected node to analyzesignleposition.py so it can show that value
-insted of just the heuristic value of that node
+instead of just the heuristic value of that node
 
 Node:
 clean up
 
 boardrep:
-castling
 en passant
 add piece factors for other pieces
 underpromotion
 
+ideas:
+save pseudolegal moves that turn out to be legal in the tree structure to save time
 
 other:
 debug what happened at the end of my game
-Clearly differentiate between heuristic scores and eval scores (return value of alpha bet afunction
+Clearly differentiate between heuristic scores and eval scores (return value of alpha beta function
 
 
 Benchmark: single threading, after 2 moves of Ruy Lopez
