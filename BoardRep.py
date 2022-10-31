@@ -114,16 +114,20 @@ class BoardRep:
     PIECE_FACTORS = getPieceFactors()
 
 
-    def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None):
+    def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None, enpassant_square=None):
 
+        self.whitemove = True
         self.whitecastle = self.BOTH_CASTLE
         self.blackcastle = self.BOTH_CASTLE
-        self.whitemove = True
-        self.confirmedlegal = False
+        self.enpassant_square = enpassant_square
 
+        # Variables to hold info about the board so it doesn't have to be calculated again
+
+        self.confirmedlegal = False
         self.ischeckmate = None
         self.legalmoves = None
         self.pseudolegalmoves = None
+
 
 
         if array is None:
@@ -152,7 +156,6 @@ class BoardRep:
             self.whitemove = True
         else:
             self.whitemove = whitemove
-
 
 
         BoardRep.numboards += 1

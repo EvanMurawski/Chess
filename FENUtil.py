@@ -19,6 +19,8 @@ class FENUtil:
                         BLACK_KING: BoardRep.BLACK_KING, WHITE_PAWN: BoardRep.WHITE_PAWN, WHITE_KNIGHT: BoardRep.WHITE_KNIGHT, WHITE_BISHOP: BoardRep.WHITE_BISHOP, WHITE_ROOK: BoardRep.WHITE_ROOK,
                         WHITE_QUEEN: BoardRep.WHITE_QUEEN, WHITE_KING: BoardRep.WHITE_KING}
 
+    ALG_TO_NUM_DICT = {v: k for k, v in BoardRep.NUMBER_TO_ALG.items()}
+
     @staticmethod
     def fenToArray(fen):
         new_array = []
@@ -73,7 +75,16 @@ class FENUtil:
 
         return white_castling, black_castling
 
+    @staticmethod
+    def getEnPassant(fen):
+        split_text = FENUtil.splitFen(fen)
+        enpassant_string = split_text[10]
+
+        if enpassant_string == "-":
+            return None
+        else:
+            return FENUtil.ALG_TO_NUM_DICT[enpassant_string]
 
     @staticmethod
     def fenToBoard(fen):
-        return BoardRep(FENUtil.fenToArray(fen), FENUtil.getWhiteMove(fen), FENUtil.getCastling(fen)[0], FENUtil.getCastling(fen)[1])
+        return BoardRep(FENUtil.fenToArray(fen), FENUtil.getWhiteMove(fen), FENUtil.getCastling(fen)[0], FENUtil.getCastling(fen)[1], FENUtil.getEnPassant(fen))
