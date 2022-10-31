@@ -12,7 +12,8 @@ class TestScore(unittest.TestCase):
         board = BoardRep()
 
         score = board.getScore()
-        self.assertEqual(score, 0)
+        self.assertGreater(score, -0.2)
+        self.assertLess(score, 0.2)
 
 class TestCheckmate(unittest.TestCase):
 
