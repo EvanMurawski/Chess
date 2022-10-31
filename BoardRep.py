@@ -88,7 +88,7 @@ class BoardRep:
 
     BLACK_KING_START = 4
     BLACK_KING_KS_CASTLE = 6
-    BLACK_KING_QS_CASTLE = 3
+    BLACK_KING_QS_CASTLE = 2
 
     # Important Squares
 
@@ -288,7 +288,22 @@ class BoardRep:
 
             _confirmedlegal = True
 
+        # Handle Queenside Castling
+        if movedPiece == self.WHITE_KING and oldSquare == self.WHITE_KING_START and newSquare == self.WHITE_KING_QS_CASTLE:
+            # move rook
+            newArray[56] = self.EMPTY
+            newArray[59] = self.WHITE_ROOK
+            _whitecastle = self.NO_CASTLE
 
+            _confirmedlegal = True
+
+        elif movedPiece == self.BLACK_KING and oldSquare == self.BLACK_KING_START and newSquare == self.BLACK_KING_QS_CASTLE:
+            # move rook
+            newArray[0] = self.EMPTY
+            newArray[3] = self.BLACK_ROOK
+            _blackcastle = self.NO_CASTLE
+
+            _confirmedlegal = True
 
         # Remove castling rights if moved pieces
 
@@ -443,21 +458,25 @@ class BoardRep:
             (not self.whitemove and self.blackcastle in [self.KS_CASTLE, self.BOTH_CASTLE]):
             potential_castling_board = self.canKingSideCastle(square)
             if potential_castling_board is not None:
-                result.append([potential_castling_board, [square, 62 if self.whitemove else 6]])
+                result.append([potential_castling_board, [square, self.WHITE_KING_KS_CASTLE if self.whitemove else self.BLACK_KING_KS_CASTLE]])
+
+        if (self.whitemove and self.whitecastle in [self.QS_CASTLE, self.BOTH_CASTLE]) or\
+            (not self.whitemove and self.blackcastle in [self.QS_CASTLE, self.BOTH_CASTLE]):
+            potential_castling_board = self.canQueenSideCastle(square)
+            if potential_castling_board is not None:
+                result.append([potential_castling_board, [square, self.WHITE_KING_QS_CASTLE if self.whitemove else self.BLACK_KING_QS_CASTLE]])
 
         return result
 
     # TODO: save check status in board rep so it only has to be calculated once per board
-    # TODO: save kingside and queenside castling squares as constants
-    # TODO: handle castling in getBoard
     def canKingSideCastle(self, square):
 
         if self.whitemove:
             passthru_square = 61
-            end_square = 62
+            end_square = self.WHITE_KING_KS_CASTLE
         else:
             passthru_square = 5
-            end_square = 6
+            end_square = self.BLACK_KING_KS_CASTLE
 
         if BoardRep.isInCheck(self):
             return None
@@ -474,7 +493,36 @@ class BoardRep:
 
         return potential_castling_board
 
+    # TODO: combine KS and QS castling functions
+    def canQueenSideCastle(self, square):
 
+        if self.whitemove:
+            passthru_squares = [58, 59]
+            end_square = self.WHITE_KING_QS_CASTLE
+        else:
+            passthru_squares = [2,3]
+            end_square = self.BLACK_KING_QS_CASTLE
+
+        if BoardRep.isInCheck(self):
+            return None
+
+        if self.array[end_square] != self.EMPTY:
+            return None
+
+        if self.array[passthru_squares[0]] != self.EMPTY or self.array[passthru_squares[1] != self.EMPTY]:
+            return None
+
+        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[0])):
+            return None
+
+        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[1])):
+            return None
+
+        potential_castling_board = self.getBoard(square, end_square)
+        if BoardRep.isInCheckOtherPlayer(potential_castling_board):
+            return None
+
+        return potential_castling_board
 
     def getPseudoLegalKingCaptures(self, square):
         result = []
