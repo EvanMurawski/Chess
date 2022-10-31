@@ -8,8 +8,6 @@ import traceback
 import time
 
 from Node import Node
-from MiniMax import MiniMax
-from AlphaBeta import AlphaBeta
 import AlphaBetaNew
 
 def writelog(message):
@@ -38,25 +36,7 @@ def randomMove():
     print("bestmove " + move_string)
     writelog("TX: bestmove " + move_string)
 
-def minimaxMove():
-    possible_next_boards = current_board.getLegalMoves()
-    writelog("legalmoves")
-    writelog(str(len(possible_next_boards)))
-    for i in range(0, len(possible_next_boards)):
-        writelog(BoardRep.numbersToAlg(possible_next_boards[i][1]))
 
-    root_node = Node(current_board)
-
-    t = time.time()
-    writelog("start analyzing")
-    best_node = MiniMax.minimaxMove(root_node,5)
-    writelog("done analyzing" + str(time.time() - t))
-
-    best_move = best_node.move_squares
-
-    move_string = BoardRep.numbersToAlg(best_move)
-    print("bestmove " + move_string)
-    writelog("TX: bestmove " + move_string)
 
 def abmove():
     t = time.time()
