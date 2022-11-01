@@ -22,7 +22,6 @@ Node:
 clean up
 
 boardrep:
-en passant
 add piece factors for other pieces
 underpromotion
 

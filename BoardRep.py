@@ -90,6 +90,14 @@ class BoardRep:
     BLACK_KING_KS_CASTLE = 6
     BLACK_KING_QS_CASTLE = 2
 
+    WHITE_DOUBLE_ENPASSANT_SQUARES = [33, 34, 35, 36, 37, 38]
+    WHITE_RIGHT_ENPASSANT_SQUARE = 39
+    WHITE_LEFT_ENPASSANT_SQUARE = 32
+
+    BLACK_DOUBLE_ENPASSANT_SQUARES = [25, 26, 27, 28, 29, 30]
+    BLACK_RIGHT_ENPASSANT_SQUARE = 31
+    BLACK_LEFT_ENPASSANT_SQUARE = 24
+
     # Important Squares
 
 
@@ -257,7 +265,7 @@ class BoardRep:
 
         return material
 
-    #TODO handle queenside castling
+    # TODO break into smaller functions
     def getBoard(self, oldSquare, newSquare):
         newArray = self.array[:]
         movedPiece = newArray[oldSquare]
@@ -265,6 +273,7 @@ class BoardRep:
         newArray[newSquare] = movedPiece
         _whitecastle = self.whitecastle
         _blackcastle = self.blackcastle
+        _enpassant_square = None
         _confirmedlegal = False
 
         # Check for queen promotion
@@ -280,7 +289,6 @@ class BoardRep:
             newArray[63] = self.EMPTY
             newArray[61] = self.WHITE_ROOK
             _whitecastle = self.NO_CASTLE
-
             _confirmedlegal = True
 
         elif movedPiece == self.BLACK_KING and oldSquare == self.BLACK_KING_START and newSquare == self.BLACK_KING_KS_CASTLE:
@@ -288,7 +296,6 @@ class BoardRep:
             newArray[7] = self.EMPTY
             newArray[5] = self.BLACK_ROOK
             _blackcastle = self.NO_CASTLE
-
             _confirmedlegal = True
 
         # Handle Queenside Castling
@@ -297,7 +304,6 @@ class BoardRep:
             newArray[56] = self.EMPTY
             newArray[59] = self.WHITE_ROOK
             _whitecastle = self.NO_CASTLE
-
             _confirmedlegal = True
 
         elif movedPiece == self.BLACK_KING and oldSquare == self.BLACK_KING_START and newSquare == self.BLACK_KING_QS_CASTLE:
@@ -305,7 +311,6 @@ class BoardRep:
             newArray[0] = self.EMPTY
             newArray[3] = self.BLACK_ROOK
             _blackcastle = self.NO_CASTLE
-
             _confirmedlegal = True
 
         # Remove castling rights if moved pieces
@@ -345,7 +350,40 @@ class BoardRep:
             elif _blackcastle == self.QS_CASTLE:
                 _blackcastle = self.NO_CASTLE
 
-        newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle)
+        # En Passant Handling
+
+        # If enpassant, remove captured pawn
+        if movedPiece == self.WHITE_PAWN and newSquare == self.enpassant_square:
+            newArray[newSquare + 8] = self.EMPTY
+
+        if movedPiece == self.BLACK_PAWN and newSquare == self.enpassant_square:
+            newArray[newSquare - 8] = self.EMPTY
+
+
+        # if white moved a pawn two squares
+        if movedPiece == self.WHITE_PAWN and abs(newSquare - oldSquare) == 16 and newSquare in self.WHITE_DOUBLE_ENPASSANT_SQUARES:
+            if newArray[newSquare - 1] == self.BLACK_PAWN or newArray[newSquare + 1] == self.BLACK_PAWN:
+                _enpassant_square = newSquare + 8
+        elif newSquare == self.WHITE_LEFT_ENPASSANT_SQUARE:
+            if newArray[newSquare + 1] == self.BLACK_PAWN:
+                _enpassant_square = newSquare + 8
+        elif newSquare == self.WHITE_RIGHT_ENPASSANT_SQUARE:
+            if newArray[newSquare -1 ] == self.BLACK_PAWN:
+                _enpassant_square = newSquare + 8
+
+        # if white moved a pawn two squares
+        if movedPiece == self.BLACK_PAWN and abs(newSquare - oldSquare) == 16 and newSquare in self.BLACK_DOUBLE_ENPASSANT_SQUARES:
+            if newArray[newSquare - 1] == self.WHITE_PAWN or newArray[newSquare + 1] == self.WHITE_PAWN:
+                _enpassant_square = newSquare - 8
+        elif newSquare == self.BLACK_LEFT_ENPASSANT_SQUARE:
+            if newArray[newSquare + 1] == self.WHITE_PAWN:
+                _enpassant_square = newSquare - 8
+        elif newSquare == self.BLACK_RIGHT_ENPASSANT_SQUARE:
+            if newArray[newSquare - 1] == self.WHITE_PAWN:
+                _enpassant_square = newSquare - 8
+
+
+        newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle, _enpassant_square)
         newBoard.confirmedlegal = _confirmedlegal
         return newBoard
 
@@ -368,7 +406,6 @@ class BoardRep:
             return piece == self.WHITE_KING
 
 
-    #TODO add en passant
     def getPseudoLegalPawnMoves(self, square):
 
         result = []
@@ -391,10 +428,10 @@ class BoardRep:
 
         #if can move diagonally
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 9]
-        if new_square != -1 and self.squareHasEnemyPiece(new_square):
+        if new_square != -1 and (self.squareHasEnemyPiece(new_square) or new_square == self.enpassant_square):
             result.append([self.getBoard(square, new_square), [square, new_square]])
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 11]
-        if new_square != -1 and self.squareHasEnemyPiece(new_square):
+        if new_square != -1 and (self.squareHasEnemyPiece(new_square) or new_square == self.enpassant_square):
             result.append([self.getBoard(square, new_square), [square, new_square]])
 
         return result
@@ -699,7 +736,6 @@ class BoardRep:
                 legal_moves.append(move)
 
         self.legalmoves = legal_moves
-
         BoardRep.getlegalmovestime += time.time() - start_time
         return legal_moves
 
