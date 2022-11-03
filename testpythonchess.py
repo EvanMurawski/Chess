@@ -1,27 +1,51 @@
 import chess.pgn
-import pickle
+from BoardRep import BoardRep
+from FENUtil import FENUtil
 
 print(chess.__file__)
-pgn = open("checkmates.pgn")
+pgn = open("20kgames.pgn")
 
-not_checkmates = []
 
-for i in range(0, 10000):
+for i in range(0, 1000):
+    if i%100 == 0:
+        print("Checking num: ", i)
     try:
-        first_game = chess.pgn.read_game(pgn)
-        endnode = first_game.end()
-        before_end = endnode.parent.board()
-        not_checkmates.append(before_end.fen())
+        game = chess.pgn.read_game(pgn)
     except UnicodeDecodeError:
         print("unicode")
     except ValueError:
         print("value error")
     except AttributeError:
         print("att error")
+    mainline = game.mainline()
+    for move in mainline:
+        fen = move.board().fen()
+        legals = list(move.board().legal_moves)
+        num_legal = len(legals)
+        legals_str = [str(move) for move in legals]
 
-f = open('storenotcheckmate.pck1', 'wb')
-pickle.dump(not_checkmates, f)
-f.close()
+        my_boardrep = FENUtil.fenToBoard(fen)
+        my_moves = my_boardrep.getLegalMoves()
+        my_num_legal = len(my_moves)
+
+        my_str = [BoardRep.numbersToAlg(item[1]) for item in my_moves]
+        if my_num_legal != num_legal:
+            print("Error found, game: ", i)
+
+            print(fen)
+
+            for movestring in my_str:
+                if movestring not in legals_str:
+                    print("My move ", movestring , " Is not in legal moves")
+
+            for legalmove in legals_str:
+                if legalmove not in my_str:
+                    print("Legal move ", legalmove, " is not in my moves")
+
+
+
+
+pgn.close()
 
 
 

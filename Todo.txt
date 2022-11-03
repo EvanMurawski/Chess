@@ -24,6 +24,7 @@ clean up
 boardrep:
 add piece factors for other pieces
 underpromotion
+find a workaround for underpromotion when checking number of legal moves
 
 ideas:
 save pseudolegal moves that turn out to be legal in the tree structure to save time

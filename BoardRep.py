@@ -549,7 +549,7 @@ class BoardRep:
         if self.array[end_square] != self.EMPTY:
             return None
 
-        if self.array[passthru_squares[0]] != self.EMPTY or self.array[passthru_squares[1] != self.EMPTY]:
+        if self.array[passthru_squares[0]] != self.EMPTY or self.array[passthru_squares[1]] != self.EMPTY:
             return None
 
         if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[0])):
