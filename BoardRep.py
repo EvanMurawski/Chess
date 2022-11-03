@@ -122,12 +122,13 @@ class BoardRep:
     PIECE_FACTORS = getPieceFactors()
 
 
-    def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None, enpassant_square=None):
+    def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None, enpassant_square=None, is_promotion=False):
 
         self.whitemove = True
         self.whitecastle = self.BOTH_CASTLE
         self.blackcastle = self.BOTH_CASTLE
         self.enpassant_square = enpassant_square
+        self.is_promotion = is_promotion
 
         # Variables to hold info about the board so it doesn't have to be calculated again
 
@@ -171,6 +172,22 @@ class BoardRep:
     @staticmethod
     def numbersToAlg(move_squares):
         return BoardRep.NUMBER_TO_ALG[move_squares[0]] + BoardRep.NUMBER_TO_ALG[move_squares[1]]
+
+    @staticmethod
+    def moveToAlg(move):
+        alg = BoardRep.NUMBER_TO_ALG[move[1][0]] + BoardRep.NUMBER_TO_ALG[move[1][1]]
+
+        if move[0].is_promotion:
+            if move[0].array[move[1][1]] in [BoardRep.WHITE_QUEEN, BoardRep.BLACK_QUEEN]:
+                alg += "q"
+            elif move[0].array[move[1][1]] in [BoardRep.WHITE_ROOK, BoardRep.BLACK_ROOK]:
+                alg += "r"
+            elif move[0].array[move[1][1]] in [BoardRep.WHITE_BISHOP, BoardRep.BLACK_BISHOP]:
+                alg += "b"
+            else:
+                alg += "n"
+
+        return alg
 
     #Returns true if the player to move is in check
     @staticmethod
@@ -266,7 +283,7 @@ class BoardRep:
         return material
 
     # TODO break into smaller functions
-    def getBoard(self, oldSquare, newSquare):
+    def getBoard(self, oldSquare, newSquare, promotion_piece=None):
         newArray = self.array[:]
         movedPiece = newArray[oldSquare]
         newArray[oldSquare] = self.EMPTY
@@ -275,13 +292,13 @@ class BoardRep:
         _blackcastle = self.blackcastle
         _enpassant_square = None
         _confirmedlegal = False
+        _is_promotion = False
 
         # Check for queen promotion
-        if self.whitemove and newSquare in self.WHITE_PAWN_PROMOTION and movedPiece == self.WHITE_PAWN:
-            newArray[newSquare] = self.WHITE_QUEEN
+        if promotion_piece is not None:
+            newArray[newSquare] = promotion_piece
+            _is_promotion = True
 
-        if not self.whitemove and newSquare in self.BLACK_PAWN_PROMOTION and movedPiece == self.BLACK_PAWN:
-            newArray[newSquare] = self.BLACK_QUEEN
 
         # Handle Kingside Castling
         if movedPiece == self.WHITE_KING and oldSquare == self.WHITE_KING_START and newSquare == self.WHITE_KING_KS_CASTLE:
@@ -383,7 +400,7 @@ class BoardRep:
                 _enpassant_square = newSquare - 8
 
 
-        newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle, _enpassant_square)
+        newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle, _enpassant_square,_is_promotion)
         newBoard.confirmedlegal = _confirmedlegal
         return newBoard
 
@@ -419,7 +436,15 @@ class BoardRep:
         #if can move one square forward
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 10]
         if  self.array[new_square] == self.EMPTY:
-            result.append([self.getBoard(square, new_square), [square, new_square]])
+            #Todo: all the below code ir repeated for forward move, and each diagonal move -> put it in a function
+            if new_square in self.WHITE_PAWN_PROMOTION:
+                for piece in [self.WHITE_BISHOP, self.WHITE_KNIGHT, self.WHITE_ROOK, self.WHITE_QUEEN]:
+                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+            elif new_square in self.BLACK_PAWN_PROMOTION:
+                for piece in [self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK, self.BLACK_QUEEN]:
+                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+            else:
+                result.append([self.getBoard(square, new_square), [square, new_square]])
 
             #check if can move two squares forward
             new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 20]
@@ -429,10 +454,25 @@ class BoardRep:
         #if can move diagonally
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 9]
         if new_square != -1 and (self.squareHasEnemyPiece(new_square) or new_square == self.enpassant_square):
-            result.append([self.getBoard(square, new_square), [square, new_square]])
+            if new_square in self.WHITE_PAWN_PROMOTION:
+                for piece in [self.WHITE_BISHOP, self.WHITE_KNIGHT, self.WHITE_ROOK, self.WHITE_QUEEN]:
+                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+            elif new_square in self.BLACK_PAWN_PROMOTION:
+                for piece in [self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK, self.BLACK_QUEEN]:
+                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+            else:
+                result.append([self.getBoard(square, new_square), [square, new_square]])
+
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 11]
         if new_square != -1 and (self.squareHasEnemyPiece(new_square) or new_square == self.enpassant_square):
-            result.append([self.getBoard(square, new_square), [square, new_square]])
+            if new_square in self.WHITE_PAWN_PROMOTION:
+                for piece in [self.WHITE_BISHOP, self.WHITE_KNIGHT, self.WHITE_ROOK, self.WHITE_QUEEN]:
+                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+            elif new_square in self.BLACK_PAWN_PROMOTION:
+                for piece in [self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK, self.BLACK_QUEEN]:
+                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+            else:
+                result.append([self.getBoard(square, new_square), [square, new_square]])
 
         return result
 
@@ -537,10 +577,10 @@ class BoardRep:
     def canQueenSideCastle(self, square):
 
         if self.whitemove:
-            passthru_squares = [58, 59]
+            passthru_squares = [57,58, 59]
             end_square = self.WHITE_KING_QS_CASTLE
         else:
-            passthru_squares = [2,3]
+            passthru_squares = [1,2,3]
             end_square = self.BLACK_KING_QS_CASTLE
 
         if BoardRep.isInCheck(self):
@@ -549,14 +589,15 @@ class BoardRep:
         if self.array[end_square] != self.EMPTY:
             return None
 
-        if self.array[passthru_squares[0]] != self.EMPTY or self.array[passthru_squares[1]] != self.EMPTY:
-            return None
-
-        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[0])):
+        if self.array[passthru_squares[0]] != self.EMPTY or self.array[passthru_squares[1]] != self.EMPTY or self.array[passthru_squares[2]] != self.EMPTY:
             return None
 
         if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[1])):
             return None
+
+        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[2])):
+            return None
+
 
         potential_castling_board = self.getBoard(square, end_square)
         if BoardRep.isInCheckOtherPlayer(potential_castling_board):

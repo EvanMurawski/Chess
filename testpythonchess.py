@@ -7,7 +7,7 @@ pgn = open("20kgames.pgn")
 
 
 for i in range(0, 1000):
-    if i%100 == 0:
+    if i%10 == 0:
         print("Checking num: ", i)
     try:
         game = chess.pgn.read_game(pgn)
@@ -17,6 +17,7 @@ for i in range(0, 1000):
         print("value error")
     except AttributeError:
         print("att error")
+
     mainline = game.mainline()
     for move in mainline:
         fen = move.board().fen()
@@ -28,7 +29,7 @@ for i in range(0, 1000):
         my_moves = my_boardrep.getLegalMoves()
         my_num_legal = len(my_moves)
 
-        my_str = [BoardRep.numbersToAlg(item[1]) for item in my_moves]
+        my_str = [BoardRep.moveToAlg(item) for item in my_moves]
         if my_num_legal != num_legal:
             print("Error found, game: ", i)
 
