@@ -28,16 +28,15 @@ for i in range(0, 1000):
         my_boardrep = FENUtil.fenToBoard(fen)
         my_moves = my_boardrep.getLegalMoves()
         my_num_legal = len(my_moves)
-
         my_str = [BoardRep.moveToAlg(item) for item in my_moves]
-        if my_num_legal != num_legal:
-            print("Error found, game: ", i)
 
+        if my_num_legal != num_legal:
+            print("Error found in game number: ", i)
             print(fen)
 
             for movestring in my_str:
                 if movestring not in legals_str:
-                    print("My move ", movestring , " Is not in legal moves")
+                    print("My move ", movestring , " is not in legal moves")
 
             for legalmove in legals_str:
                 if legalmove not in my_str:

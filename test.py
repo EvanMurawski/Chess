@@ -1,10 +1,38 @@
 import unittest
 import pickle
 from FENUtil import FENUtil
+import AlphaBetaNew
+from Node import Node
 
 
 from BoardRep import BoardRep
 
+class TestTactics(unittest.TestCase):
+
+    def testTactics(self):
+        file = open("tactics.txt", 'r')
+
+        i = 0
+        j = 0
+        while True:
+            fen = file.readline()
+            if not fen:
+                break
+
+            solution = file.readline()
+            board = FENUtil.fenToBoard(fen)
+            best_node = AlphaBetaNew.getBestMoveMulti(Node(board), board.whitemove)
+            best_move = best_node.move_squares
+            move_string = BoardRep.numbersToAlg(best_move)
+            try:
+                self.assertEqual(move_string+"\n", solution)
+            except AssertionError:
+                j += 1
+                print("Failed tactic: ", fen)
+            i += 1
+
+        print("Tested ", i , " tactics, ", j , " failed.")
+        file.close()
 
 class TestScore(unittest.TestCase):
 
