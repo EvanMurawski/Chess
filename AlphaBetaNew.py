@@ -56,8 +56,8 @@ def getBestMoveSingle(node, depth, whiteplayer):
                 bestscore = childscore
 
 
-        childnode.board.print()
-        print("above value: ", str(childscore))
+        # childnode.board.print()
+        # print("above value: ", str(childscore))
 
     return bestnode
 

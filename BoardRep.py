@@ -549,6 +549,7 @@ class BoardRep:
         return result
 
     # TODO: save check status in board rep so it only has to be calculated once per board
+    # TODO: don't need to pass square to this function
     def canKingSideCastle(self, square):
 
         if self.whitemove:

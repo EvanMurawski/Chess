@@ -1,8 +1,9 @@
 
 
 test:
-add more test cases
-test cases for obvious moves
+Add more metrics to analyzesingleposition.py (boards created per node? Number of cutoffs?)
+test cases for Fenutil
+
 
 
 engine:

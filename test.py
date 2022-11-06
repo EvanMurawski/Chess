@@ -46,19 +46,6 @@ class TestBoardRep(unittest.TestCase):
     CHECKMATES_TEST_FILE = "checkmate_test.txt"
 
 
-    def testStartingScore(self):
-        board = BoardRep()
-
-        score = board.getScore()
-        self.assertGreater(score, -0.2)
-        self.assertLess(score, 0.2)
-
-
-    def testOneCheckmate(self):
-        board = FENUtil.fenToBoard("rnbqkbnr/2pp1Qpp/pp6/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4")
-        self.assertTrue(board.isCheckmate())
-
-
     def testGetLegalMoves(self):
         pgn = open(self.PGN_FILE_NAME)
         num_positions = 0
@@ -138,10 +125,7 @@ class TestBoardRep(unittest.TestCase):
               " positions were checkmate and ", num_noncheckmate, " positions were not checkmate")
 
 
-    #TODO: Test case for material
-    #TODO: Test case for illegal move (isincheckotherplayer)
     #TODO: Test case for stalemate
-    #TODO: Test cases for specific edge cases
 
 
 if __name__ == '__main__':
