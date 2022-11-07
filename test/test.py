@@ -1,16 +1,14 @@
 import unittest
-from FENUtil import FENUtil
-import AlphaBetaNew
-from Node import Node
-from BoardRep import BoardRep
+from chesseng.FENUtil import FENUtil
+import chesseng.AlphaBetaNew as AlphaBetaNew
+from chesseng.Node import Node
+from chesseng.BoardRep import BoardRep
 import chess.pgn
 
 
-from BoardRep import BoardRep
-
 class TestAlphaBeta(unittest.TestCase):
 
-    TACTICS_FILE_NAME = "tactics.txt"
+    TACTICS_FILE_NAME = "../data/tactics.txt"
 
     #TODO: Create more tactics to test
     def testTactics(self):
@@ -42,8 +40,8 @@ class TestAlphaBeta(unittest.TestCase):
 class TestBoardRep(unittest.TestCase):
 
     NUM_TEST_MOVE_GENERATION = 500
-    PGN_FILE_NAME = "20kgames.pgn"
-    CHECKMATES_TEST_FILE = "checkmate_test.txt"
+    PGN_FILE_NAME = "../data/20kgames.pgn"
+    CHECKMATES_TEST_FILE = "../data/checkmate_test.txt"
 
 
     def testGetLegalMoves(self):

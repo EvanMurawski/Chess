@@ -1,10 +1,9 @@
 import chess.pgn
-from BoardRep import BoardRep
-from FENUtil import FENUtil
+
 
 def generateCheckmateTest():
-    pgn = open("GamesEndingInCheckmate.pgn")
-    write_file= open("checkmate_test.txt", 'w')
+    pgn = open("../data/GamesEndingInCheckmate.pgn")
+    write_file= open("../data/checkmate_test.txt", 'w')
 
     for i in range(0, 5000):
         if i%10 == 0:

@@ -1,4 +1,3 @@
-from BoardRep import BoardRep
 import multiprocessing
 
 

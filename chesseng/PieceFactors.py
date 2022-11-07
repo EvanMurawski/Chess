@@ -1,7 +1,7 @@
 import csv
 
 def getPieceFactors():
-    with open('test.csv') as csvfile:
+    with open('../data/test.csv') as csvfile:
 
         piece_type = 0
         piece_values = [[0 for square in range(64)] for piece in range(13)]

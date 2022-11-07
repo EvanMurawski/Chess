@@ -1,6 +1,6 @@
 import unittest
-from FENUtil import FENUtil
-from BoardRep import BoardRep
+from chesseng.FENUtil import FENUtil
+from chesseng.BoardRep import BoardRep
 
 
 class TestBoardRep(unittest.TestCase):

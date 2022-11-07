@@ -1,7 +1,7 @@
-from FENUtil import FENUtil
+from chesseng.FENUtil import FENUtil
 import time
-import AlphaBetaNew
-from Node import Node
+import chesseng.AlphaBetaNew as AlphaBetaNew
+from chesseng.Node import Node
 
 OPENING_POSITION = "rn1qkb1r/pp3ppp/2p1pn2/3p1b2/2PP4/5NP1/PP2PPBP/RNBQK2R w KQkq - 0 6"
 MIDDLEGAME_POSITION = "rr4k1/p2nbpp1/2p1p2p/3p1b2/N2PnB2/1P3NP1/1P2PP1P/R1R2BK1 b - - 6 17"

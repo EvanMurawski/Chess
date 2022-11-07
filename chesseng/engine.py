@@ -1,17 +1,19 @@
 #todo, keep root node as global variable, check if the next move is already there, pass that node directly as the next root node
 
 import sys
-from FENUtil import FENUtil
-from BoardRep import BoardRep
+sys.path.extend(['/home/evan/Code/Chess'])
+from chesseng.FENUtil import FENUtil
+from chesseng.BoardRep import BoardRep
+from chesseng.Node import Node
+import chesseng.AlphaBetaNew as AlphaBetaNew
 import random
 import traceback
 import time
 
-from Node import Node
-import AlphaBetaNew
+
 
 def writelog(message):
-    logfile = open("/home/evan/Code/Chess/log_1.txt", "a")
+    logfile = open("../log/log_1.txt", "a")
     logfile.write(message + "\n")
     logfile.close()
 
@@ -77,7 +79,7 @@ try:
         sys.stdout.flush()
 
 except Exception as e:
-    with open("/home/evan/Code/Chess/errorlog.txt", 'a') as f:
+    with open("../log/errorlog.txt", 'a') as f:
         f.write(str(e))
         f.write(traceback.format_exc())
         f.write("i = " + str(i))

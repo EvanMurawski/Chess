@@ -1,4 +1,4 @@
-from BoardRep import BoardRep
+from chesseng.BoardRep import BoardRep
 
 class Node:
 

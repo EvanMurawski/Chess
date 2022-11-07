@@ -1,7 +1,7 @@
 import random
 import time
-from PieceFactors import getPieceFactors
-import csv
+from chesseng.PieceFactors import getPieceFactors
+
 class BoardRep:
 
     # IMPORT FILES #

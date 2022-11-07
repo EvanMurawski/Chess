@@ -1,7 +1,7 @@
-from BoardRep import BoardRep
-from FENUtil import FENUtil
-from Node import Node
-import AlphaBetaNew
+from chesseng.BoardRep import BoardRep
+from chesseng.FENUtil import FENUtil
+from chesseng.Node import Node
+import chesseng.AlphaBetaNew as AlphaBetaNew
 import time
 
 
@@ -10,7 +10,7 @@ if __name__ == "__main__":
     # Configuration
     # -------------------
     depth = 3
-    multithreading = False
+    multithreading = True
     # -------------------
 
 
