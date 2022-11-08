@@ -1,6 +1,14 @@
 import multiprocessing
+from chesseng.BoardRep import BoardRep
 
+def nodeSort(node):
+    if BoardRep.isInCheck(node.board):
+        return 0
 
+    if node.board.is_capture:
+        return 5
+
+    return 10
 
 #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
 #todo, store the score in the node, start searching highest scoring nodes first
@@ -14,7 +22,9 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
 
     if maximizingplayer:
         value = -99999
-        for childnode in node.next_nodes:
+        next_nodes = node.next_nodes
+        next_nodes.sort(key = nodeSort)
+        for childnode in next_nodes:
             value = max(value, alphabeta(childnode, depth-1, alpha, beta, False))
             if value >= beta:
                 break
@@ -23,7 +33,9 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
 
     else:
         value = 99999
-        for childnode in node.next_nodes:
+        next_nodes = node.next_nodes
+        next_nodes.sort(key = nodeSort)
+        for childnode in next_nodes:
             value = min(value, alphabeta(childnode, depth-1, alpha, beta, True))
             if value <= alpha:
                 break

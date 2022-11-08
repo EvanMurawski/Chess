@@ -122,13 +122,14 @@ class BoardRep:
     PIECE_FACTORS = getPieceFactors()
 
 
-    def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None, enpassant_square=None, is_promotion=False):
+    def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None, enpassant_square=None, is_promotion=False, is_capture = False):
 
         self.whitemove = True
         self.whitecastle = self.BOTH_CASTLE
         self.blackcastle = self.BOTH_CASTLE
         self.enpassant_square = enpassant_square
         self.is_promotion = is_promotion
+        self.is_capture = is_capture
 
         # Variables to hold info about the board so it doesn't have to be calculated again
 
@@ -286,6 +287,11 @@ class BoardRep:
     def getBoard(self, oldSquare, newSquare, promotion_piece=None):
         newArray = self.array[:]
         movedPiece = newArray[oldSquare]
+        if newArray[newSquare] != self.EMPTY:
+            _is_capture = True
+        else:
+            _is_capture = False
+
         newArray[oldSquare] = self.EMPTY
         newArray[newSquare] = movedPiece
         _whitecastle = self.whitecastle
@@ -400,7 +406,7 @@ class BoardRep:
                 _enpassant_square = newSquare - 8
 
 
-        newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle, _enpassant_square,_is_promotion)
+        newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle, _enpassant_square,_is_promotion, _is_capture)
         newBoard.confirmedlegal = _confirmedlegal
         return newBoard
 
