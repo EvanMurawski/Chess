@@ -1,125 +1,64 @@
-a8a7
-not check
-not illegal
-not checkmate
-0.0
-bestmove a2a3
-number nodes: 18915
-number boards: 13899374
-num getcheck 424833
-num getcheckmate 37833
-num getpseudo443748
-num getlegal 19538
+Performance metrics w/ wo move ordering
 
-a8a7
-not check
-not checkmate
-0.0
-bestmove a2a3
-number nodes: 18915
-number boards: 13899344
-num getcheck 1
-num getothercheck 424831
-num getcheckmate 37833
-num getpseudo443747
-num getlegal 19538
+With move ordering (checks, captures, forward moves)
+Average legal move generation time (ms):
+1.46
+Average multithreaded search time (s):
+0.94
+Average singlethreaded search time (s):
+19.29
 
 
+Elapsed time: 30.232572555541992
+Best move: b8b3
+Best move eval: -1.534237660468146
+Nodes created: 263440
+Boards created: : 666785
+num getcheck: 333784 time: 14.600787162780762
+num getothercheck: 298916 time: 11.920527696609497
+num getcheckmate: 70391 time: 3.7041571140289307
+num getpseudo: 7893 time: 2.1797192096710205
+num getpseudocaptures: 632700 time:  25.181769371032715
+num getlegal: 7894 time: 14.253705501556396
 
-a8a7
-not check
-not checkmate
-0.0
-bestmove a2a3
-number nodes: 19078
-number boards: 428676
-num getcheck 428523
-num getcheckmate 38159
-num getpseudo19083
-num getlegal 19705
+With move ordering (checks, captures)
+Average legal move generation time (ms):
+1.46
+Average multithreaded search time (s):
+0.95
+Average singlethreaded search time (s):
+19.27
 
-a8a7
-not check
-not checkmate
-0.0
-bestmove a2a3
-number nodes: 19078
-number boards: 428676
-num getcheck 5
-num getothercheck 428518 -> How to reduce this?
-num getcheckmate 38159
-num getpseudo19083
-num getlegal 19705
+Elapsed time: 30.567029237747192
+Best move: b8b3
+Best move eval: -1.369504212667863
+Nodes created: 265599
+Boards created: : 670106
+num getcheck: 336252 time: 14.849415302276611
+num getothercheck: 300395 time: 11.994911909103394
+num getcheckmate: 70700 time: 3.749415636062622
+num getpseudo: 7939 time: 2.27642560005188
+num getpseudocaptures: 636647 time:  25.525573015213013
+num getlegal: 7940 time: 14.428388357162476
 
 
 
+Without move ordering
+Average legal move generation time (ms):
+1.48
+Average multithreaded search time (s):
+2.53
+Average singlethreaded search time (s):
+46.95
 
-Alpha-beta (whitemove):
-a8a7
-not check
-not checkmate
-0.0
-bestmove a2a4
-number nodes: 2568
-number boards: 6009
-num getcheck 2569
-num getothercheck 3021
-num getcheckmate 5139
-num getpseudo102
-num getpseudocaptures5590
-num getlegal 103
-
-Process finished with exit code 0
-
-Minimax (whitemove):
-
-a8a7
-not check
-not checkmate
-0.0
-bestmove d1f3
-number nodes: 25690
-number boards: 68263
-num getcheck 25691
-num getothercheck 34493
-num getcheckmate 51383
-num getpseudo1149
-num getpseudocaptures60184
-num getlegal 1154
-
-Process finished with exit code 0
-
-Minimax (blackmove)
-a8a7
-not check
-not checkmate
-0.0
-bestmove b8a6
-number nodes: 13781
-number boards: 28763
-num getcheck 13782
-num getothercheck 14409
-num getcheckmate 27565
-num getpseudo637
-num getpseudocaptures28191
-num getlegal 642
-
-Process finished with exit code 0
-
-
-alphabeta (blackmove)
-a8a7
-not check
-not checkmate
-0.0
-bestmove b8a6
-number nodes: 13781
-number boards: 28763
-num getcheck 13782
-num getothercheck 14409
-num getcheckmate 27565
-num getpseudo637
-num getpseudocaptures28191
-num getlegal 642
-
-Process finished with exit code 0
+Elapsed time: 62.116161823272705
+Best move: b8b3
+Best move eval: -1.5030021451726674
+Nodes created: 851769
+Boards created: : 1193651
+num getcheck: 260350 time: 11.885846138000488
+num getothercheck: 893995 time: 37.877862215042114
+num getcheckmate: 260350 time: 13.235337257385254
+num getpseudo: 23799 time: 6.7963526248931885
+num getpseudocaptures: 1154345 time:  48.43490529060364
+num getlegal: 23800 time: 45.12189745903015
