@@ -1,12 +1,25 @@
 import multiprocessing
 from chesseng.BoardRep import BoardRep
 
+MULTI_DEPTH = 3
+
 def nodeSort(node):
     if BoardRep.isInCheck(node.board):
         return 0
 
     if node.board.is_capture:
         return 5
+
+    # Black just moved, see if it is a forward move
+    # From square is a lower row number -> is a forward move
+    if node.board.whitemove and node.move_squares[0] // 8  < node.move_squares[1] // 8:
+        return 8
+
+    # White just moved, see if it is a forward move
+    # From square is a higher row number -> is a forward move
+    if (not node.board.whitemove) and node.move_squares[0] // 8 > node.move_squares[1] // 8:
+        return 8
+
 
     return 10
 
@@ -73,11 +86,12 @@ def getBestMoveSingle(node, depth, whiteplayer):
     return bestnode
 
 def multiAlphaBetaBlack(node):
-    return alphabeta(node, 3, -99999, 99999, False)
+    return alphabeta(node, MULTI_DEPTH, -99999, 99999, False)
 
 def multiAlphaBetaWhite(node):
-    return alphabeta(node, 3, -99999, 99999, True)
+    return alphabeta(node, MULTI_DEPTH, -99999, 99999, True)
 
+#TODO: pass depth to this function and save it as a global or class variable
 def getBestMoveMulti(node, whiteplayer):
     pool = multiprocessing.Pool(processes=8)
 
