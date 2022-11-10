@@ -124,6 +124,7 @@ class BoardRep:
 
     def __init__(self, array=None, whitemove=None, whitecastle=None, blackcastle=None, enpassant_square=None, is_promotion=False, is_capture = False):
 
+        # These values need to be calculated and stored for every board
         self.whitemove = True
         self.whitecastle = self.BOTH_CASTLE
         self.blackcastle = self.BOTH_CASTLE
@@ -131,8 +132,8 @@ class BoardRep:
         self.is_promotion = is_promotion
         self.is_capture = is_capture
 
-        # Variables to hold info about the board so it doesn't have to be calculated again
-
+        # These values don't always need to be calculated. Give them a default value and only caclulate them when needed
+        # TODO: store ischeck status
         self.confirmedlegal = False
         self.ischeckmate = None
         self.legalmoves = None
@@ -485,6 +486,16 @@ class BoardRep:
 
     def getPseudoLegalPawnCaptures(self, square):
         result = []
+
+        if self.whitemove:
+            king_square = self.array.index(self.BLACK_KING)
+            if king_square // 8 - square // 8 != -1:
+                return result
+        else:
+            king_square = self.array.index(self.WHITE_KING)
+            if king_square // 8 - square //8 != 1:
+                return result
+
         if self.whitemove:
             factor = -1
         else:
@@ -650,8 +661,16 @@ class BoardRep:
     def getPseudoLegalQueenMoves(self, square):
         return self.getPseudoLegalRBQMoves(square, self.QUEEN_OFFSETS)
 
-
+    # TODO: try saving king_square into a class variable
     def getPseudoLegalRookCaptures(self, square):
+        if self.whitemove:
+            king_square = self.array.index(self.BLACK_KING)
+        else:
+            king_square = self.array.index(self.WHITE_KING)
+
+        if square // 8 != king_square // 8 and square % 8 != king_square % 8:
+            return None
+
         return self.getPseudoLegalRBQCaptures(square, self.ROOK_OFFSETS)
 
     def getPseudoLegalBishopCaptures(self, square):
@@ -696,6 +715,8 @@ class BoardRep:
         return result
 
     #write test cases
+    # TODO: idea, get the squares holding pawns, squuares holding rooks, etc and do a basic check i.e. is the piece
+    # on a rank / file that could potentially attack the king? Only if so, do the pseudolegal capture check
     def getPseudoLegalCaptures(self):
         start_time = time.time()
         BoardRep.numgetpseudocaptures += 1

@@ -1,3 +1,22 @@
+With new rook pseudocapture logic:
+
+Average legal move generation time (ms):
+1.22
+Average multithreaded search time (s):
+0.80
+Average singlethreaded search time (s):
+16.69
+
+
+With new pawn pseudocapture logic:
+
+Average legal move generation time (ms):
+1.41
+Average multithreaded search time (s):
+0.92
+Average singlethreaded search time (s):
+18.66
+
 Performance metrics w/ wo move ordering
 
 With move ordering (checks, captures, forward moves)
