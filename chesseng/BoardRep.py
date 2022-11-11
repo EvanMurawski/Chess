@@ -98,6 +98,9 @@ class BoardRep:
     BLACK_RIGHT_ENPASSANT_SQUARE = 31
     BLACK_LEFT_ENPASSANT_SQUARE = 24
 
+    LIGHT_SQUARES = [0,2,4,6,9,11,13,15,16,18,20,22,25,27,29,31,32,34,36,38,41,43,45,47,48,50,52,54,57,59,61,63]
+    DARK_SQUARES =  [1,3,5,7,8,10,12,14,17,19,21,23,24,26,28,30,33,35,37,39,40,42,44,46,49,51,53,55,56,58,60,62]
+
     # Important Squares
 
 
@@ -138,6 +141,7 @@ class BoardRep:
         self.ischeckmate = None
         self.legalmoves = None
         self.pseudolegalmoves = None
+        self.king_square = None
 
 
 
@@ -429,6 +433,19 @@ class BoardRep:
         else:
             return piece == self.WHITE_KING
 
+    def getEnemyKingSquare(self):
+
+        if self.king_square is not None:
+            return self.king_square
+
+        if self.whitemove:
+            king_square =  self.array.index(self.BLACK_KING)
+        else:
+            king_square = self.array.index(self.WHITE_KING)
+
+        self.king_square = king_square
+        return king_square
+
 
     def getPseudoLegalPawnMoves(self, square):
 
@@ -486,15 +503,12 @@ class BoardRep:
 
     def getPseudoLegalPawnCaptures(self, square):
         result = []
+        king_square = self.getEnemyKingSquare()
 
-        if self.whitemove:
-            king_square = self.array.index(self.BLACK_KING)
-            if king_square // 8 - square // 8 != -1:
-                return result
-        else:
-            king_square = self.array.index(self.WHITE_KING)
-            if king_square // 8 - square //8 != 1:
-                return result
+        if self.whitemove and king_square // 8 - square // 8 != -1:
+                return None
+        if not self.whitemove and  king_square // 8 - square //8 != 1:
+                return None
 
         if self.whitemove:
             factor = -1
@@ -661,12 +675,8 @@ class BoardRep:
     def getPseudoLegalQueenMoves(self, square):
         return self.getPseudoLegalRBQMoves(square, self.QUEEN_OFFSETS)
 
-    # TODO: try saving king_square into a class variable
     def getPseudoLegalRookCaptures(self, square):
-        if self.whitemove:
-            king_square = self.array.index(self.BLACK_KING)
-        else:
-            king_square = self.array.index(self.WHITE_KING)
+        king_square = self.getEnemyKingSquare()
 
         if square // 8 != king_square // 8 and square % 8 != king_square % 8:
             return None
@@ -674,6 +684,15 @@ class BoardRep:
         return self.getPseudoLegalRBQCaptures(square, self.ROOK_OFFSETS)
 
     def getPseudoLegalBishopCaptures(self, square):
+
+        king_square = self.getEnemyKingSquare()
+
+        if king_square in self.LIGHT_SQUARES:
+            if square not in self.LIGHT_SQUARES:
+                return None
+        elif square not in self.DARK_SQUARES:
+            return None
+
         return self.getPseudoLegalRBQCaptures(square, self.BISHOP_OFFSETS)
 
     def getPseudoLegalQueenCaptures(self, square):

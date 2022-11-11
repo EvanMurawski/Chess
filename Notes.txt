@@ -1,3 +1,20 @@
+with new function to get king square:
+Average legal move generation time (ms):
+1.05
+Average multithreaded search time (s):
+0.80
+Average singlethreaded search time (s):
+14.51
+
+With new bishop pseudocapture logic:
+
+Average legal move generation time (ms):
+1.08
+Average multithreaded search time (s):
+0.73
+Average singlethreaded search time (s):
+15.46
+
 With new rook pseudocapture logic:
 
 Average legal move generation time (ms):
