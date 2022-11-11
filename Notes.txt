@@ -1,3 +1,12 @@
+With new queen pseudocapture logic:
+
+Average legal move generation time (ms):
+1.06
+Average multithreaded search time (s):
+0.72
+Average singlethreaded search time (s):
+14.24
+
 with new function to get king square:
 Average legal move generation time (ms):
 1.05

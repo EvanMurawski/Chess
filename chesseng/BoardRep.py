@@ -696,6 +696,15 @@ class BoardRep:
         return self.getPseudoLegalRBQCaptures(square, self.BISHOP_OFFSETS)
 
     def getPseudoLegalQueenCaptures(self, square):
+
+        king_square = self.getEnemyKingSquare()
+
+        if king_square // 8 != square // 8 and king_square % 8 != square % 8:
+            if king_square in self.LIGHT_SQUARES and square not in self.LIGHT_SQUARES:
+                return None
+            if king_square not in self.LIGHT_SQUARES and square in self.LIGHT_SQUARES:
+                return None
+
         return self.getPseudoLegalRBQCaptures(square, self.QUEEN_OFFSETS)
 
     #write test cases
@@ -771,6 +780,7 @@ class BoardRep:
         BoardRep.getpseudocapturestime += time.time() - start_time
         return result
 
+    #TODO: Try sorting pieces by how close they are to the king?
     def hasPseudoLegalCaptures(self):
         start_time = time.time()
         BoardRep.numgetpseudocaptures += 1
