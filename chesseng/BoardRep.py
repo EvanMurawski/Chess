@@ -136,7 +136,6 @@ class BoardRep:
         self.is_capture = is_capture
 
         # These values don't always need to be calculated. Give them a default value and only caclulate them when needed
-        # TODO: store ischeck status
         self.confirmedlegal = False
         self.ischeckmate = None
         self.legalmoves = None
@@ -575,7 +574,6 @@ class BoardRep:
 
         return result
 
-    # TODO: save check status in board rep so it only has to be calculated once per board
     # TODO: don't need to pass square to this function
     def canKingSideCastle(self, square):
 
