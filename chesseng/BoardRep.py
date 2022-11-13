@@ -201,8 +201,8 @@ class BoardRep:
         start_time = time.time()
         BoardRep.numgetcheck += 1
         flip_move_board = BoardRep(board.array, not board.whitemove, board.whitecastle, board.blackcastle)
-        next_boards = flip_move_board.getPseudoLegalCaptures()
-        if not next_boards:
+        has_captures = flip_move_board.hasPseudoLegalCaptures()
+        if not has_captures:
             BoardRep.getchecktime += time.time() - start_time
             return False
         BoardRep.getchecktime += time.time() - start_time
@@ -501,14 +501,13 @@ class BoardRep:
         return result
 
 
-    def getPseudoLegalPawnCaptures(self, square):
-        result = []
+    def hasPseudoLegalPawnCaptures(self, square):
         king_square = self.getEnemyKingSquare()
 
         if self.whitemove and king_square // 8 - square // 8 != -1:
-                return None
+                return False
         if not self.whitemove and  king_square // 8 - square //8 != 1:
-                return None
+                return False
 
         if self.whitemove:
             factor = -1
@@ -518,12 +517,12 @@ class BoardRep:
         #if can move diagonally
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 9]
         if new_square != -1 and self.squareHasEnemyKing(new_square):
-            result.append([self.getBoard(square, new_square), [square, new_square]])
+            return True
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 11]
         if new_square != -1 and self.squareHasEnemyKing(new_square):
-            result.append([self.getBoard(square, new_square), [square, new_square]])
+            return True
 
-        return result
+        return False
 
     def getPseudoLegalRBQMoves(self, square, offsets):
         result = []
@@ -540,20 +539,18 @@ class BoardRep:
 
         return result
 
-    def getPseudoLegalRBQCaptures(self, square, offsets):
-        result = []
+    def hasPseudoLegalRBQCaptures(self, square, offsets):
         for offset in offsets:
             for i in range(1,8):
                 new_square = self.MAILBOX[self.TO_MAILBOX[square] + offset*i]
                 if new_square != -1 and self.squareHasEnemyKing(new_square):
-                    result.append([self.getBoard(square, new_square), [square, new_square]])
-                    break
+                    return True
                 elif new_square != -1 and self.squareHasEnemyPiece(new_square):
                     break
                 elif not (new_square != -1 and self.array[new_square] == self.EMPTY):
                     break
 
-        return result
+        return False
 
     def getPseudoLegalKingMoves(self, square):
         result = []
@@ -637,14 +634,13 @@ class BoardRep:
 
         return potential_castling_board
 
-    def getPseudoLegalKingCaptures(self, square):
-        result = []
+    def hasPseudoLegalKingCaptures(self, square):
         for offset in self.KING_OFFSETS:
             new_square = self.MAILBOX[self.TO_MAILBOX[square] + offset]
             if new_square != -1 and self.squareHasEnemyKing(new_square):
-                result.append([self.getBoard(square, new_square), [square, new_square]])
+                return True
 
-        return result
+        return False
 
     def getPseudoLegalKnightMoves(self, square):
         result = []
@@ -657,14 +653,13 @@ class BoardRep:
 
         return result
 
-    def getPseudoLegalKnightCaptures(self, square):
-        result = []
+    def hasPseudoLegalKnightCaptures(self, square):
         for offset in self.KNIGHT_OFFSETS:
             new_square = self.MAILBOX[self.TO_MAILBOX[square] + offset]
             if new_square != -1 and self.squareHasEnemyKing(new_square):
-                result.append([self.getBoard(square, new_square), [square, new_square]])
+                return True
 
-        return result
+        return False
 
     def getPseudoLegalRookMoves(self, square):
         return self.getPseudoLegalRBQMoves(square, self.ROOK_OFFSETS)
@@ -675,37 +670,37 @@ class BoardRep:
     def getPseudoLegalQueenMoves(self, square):
         return self.getPseudoLegalRBQMoves(square, self.QUEEN_OFFSETS)
 
-    def getPseudoLegalRookCaptures(self, square):
+    def hasPseudoLegalRookCaptures(self, square):
         king_square = self.getEnemyKingSquare()
 
         if square // 8 != king_square // 8 and square % 8 != king_square % 8:
             return None
 
-        return self.getPseudoLegalRBQCaptures(square, self.ROOK_OFFSETS)
+        return self.hasPseudoLegalRBQCaptures(square, self.ROOK_OFFSETS)
 
-    def getPseudoLegalBishopCaptures(self, square):
+    def hasPseudoLegalBishopCaptures(self, square):
 
         king_square = self.getEnemyKingSquare()
 
         if king_square in self.LIGHT_SQUARES:
             if square not in self.LIGHT_SQUARES:
-                return None
+                return False
         elif square not in self.DARK_SQUARES:
-            return None
+            return False
 
-        return self.getPseudoLegalRBQCaptures(square, self.BISHOP_OFFSETS)
+        return self.hasPseudoLegalRBQCaptures(square, self.BISHOP_OFFSETS)
 
-    def getPseudoLegalQueenCaptures(self, square):
+    def hasPseudoLegalQueenCaptures(self, square):
 
         king_square = self.getEnemyKingSquare()
 
         if king_square // 8 != square // 8 and king_square % 8 != square % 8:
             if king_square in self.LIGHT_SQUARES and square not in self.LIGHT_SQUARES:
-                return None
+                return False
             if king_square not in self.LIGHT_SQUARES and square in self.LIGHT_SQUARES:
-                return None
+                return False
 
-        return self.getPseudoLegalRBQCaptures(square, self.QUEEN_OFFSETS)
+        return self.hasPseudoLegalRBQCaptures(square, self.QUEEN_OFFSETS)
 
     #write test cases
     def getPseudoLegalMoves(self):
@@ -742,43 +737,6 @@ class BoardRep:
         BoardRep.getpseudolegaltime += time.time() - start_time
         return result
 
-    #write test cases
-    # TODO: idea, get the squares holding pawns, squuares holding rooks, etc and do a basic check i.e. is the piece
-    # on a rank / file that could potentially attack the king? Only if so, do the pseudolegal capture check
-    def getPseudoLegalCaptures(self):
-        start_time = time.time()
-        BoardRep.numgetpseudocaptures += 1
-        result = []
-        for squareNumber in range(0,64):
-            piece = self.array[squareNumber]
-            if piece in self.getCurrentSidePieces():
-                if piece == self.WHITE_PAWN or piece == self.BLACK_PAWN:
-                    moves = self.getPseudoLegalPawnCaptures(squareNumber)
-                    if moves is not None:
-                        result.extend(moves)
-                elif piece == self.WHITE_ROOK or piece == self.BLACK_ROOK:
-                    moves = self.getPseudoLegalRookCaptures(squareNumber)
-                    if moves is not None:
-                        result.extend(moves)
-                elif piece == self.WHITE_BISHOP or piece == self.BLACK_BISHOP:
-                    moves = self. getPseudoLegalBishopCaptures(squareNumber)
-                    if moves is not None:
-                        result.extend(moves)
-                elif piece == self.WHITE_QUEEN or piece == self.BLACK_QUEEN:
-                    moves = self. getPseudoLegalQueenCaptures(squareNumber)
-                    if moves is not None:
-                        result.extend(moves)
-                elif piece == self.WHITE_KNIGHT or piece == self.BLACK_KNIGHT:
-                    moves = self.getPseudoLegalKnightCaptures(squareNumber)
-                    if moves is not None:
-                        result.extend(moves)
-                elif piece == self.WHITE_KING or piece == self.BLACK_KING:
-                    moves = self.getPseudoLegalKingCaptures(squareNumber)
-                    if moves is not None:
-                        result.extend(moves)
-
-        BoardRep.getpseudocapturestime += time.time() - start_time
-        return result
 
     #TODO: Try sorting pieces by how close they are to the king?
     def hasPseudoLegalCaptures(self):
@@ -789,28 +747,22 @@ class BoardRep:
             piece = self.array[squareNumber]
             if piece in self.getCurrentSidePieces():
                 if piece == self.WHITE_PAWN or piece == self.BLACK_PAWN:
-                    moves = self.getPseudoLegalPawnCaptures(squareNumber)
-                    if moves:
+                    if self.hasPseudoLegalPawnCaptures(squareNumber):
                         return True
                 elif piece == self.WHITE_ROOK or piece == self.BLACK_ROOK:
-                    moves = self.getPseudoLegalRookCaptures(squareNumber)
-                    if moves:
+                    if self.hasPseudoLegalRookCaptures(squareNumber):
                         return True
                 elif piece == self.WHITE_BISHOP or piece == self.BLACK_BISHOP:
-                    moves = self. getPseudoLegalBishopCaptures(squareNumber)
-                    if moves:
+                    if self. hasPseudoLegalBishopCaptures(squareNumber):
                         return True
                 elif piece == self.WHITE_QUEEN or piece == self.BLACK_QUEEN:
-                    moves = self. getPseudoLegalQueenCaptures(squareNumber)
-                    if moves:
+                    if self. hasPseudoLegalQueenCaptures(squareNumber):
                         return True
                 elif piece == self.WHITE_KNIGHT or piece == self.BLACK_KNIGHT:
-                    moves = self.getPseudoLegalKnightCaptures(squareNumber)
-                    if moves:
+                    if self.hasPseudoLegalKnightCaptures(squareNumber):
                         return True
                 elif piece == self.WHITE_KING or piece == self.BLACK_KING:
-                    moves = self.getPseudoLegalKingCaptures(squareNumber)
-                    if moves:
+                    if self.hasPseudoLegalKingCaptures(squareNumber):
                         return True
 
         BoardRep.getpseudocapturestime += time.time() - start_time

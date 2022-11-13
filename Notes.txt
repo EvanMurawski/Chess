@@ -1,3 +1,12 @@
+After refactoring to remove getPseudoLegalCaptures and only use hasPseudoLegalCaptures:
+
+Average legal move generation time (ms):
+1.02
+Average multithreaded search time (s):
+0.67
+Average singlethreaded search time (s):
+13.71
+
 With new queen pseudocapture logic:
 
 Average legal move generation time (ms):
