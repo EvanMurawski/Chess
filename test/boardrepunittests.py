@@ -18,11 +18,11 @@ class TestBoardRep(unittest.TestCase):
 
     def testIsInCheck(self):
         board = FENUtil.fenToBoard("r1bqk1nr/pppp1Bpp/2n5/2b1p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 1")
-        self.assertTrue(BoardRep.isInCheck(board))
+        self.assertTrue(board.isInCheck())
 
     def testIsInCheckOtherPlayer(self):
         board = FENUtil.fenToBoard("r1bqk1nr/pppp1Bpp/2n5/2b1p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 1")
-        self.assertTrue(BoardRep.isInCheckOtherPlayer(board))
+        self.assertTrue(board.isInCheckOtherPlayer())
 
     def testIsCheckmate(self):
         board = FENUtil.fenToBoard("rnbqkbnr/2pp1Qpp/pp6/4p3/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 4")

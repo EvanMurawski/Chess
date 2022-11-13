@@ -4,7 +4,7 @@ from chesseng.BoardRep import BoardRep
 MULTI_DEPTH = 3
 
 def nodeSort(node):
-    if BoardRep.isInCheck(node.board):
+    if node.board.isInCheck():
         return 0
 
     if node.board.is_capture:

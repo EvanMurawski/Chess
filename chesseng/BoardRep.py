@@ -142,6 +142,8 @@ class BoardRep:
         self.legalmoves = None
         self.pseudolegalmoves = None
         self.king_square = None
+        self.is_in_check = None
+        self.is_in_check_other_player = None
 
 
 
@@ -196,37 +198,34 @@ class BoardRep:
         return alg
 
     #Returns true if the player to move is in check
-    @staticmethod
-    def isInCheck(board):
+    def isInCheck(self):
+
+        if self.is_in_check is not None:
+            return self.is_in_check
+
         start_time = time.time()
         BoardRep.numgetcheck += 1
-        flip_move_board = BoardRep(board.array, not board.whitemove, board.whitecastle, board.blackcastle)
+        flip_move_board = BoardRep(self.array, not self.whitemove, self.whitecastle, self.blackcastle)
         has_captures = flip_move_board.hasPseudoLegalCaptures()
-        if not has_captures:
-            BoardRep.getchecktime += time.time() - start_time
-            return False
+
         BoardRep.getchecktime += time.time() - start_time
-        return True
+        self.is_in_check = has_captures
+        return has_captures
 
     #returns true if the player who moved previously is in check (i.e. illegal move)
     #todo think of a better way to calculate this.
-    @staticmethod
-    def isInCheckOtherPlayer(board):
+    def isInCheckOtherPlayer(self):
+
+        if self.is_in_check_other_player is not None:
+            return self.is_in_check_other_player
+
         start_time = time.time()
         BoardRep.numgetothercheck += 1
-        result = board.hasPseudoLegalCaptures()
+        result = self.hasPseudoLegalCaptures()
         BoardRep.getotherchecktime += time.time() - start_time
+
+        self.is_in_check_other_player = result
         return result
-        # next_boards = board.getPseudoLegalCaptures()
-        #
-        # if not next_boards:
-        #     #print("legal move")
-        #     BoardRep.getotherchecktime += time.time() - start_time
-        #     return False
-        #
-        # #print("illegal move")
-        # BoardRep.getotherchecktime += time.time() - start_time
-        # return True
 
 
     def print(self):
@@ -242,7 +241,7 @@ class BoardRep:
         BoardRep.numgetcheckmate += 1
         if self.ischeckmate is None:
 
-            if not BoardRep.isInCheck(self):
+            if not self.isInCheck():
                 self.ischeckmate = False
                 self.getcheckmatetime += time.time() - start_time
                 BoardRep.getcheckmatetime += time.time() - start_time
@@ -587,17 +586,17 @@ class BoardRep:
             passthru_square = 5
             end_square = self.BLACK_KING_KS_CASTLE
 
-        if BoardRep.isInCheck(self):
+        if self.isInCheck():
             return None
 
         if self.array[end_square] != self.EMPTY or self.array[passthru_square] != self.EMPTY:
             return None
 
-        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_square)):
+        if self.getBoard(square, passthru_square).isInCheckOtherPlayer():
             return None
 
         potential_castling_board = self.getBoard(square, end_square)
-        if BoardRep.isInCheckOtherPlayer(potential_castling_board):
+        if potential_castling_board.isInCheckOtherPlayer():
             return None
 
         return potential_castling_board
@@ -612,7 +611,7 @@ class BoardRep:
             passthru_squares = [1,2,3]
             end_square = self.BLACK_KING_QS_CASTLE
 
-        if BoardRep.isInCheck(self):
+        if self.isInCheck():
             return None
 
         if self.array[end_square] != self.EMPTY:
@@ -621,15 +620,15 @@ class BoardRep:
         if self.array[passthru_squares[0]] != self.EMPTY or self.array[passthru_squares[1]] != self.EMPTY or self.array[passthru_squares[2]] != self.EMPTY:
             return None
 
-        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[1])):
+        if self.getBoard(square, passthru_squares[1]).isInCheckOtherPlayer():
             return None
 
-        if BoardRep.isInCheckOtherPlayer(self.getBoard(square, passthru_squares[2])):
+        if self.getBoard(square, passthru_squares[2]).isInCheckOtherPlayer():
             return None
 
 
         potential_castling_board = self.getBoard(square, end_square)
-        if BoardRep.isInCheckOtherPlayer(potential_castling_board):
+        if potential_castling_board.isInCheckOtherPlayer():
             return None
 
         return potential_castling_board
@@ -782,7 +781,7 @@ class BoardRep:
         for move in pseudo_legal_moves:
             if move[:][0].confirmedlegal:
                 legal_moves.append(move)
-            elif not BoardRep.isInCheckOtherPlayer(move[:][0]):
+            elif not move[:][0].isInCheckOtherPlayer():
                 legal_moves.append(move)
 
         self.legalmoves = legal_moves
