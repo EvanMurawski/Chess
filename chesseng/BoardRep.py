@@ -739,7 +739,7 @@ class BoardRep:
     def hasPseudoLegalCaptures(self):
         start_time = time.time()
         BoardRep.numgetpseudocaptures += 1
-        result = []
+
         for squareNumber in range(0,64):
             piece = self.array[squareNumber]
             if piece in self.getCurrentSidePieces():

@@ -28,12 +28,12 @@ if __name__ == "__main__":
         print("-------------------\n")
 
 
-    if(BoardRep.isInCheck(my_fen_board)):
+    if BoardRep.isInCheck(my_fen_board):
         print("check")
     else:
         print("not check")
 
-    if(my_fen_board.isCheckmate()):
+    if my_fen_board.isCheckmate():
         print("checkmate")
     else:
         print("not checkmate")

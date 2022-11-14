@@ -1,5 +1,4 @@
 import multiprocessing
-from chesseng.BoardRep import BoardRep
 
 MULTI_DEPTH = 3
 

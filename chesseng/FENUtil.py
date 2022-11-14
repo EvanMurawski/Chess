@@ -24,7 +24,6 @@ class FENUtil:
     @staticmethod
     def fenToArray(fen):
         new_array = []
-        array_elem = 0
 
         split_text = FENUtil.splitFen(fen)
 

@@ -17,8 +17,8 @@ def writelog(message):
     logfile.write(message + "\n")
     logfile.close()
 
-def handleuci(line):
-    if line.startswith("isready"):
+def handleuci(uci_line):
+    if uci_line.startswith("isready"):
         print("readyok")
         writelog("TX: " + "readyok")
         return
@@ -82,5 +82,4 @@ except Exception as e:
     with open("../log/errorlog.txt", 'a') as f:
         f.write(str(e))
         f.write(traceback.format_exc())
-        f.write("i = " + str(i))
 

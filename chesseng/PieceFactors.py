@@ -21,7 +21,6 @@ def getPieceFactors():
                     this_piece_value = []
                 else:
                     raise Exception("Malformed CSV file for piece factors")
-                    exit(1)
             else:
                 this_piece_value += [float(i) for i in row]
 
