@@ -1,3 +1,12 @@
+After refactoring getPseudoLegalPawnMoves
+
+Average legal move generation time (ms):
+1.02
+Average multithreaded search time (s):
+0.57
+Average singlethreaded search time (s):
+12.18
+
 After saving isincheck status to class variable
 
 Average legal move generation time (ms):

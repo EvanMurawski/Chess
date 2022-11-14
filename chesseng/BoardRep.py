@@ -444,6 +444,20 @@ class BoardRep:
         self.king_square = king_square
         return king_square
 
+    # Appends boards for pawn move from square to new_square to the result list
+    # Handles check for promotion
+    def addPawnMoveBoards(self, square, new_square, result):
+
+        if new_square in self.WHITE_PAWN_PROMOTION:
+            for piece in [self.WHITE_BISHOP, self.WHITE_KNIGHT, self.WHITE_ROOK, self.WHITE_QUEEN]:
+                result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+        elif new_square in self.BLACK_PAWN_PROMOTION:
+            for piece in [self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK, self.BLACK_QUEEN]:
+                result.append([self.getBoard(square, new_square, piece), [square, new_square]])
+        else:
+            result.append([self.getBoard(square, new_square), [square, new_square]])
+
+        return
 
     def getPseudoLegalPawnMoves(self, square):
 
@@ -455,46 +469,25 @@ class BoardRep:
             factor = 1
             starting_squares = self.BLACK_PAWN_START
 
-        #if can move one square forward
+        # If pawn can move one square forward
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 10]
         if  self.array[new_square] == self.EMPTY:
-            #Todo: all the below code ir repeated for forward move, and each diagonal move -> put it in a function
-            if new_square in self.WHITE_PAWN_PROMOTION:
-                for piece in [self.WHITE_BISHOP, self.WHITE_KNIGHT, self.WHITE_ROOK, self.WHITE_QUEEN]:
-                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
-            elif new_square in self.BLACK_PAWN_PROMOTION:
-                for piece in [self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK, self.BLACK_QUEEN]:
-                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
-            else:
-                result.append([self.getBoard(square, new_square), [square, new_square]])
+            self.addPawnMoveBoards(square, new_square, result)
 
-            #check if can move two squares forward
+            # If pawn can move two squares forward
+            # not using addPawnMoveBoards since we don't need to check for promotion
             new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 20]
             if self.array[new_square] == self.EMPTY and square in starting_squares:
                 result.append([self.getBoard(square, new_square), [square, new_square]])
 
-        #if can move diagonally
+        # If pawn can move diagonally
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 9]
         if new_square != -1 and (self.squareHasEnemyPiece(new_square) or new_square == self.enpassant_square):
-            if new_square in self.WHITE_PAWN_PROMOTION:
-                for piece in [self.WHITE_BISHOP, self.WHITE_KNIGHT, self.WHITE_ROOK, self.WHITE_QUEEN]:
-                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
-            elif new_square in self.BLACK_PAWN_PROMOTION:
-                for piece in [self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK, self.BLACK_QUEEN]:
-                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
-            else:
-                result.append([self.getBoard(square, new_square), [square, new_square]])
+            self.addPawnMoveBoards(square, new_square, result)
 
         new_square = self.MAILBOX[self.TO_MAILBOX[square] + factor * 11]
         if new_square != -1 and (self.squareHasEnemyPiece(new_square) or new_square == self.enpassant_square):
-            if new_square in self.WHITE_PAWN_PROMOTION:
-                for piece in [self.WHITE_BISHOP, self.WHITE_KNIGHT, self.WHITE_ROOK, self.WHITE_QUEEN]:
-                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
-            elif new_square in self.BLACK_PAWN_PROMOTION:
-                for piece in [self.BLACK_BISHOP, self.BLACK_KNIGHT, self.BLACK_ROOK, self.BLACK_QUEEN]:
-                    result.append([self.getBoard(square, new_square, piece), [square, new_square]])
-            else:
-                result.append([self.getBoard(square, new_square), [square, new_square]])
+            self.addPawnMoveBoards(square, new_square, result)
 
         return result
 
@@ -700,6 +693,7 @@ class BoardRep:
         return self.hasPseudoLegalRBQCaptures(square, self.QUEEN_OFFSETS)
 
     #write test cases
+    #TODO: Idea, save the square numbers of the current side's pieces so you don't need to iterate over range(0,64)
     def getPseudoLegalMoves(self):
         start_time = time.time()
         BoardRep.numgetpseudo += 1
@@ -781,6 +775,7 @@ class BoardRep:
                 legal_moves.append(move)
             elif not move[:][0].isInCheckOtherPlayer():
                 legal_moves.append(move)
+
 
         self.legalmoves = legal_moves
         BoardRep.getlegalmovestime += time.time() - start_time
