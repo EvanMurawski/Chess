@@ -14,7 +14,7 @@ def getPieceFactors():
             if row[0] == "start":
                 continue
 
-            if len(row) == 1:
+            if row[1] == "PIECE_NUM":
                 if len(this_piece_value) == 64:
                     piece_type = int(row[0])
                     piece_values[piece_type] = this_piece_value
