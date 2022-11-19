@@ -1,6 +1,10 @@
 import multiprocessing
 
-MULTI_DEPTH = 3
+MULTI_DEPTH_INITIAL = 3
+MULTI_DEPTH_SECONDARY = 4
+SECONDARY_NODE_QTY = 3
+NUM_PROCESSES = 16
+
 
 def nodeSort(node):
     if node.board.isInCheck():
@@ -85,14 +89,20 @@ def getBestMoveSingle(node, depth, whiteplayer):
     return bestnode
 
 def multiAlphaBetaBlack(node):
-    return alphabeta(node, MULTI_DEPTH, -99999, 99999, False)
+    return alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, False)
 
 def multiAlphaBetaWhite(node):
-    return alphabeta(node, MULTI_DEPTH, -99999, 99999, True)
+    return alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, True)
+
+def multiAlphaBetaBlackSecondary(node):
+    return alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, False)
+
+def multiAlphaBetaWhiteSecondary(node):
+    return alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, True)
 
 #TODO: pass depth to this function and save it as a global or class variable
 def getBestMoveMulti(node, whiteplayer):
-    pool = multiprocessing.Pool(processes=8)
+    pool = multiprocessing.Pool(processes=NUM_PROCESSES)
 
     if node.next_nodes is None:
         node.buildNextLayer()
@@ -108,22 +118,17 @@ def getBestMoveMulti(node, whiteplayer):
 
     if whiteplayer:
         outputs = pool.map(multiAlphaBetaBlack, inputs)
+        sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1], reverse=True)
+        secondary_search_nodes = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
+        outputs = pool.map(multiAlphaBetaBlackSecondary, secondary_search_nodes)
+        bestnode = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1], reverse=True)[0][0]
     else:
         outputs = pool.map(multiAlphaBetaWhite, inputs)
+        sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1])
+        secondary_search_nodes = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
+        outputs = pool.map(multiAlphaBetaWhiteSecondary, secondary_search_nodes)
+        bestnode = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1])[0][0]
 
-    for (childnode, childscore) in zip(node.next_nodes, outputs):
-
-        #childnode.board.print()
-        #print("above value: ", str(childscore))
-
-        if whiteplayer:
-            if childscore > bestscore:
-                bestnode = childnode
-                bestscore = childscore
-        else:
-            if childscore < bestscore:
-                bestnode = childnode
-                bestscore = childscore
 
     return bestnode
 

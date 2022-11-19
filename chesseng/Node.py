@@ -8,8 +8,8 @@ class Node:
         self.board = board
         self.next_nodes = next_nodes
         self.move_squares = move_squares
-
         self.best_node_idx = best_node_idx
+        self.score = None
         Node.numnodes += 1
 
     def setNextNodes(self, moves):
@@ -24,4 +24,6 @@ class Node:
         self.setNextNodes(next_moves)
 
     def getScore(self):
-        return BoardRep.getScore(self.board)
+        if self.score is None:
+            self.score = BoardRep.getScore(self.board)
+        return self.score
