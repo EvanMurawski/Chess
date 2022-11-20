@@ -17,6 +17,7 @@ find whose move it is from node instead of function argument
 Save the score in the nodes
 Return the final alpha beta score value of the selected node to analyzesignleposition.py so it can show that value
 instead of just the heuristic value of that node
+hash table
 
 Node:
 clean up
