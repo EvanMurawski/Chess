@@ -3,6 +3,7 @@
 test:
 Add more metrics to analyzesingleposition.py (boards created per node? Number of cutoffs?)
 test cases for Fenutil
+Add tactics which are 1, 2, 3, 4 move checkmates to ensure nothing weird happens in AlphaBeta if the game ends
 
 engine:
 option for more verbose logging (include evaluation)
