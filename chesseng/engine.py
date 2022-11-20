@@ -43,7 +43,7 @@ def randomMove():
 def abmove():
     t = time.time()
     writelog("start analyzing")
-    best_node = AlphaBetaNew.getBestMoveMulti(Node(current_board), current_board.whitemove)
+    best_node, not_used = AlphaBetaNew.getBestMoveMulti(Node(current_board), current_board.whitemove)
     writelog("done analyzing" + str(time.time() - t))
 
     best_move = best_node.move_squares

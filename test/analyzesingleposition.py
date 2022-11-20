@@ -5,6 +5,13 @@ import chesseng.AlphaBetaNew as AlphaBetaNew
 import time
 
 
+def printLine(print_node):
+    if print_node is None:
+        return
+
+    print_node.board.print()
+    printLine(print_node.previous_node)
+
 if __name__ == "__main__":
 
     # Configuration
@@ -46,7 +53,7 @@ if __name__ == "__main__":
     start_time = time.time()
 
     if multithreading:
-        best_node = AlphaBetaNew.getBestMoveMulti(root_node, my_fen_board.whitemove)
+        best_node, end_node = AlphaBetaNew.getBestMoveMulti(root_node, my_fen_board.whitemove)
     else:
         best_node = AlphaBetaNew.getBestMoveSingle(root_node, depth, my_fen_board.whitemove)
 
@@ -65,6 +72,9 @@ if __name__ == "__main__":
     print("num getpseudo: " + str(BoardRep.numgetpseudo) + " time: " + str(BoardRep.getpseudolegaltime))
     print("num getpseudocaptures: " + str(BoardRep.numgetpseudocaptures) + " time:  " + str(BoardRep.getpseudocapturestime))
     print("num getlegal: " + str(BoardRep.numgetlegal) + " time: " + str(BoardRep.getlegalmovestime))
+    print("expected end node: ")
+    for node in end_node:
+        node.board.print()
 
 
 

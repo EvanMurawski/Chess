@@ -1,7 +1,8 @@
 import multiprocessing
+import chesseng.Node as Node
 
 MULTI_DEPTH_INITIAL = 3
-MULTI_DEPTH_SECONDARY = 4
+MULTI_DEPTH_SECONDARY = 3
 SECONDARY_NODE_QTY = 3
 NUM_PROCESSES = 16
 
@@ -26,12 +27,15 @@ def nodeSort(node):
 
     return 10
 
+
+
+
 #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
 #todo, store the score in the node, start searching highest scoring nodes first
 def alphabeta(node, depth, alpha, beta, maximizingplayer):
 
     if depth == 0:
-        return node.getScore()
+        return node.getScore(), []
 
     if node.next_nodes is None:
         node.buildNextLayer()
@@ -40,23 +44,36 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
         value = -99999
         next_nodes = node.next_nodes
         next_nodes.sort(key = nodeSort)
+        line = []
         for childnode in next_nodes:
-            value = max(value, alphabeta(childnode, depth-1, alpha, beta, False))
+            try:
+                new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, False)
+            except TypeError:
+                print("here")
+            value= max(value, new_value)
             if value >= beta:
                 break
-            alpha = max(alpha, value)
-        return value
+            if value > alpha:
+                alpha = value
+                line = [childnode]
+                line.extend(new_line)
+        return value, line
 
     else:
         value = 99999
         next_nodes = node.next_nodes
         next_nodes.sort(key = nodeSort)
+        line = []
         for childnode in next_nodes:
-            value = min(value, alphabeta(childnode, depth-1, alpha, beta, True))
+            new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, True)
+            value = min(value, new_value)
             if value <= alpha:
                 break
-            beta = min(beta, value)
-        return value
+            if value < beta:
+                beta = value
+                line = [childnode]
+                line.extend(new_line)
+        return value, line
 
 
 def getBestMoveSingle(node, depth, whiteplayer):
@@ -102,6 +119,7 @@ def multiAlphaBetaWhiteSecondary(node):
 
 #TODO: pass depth to this function and save it as a global or class variable
 def getBestMoveMulti(node, whiteplayer):
+
     pool = multiprocessing.Pool(processes=NUM_PROCESSES)
 
     if node.next_nodes is None:
@@ -121,15 +139,17 @@ def getBestMoveMulti(node, whiteplayer):
         sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1], reverse=True)
         secondary_search_nodes = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
         outputs = pool.map(multiAlphaBetaBlackSecondary, secondary_search_nodes)
-        bestnode = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1], reverse=True)[0][0]
+        bestmove = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1], reverse=True)[0][0]
+        end_node = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1], reverse=True)[0][1][1]
     else:
         outputs = pool.map(multiAlphaBetaWhite, inputs)
         sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1])
         secondary_search_nodes = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
         outputs = pool.map(multiAlphaBetaWhiteSecondary, secondary_search_nodes)
-        bestnode = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1])[0][0]
+        bestmove = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1])[0][0]
+        end_node = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1])[0][1][1]
 
 
-    return bestnode
+    return bestmove, end_node
 
 

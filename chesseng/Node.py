@@ -10,6 +10,7 @@ class Node:
         self.move_squares = move_squares
         self.best_node_idx = best_node_idx
         self.score = None
+        self.previous_node = previous_node
         Node.numnodes += 1
 
     def setNextNodes(self, moves):
