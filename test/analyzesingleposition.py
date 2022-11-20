@@ -73,8 +73,11 @@ if __name__ == "__main__":
     print("num getpseudocaptures: " + str(BoardRep.numgetpseudocaptures) + " time:  " + str(BoardRep.getpseudocapturestime))
     print("num getlegal: " + str(BoardRep.numgetlegal) + " time: " + str(BoardRep.getlegalmovestime))
     print("expected end node: ")
+    best_node.board.print()
+    print("\n")
     for node in end_node:
         node.board.print()
+        print("\n")
 
 
 

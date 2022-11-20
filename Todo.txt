@@ -18,6 +18,9 @@ Save the score in the nodes
 Return the final alpha beta score value of the selected node to analyzesignleposition.py so it can show that value
 instead of just the heuristic value of that node
 hash table
+Important, check case where number of legal moves is less than the configured value of secondary nodes to be searched
+Investigate: very greedy when search ends on a move by the player to move (e.g. taking material, despite that the next move,
+ the piece will be taken. For now, should always end the search on a move by the opponent)
 
 Node:
 clean up

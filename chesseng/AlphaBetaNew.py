@@ -4,6 +4,7 @@ import chesseng.Node as Node
 MULTI_DEPTH_INITIAL = 3
 MULTI_DEPTH_SECONDARY = 3
 SECONDARY_NODE_QTY = 3
+SECONDARY_SEARCH = False
 NUM_PROCESSES = 16
 
 
@@ -46,10 +47,7 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
         next_nodes.sort(key = nodeSort)
         line = []
         for childnode in next_nodes:
-            try:
-                new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, False)
-            except TypeError:
-                print("here")
+            new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, False)
             value= max(value, new_value)
             if value >= beta:
                 break
@@ -125,29 +123,29 @@ def getBestMoveMulti(node, whiteplayer):
     if node.next_nodes is None:
         node.buildNextLayer()
 
-    if whiteplayer:
-        bestscore = -999999999
-    else:
-        bestscore = 999999999
-
-    bestnode = None
-
     inputs = node.next_nodes
 
     if whiteplayer:
         outputs = pool.map(multiAlphaBetaBlack, inputs)
-        sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1], reverse=True)
-        secondary_search_nodes = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
-        outputs = pool.map(multiAlphaBetaBlackSecondary, secondary_search_nodes)
-        bestmove = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1], reverse=True)[0][0]
-        end_node = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1], reverse=True)[0][1][1]
+        sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1], reverse=True)
+        if SECONDARY_SEARCH:
+            inputs = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
+            outputs = pool.map(multiAlphaBetaBlackSecondary, inputs)
+            sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1], reverse=True)
+
+        bestmove = sorted_outputs[0][0]
+        end_node = sorted_outputs[0][1][1]
     else:
         outputs = pool.map(multiAlphaBetaWhite, inputs)
         sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1])
-        secondary_search_nodes = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
-        outputs = pool.map(multiAlphaBetaWhiteSecondary, secondary_search_nodes)
-        bestmove = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1])[0][0]
-        end_node = sorted(zip(secondary_search_nodes, outputs), key=lambda x: x[1])[0][1][1]
+
+        if SECONDARY_SEARCH:
+            inputs = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
+            outputs = pool.map(multiAlphaBetaWhiteSecondary, inputs)
+            sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1])
+
+        bestmove = sorted_outputs[0][0]
+        end_node = sorted_outputs[0][1][1]
 
 
     return bestmove, end_node
