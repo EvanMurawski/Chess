@@ -21,6 +21,7 @@ hash table
 Important, check case where number of legal moves is less than the configured value of secondary nodes to be searched
 Investigate: very greedy when search ends on a move by the player to move (e.g. taking material, despite that the next move,
  the piece will be taken. For now, should always end the search on a move by the opponent)
+Troubleshoot why the returned primary variation stops 2 ply short of mate when it finds mate
 
 Node:
 clean up

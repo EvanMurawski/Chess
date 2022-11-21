@@ -2,9 +2,9 @@ import multiprocessing
 import chesseng.Node as Node
 
 MULTI_DEPTH_INITIAL = 3
-MULTI_DEPTH_SECONDARY = 3
+MULTI_DEPTH_SECONDARY = 5
 SECONDARY_NODE_QTY = 3
-SECONDARY_SEARCH = False
+SECONDARY_SEARCH = True
 NUM_PROCESSES = 16
 
 
@@ -116,6 +116,7 @@ def multiAlphaBetaWhiteSecondary(node):
     return alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, True)
 
 #TODO: pass depth to this function and save it as a global or class variable
+#TODO: handle secondary search parameters here as well
 def getBestMoveMulti(node, whiteplayer):
 
     pool = multiprocessing.Pool(processes=NUM_PROCESSES)
@@ -125,11 +126,12 @@ def getBestMoveMulti(node, whiteplayer):
 
     inputs = node.next_nodes
 
+    # TODO simplify this, redundant code
     if whiteplayer:
         outputs = pool.map(multiAlphaBetaBlack, inputs)
-        sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1], reverse=True)
+        sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1][0], reverse=True)
         if SECONDARY_SEARCH:
-            inputs = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
+            inputs = [sorted_outputs[x][0] for x in range(min(SECONDARY_NODE_QTY, len(sorted_outputs)))]
             outputs = pool.map(multiAlphaBetaBlackSecondary, inputs)
             sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1], reverse=True)
 
@@ -140,7 +142,7 @@ def getBestMoveMulti(node, whiteplayer):
         sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1])
 
         if SECONDARY_SEARCH:
-            inputs = [sorted_outputs[x][0] for x in range(SECONDARY_NODE_QTY)]
+            inputs = [sorted_outputs[x][0] for x in range(min(SECONDARY_NODE_QTY, len(sorted_outputs)))]
             outputs = pool.map(multiAlphaBetaWhiteSecondary, inputs)
             sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1])
 
