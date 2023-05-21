@@ -55,7 +55,7 @@ if __name__ == "__main__":
     if multithreading:
         best_node, end_node = AlphaBetaNew.getBestMoveMulti(root_node, my_fen_board.whitemove)
     else:
-        best_node = AlphaBetaNew.getBestMoveSingle(root_node, depth, my_fen_board.whitemove)
+        best_node, end_node = AlphaBetaNew.getBestMoveSingle(root_node, depth, my_fen_board.whitemove)
 
 
     best_move = best_node.move_squares
@@ -75,6 +75,7 @@ if __name__ == "__main__":
     print("expected end node: ")
     best_node.board.print()
     print("\n")
+
     for node in end_node:
         node.board.print()
         print("\n")

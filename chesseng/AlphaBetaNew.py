@@ -88,22 +88,24 @@ def getBestMoveSingle(node, depth, whiteplayer):
     bestnode = None
 
     for childnode in node.next_nodes:
-        childscore = alphabeta(childnode, depth, -99999, 99999, not whiteplayer)
+        childscore, line = alphabeta(childnode, depth, -99999, 99999, not whiteplayer)
 
         if whiteplayer:
             if childscore > bestscore:
                 bestnode = childnode
                 bestscore = childscore
+                bestline =  line
         else:
             if childscore < bestscore:
                 bestnode = childnode
                 bestscore = childscore
+                bestline = line
 
 
         # childnode.board.print()
         # print("above value: ", str(childscore))
 
-    return bestnode
+    return bestnode, bestline
 
 def multiAlphaBetaBlack(node):
     return alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, False)
