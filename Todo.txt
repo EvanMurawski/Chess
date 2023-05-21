@@ -1,6 +1,6 @@
 
 General: issues occurring when we check for pseudo legal moves in a position where a king has been captured (post-checkmate position)
-occurs during performance test using depth 3 / 5
+occurs during performance test using depth 3 / 5. I think the problem is that alphabetanew never checks if a move is check mate before
 
 test:
 Add more metrics to analyzesingleposition.py (boards created per node? Number of cutoffs?)
