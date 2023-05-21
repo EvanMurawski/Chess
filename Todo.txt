@@ -1,4 +1,6 @@
 
+General: issues occurring when we check for pseudo legal moves in a position where a king has been captured (post-checkmate position)
+occurs during performance test using depth 3 / 5
 
 test:
 Add more metrics to analyzesingleposition.py (boards created per node? Number of cutoffs?)
