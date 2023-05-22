@@ -6,6 +6,7 @@ test:
 Add more metrics to analyzesingleposition.py (boards created per node? Number of cutoffs?)
 test cases for Fenutil
 Add tactics which are 1, 2, 3, 4 move checkmates to ensure nothing weird happens in AlphaBeta if the game ends
+Add a test that the right en passant squares are found (remember bug where non-pawn piece is considered eligible to be en passant-ed)
 
 engine:
 option for more verbose logging (include evaluation)
@@ -30,7 +31,7 @@ clean up
 
 boardrep:
 add piece factors for other pieces
-deeo dive time usage of haspseudocaptures function
+deep dive time usage of haspseudocaptures function
 
 
 ideas:

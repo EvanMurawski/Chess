@@ -7,7 +7,7 @@ SECONDARY_NODE_QTY = 3
 SECONDARY_SEARCH = True
 NUM_PROCESSES = 16
 
-
+#TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node
 def nodeSort(node):
     if node.board.isInCheck():
         return 0
@@ -32,7 +32,6 @@ def nodeSort(node):
 
 
 #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
-#todo, store the score in the node, start searching highest scoring nodes first
 #TODO, if there are no more nodes after building next layer (i.e. no more legal moves, return the score of the node
 # (could be stalemate or checkmate)
 def alphabeta(node, depth, alpha, beta, maximizingplayer):

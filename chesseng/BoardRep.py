@@ -398,7 +398,7 @@ class BoardRep:
                 if newArray[newSquare -1 ] == self.BLACK_PAWN:
                     _enpassant_square = newSquare + 8
 
-        # if white moved a pawn two squares
+        # if black moved a pawn two squares
         if movedPiece == self.BLACK_PAWN and abs(newSquare - oldSquare) == 16:
             if newSquare in self.BLACK_DOUBLE_ENPASSANT_SQUARES:
                 if newArray[newSquare - 1] == self.WHITE_PAWN or newArray[newSquare + 1] == self.WHITE_PAWN:
