@@ -387,26 +387,28 @@ class BoardRep:
 
 
         # if white moved a pawn two squares
-        if movedPiece == self.WHITE_PAWN and abs(newSquare - oldSquare) == 16 and newSquare in self.WHITE_DOUBLE_ENPASSANT_SQUARES:
-            if newArray[newSquare - 1] == self.BLACK_PAWN or newArray[newSquare + 1] == self.BLACK_PAWN:
-                _enpassant_square = newSquare + 8
-        elif newSquare == self.WHITE_LEFT_ENPASSANT_SQUARE:
-            if newArray[newSquare + 1] == self.BLACK_PAWN:
-                _enpassant_square = newSquare + 8
-        elif newSquare == self.WHITE_RIGHT_ENPASSANT_SQUARE:
-            if newArray[newSquare -1 ] == self.BLACK_PAWN:
-                _enpassant_square = newSquare + 8
+        if movedPiece == self.WHITE_PAWN and abs(newSquare - oldSquare) == 16:
+            if newSquare in self.WHITE_DOUBLE_ENPASSANT_SQUARES:
+                if newArray[newSquare - 1] == self.BLACK_PAWN or newArray[newSquare + 1] == self.BLACK_PAWN:
+                    _enpassant_square = newSquare + 8
+            elif newSquare == self.WHITE_LEFT_ENPASSANT_SQUARE:
+                if newArray[newSquare + 1] == self.BLACK_PAWN:
+                    _enpassant_square = newSquare + 8
+            elif newSquare == self.WHITE_RIGHT_ENPASSANT_SQUARE:
+                if newArray[newSquare -1 ] == self.BLACK_PAWN:
+                    _enpassant_square = newSquare + 8
 
         # if white moved a pawn two squares
-        if movedPiece == self.BLACK_PAWN and abs(newSquare - oldSquare) == 16 and newSquare in self.BLACK_DOUBLE_ENPASSANT_SQUARES:
-            if newArray[newSquare - 1] == self.WHITE_PAWN or newArray[newSquare + 1] == self.WHITE_PAWN:
-                _enpassant_square = newSquare - 8
-        elif newSquare == self.BLACK_LEFT_ENPASSANT_SQUARE:
-            if newArray[newSquare + 1] == self.WHITE_PAWN:
-                _enpassant_square = newSquare - 8
-        elif newSquare == self.BLACK_RIGHT_ENPASSANT_SQUARE:
-            if newArray[newSquare - 1] == self.WHITE_PAWN:
-                _enpassant_square = newSquare - 8
+        if movedPiece == self.BLACK_PAWN and abs(newSquare - oldSquare) == 16:
+            if newSquare in self.BLACK_DOUBLE_ENPASSANT_SQUARES:
+                if newArray[newSquare - 1] == self.WHITE_PAWN or newArray[newSquare + 1] == self.WHITE_PAWN:
+                    _enpassant_square = newSquare - 8
+            elif newSquare == self.BLACK_LEFT_ENPASSANT_SQUARE:
+                if newArray[newSquare + 1] == self.WHITE_PAWN:
+                    _enpassant_square = newSquare - 8
+            elif newSquare == self.BLACK_RIGHT_ENPASSANT_SQUARE:
+                if newArray[newSquare - 1] == self.WHITE_PAWN:
+                    _enpassant_square = newSquare - 8
 
 
         newBoard = BoardRep(newArray, not self.whitemove, _whitecastle, _blackcastle, _enpassant_square,_is_promotion, _is_capture)
