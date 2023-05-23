@@ -4,7 +4,7 @@ import chesseng.Node as Node
 MULTI_DEPTH_INITIAL = 3
 MULTI_DEPTH_SECONDARY = 5
 SECONDARY_NODE_QTY = 3
-SECONDARY_SEARCH = False
+SECONDARY_SEARCH = True
 NUM_PROCESSES = 16
 
 hash_table = {}
@@ -54,7 +54,6 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
             key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,childnode.board.enpassant_square)
             if key in hash_table:
                 new_value, new_line = hash_table[key]
-                print("hit")
             else:
                 new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, False)
                 hash_table[key] = (new_value, new_line)
@@ -76,7 +75,6 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
             key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle, childnode.board.enpassant_square)
             if key in hash_table:
                 new_value, new_line = hash_table[key]
-                print("hit")
             else:
                 new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, True)
                 hash_table[key] = (new_value, new_line)
