@@ -123,8 +123,5 @@ class TestBoardRep(unittest.TestCase):
               " positions were checkmate and ", num_noncheckmate, " positions were not checkmate")
 
 
-    #TODO: Test case for stalemate
-
-
 if __name__ == '__main__':
     unittest.main()

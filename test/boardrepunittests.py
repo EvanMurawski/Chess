@@ -240,5 +240,12 @@ class TestBoardRep(unittest.TestCase):
         noEnPassantBoard = board.getBoard(52,44)
         self.assertTrue(noEnPassantBoard.enpassant_square is None)
 
+    def testStalemate(self):
+        board = FENUtil.fenToBoard("k7/P7/1K6/8/8/8/8/8 b - - 0 1")
+
+        legalMoves = board.getLegalMoves()
+        self.assertFalse(legalMoves)
+        self.assertEqual(board.getScoreNoMoves(), 0)
+
 if __name__ == '__main__':
     unittest.main()

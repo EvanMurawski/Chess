@@ -269,6 +269,19 @@ class BoardRep:
 
         return self.getWeightedMaterial() + random.uniform(-0.1,0.1)
 
+    # Important, assumption is this is only called if the calling function already knows there are no legal moves
+    # i.e. it must be checkmate or stalemate
+    def getScoreNoMoves(self):
+
+        checkmate = self.isCheckmate()
+        if checkmate and self.whitemove:
+            return -999
+        elif checkmate and not self.whitemove:
+
+            return 999
+
+        return 0
+
     def getWeightedMaterial(self):
         material = 0
         for square, piece in enumerate(self.array):

@@ -32,8 +32,6 @@ def nodeSort(node):
 
 
 #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
-#TODO, if there are no more nodes after building next layer (i.e. no more legal moves, return the score of the node
-# (could be stalemate or checkmate)
 def alphabeta(node, depth, alpha, beta, maximizingplayer):
 
     if depth == 0:
@@ -41,6 +39,9 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
 
     if node.next_nodes is None:
         node.buildNextLayer()
+
+    if not node.next_nodes:
+        return node.board.getScoreNoMoves(), []
 
     if maximizingplayer:
         value = -99999
