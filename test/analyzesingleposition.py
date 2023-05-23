@@ -17,7 +17,7 @@ if __name__ == "__main__":
     # Configuration
     # -------------------
     depth = 3
-    multithreading = False
+    multithreading = True
     # -------------------
 
 

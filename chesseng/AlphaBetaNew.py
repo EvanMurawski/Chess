@@ -7,6 +7,8 @@ SECONDARY_NODE_QTY = 3
 SECONDARY_SEARCH = False
 NUM_PROCESSES = 16
 
+hash_table = {}
+
 #TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node
 def nodeSort(node):
     if node.board.isInCheck():
@@ -28,7 +30,7 @@ def nodeSort(node):
 
     return 10
 
-hash_table = {}
+
 
 
 #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
@@ -49,20 +51,20 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
         next_nodes.sort(key = nodeSort)
         line = []
         for childnode in next_nodes:
-            hash_value = hash(tuple(childnode.board.array))
-            if hash_value in hash_table:
-                new_value, new_line = hash_table[hash_value]
+            key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,childnode.board.enpassant_square)
+            if key in hash_table:
+                new_value, new_line = hash_table[key]
                 print("hit")
             else:
                 new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, False)
-                hash_table[hash_value]  = (new_value, new_line)
-                value= max(value, new_value)
-                if value >= beta:
-                    break
-                if value > alpha:
-                    alpha = value
-                    line = [childnode]
-                    line.extend(new_line)
+                hash_table[key] = (new_value, new_line)
+            value = max(value, new_value)
+            if value >= beta:
+                break
+            if value > alpha:
+                alpha = value
+                line = [childnode]
+                line.extend(new_line)
         return value, line
 
     else:
@@ -71,20 +73,20 @@ def alphabeta(node, depth, alpha, beta, maximizingplayer):
         next_nodes.sort(key = nodeSort)
         line = []
         for childnode in next_nodes:
-            hash_value = hash(tuple(childnode.board.array))
-            if hash_value in hash_table:
-                new_value, new_line = hash_table[hash_value]
+            key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle, childnode.board.enpassant_square)
+            if key in hash_table:
+                new_value, new_line = hash_table[key]
                 print("hit")
             else:
                 new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, True)
-                hash_table[hash_value] = (new_value, new_line)
-                value = min(value, new_value)
-                if value <= alpha:
-                    break
-                if value < beta:
-                    beta = value
-                    line = [childnode]
-                    line.extend(new_line)
+                hash_table[key] = (new_value, new_line)
+            value = min(value, new_value)
+            if value <= alpha:
+                break
+            if value < beta:
+                beta = value
+                line = [childnode]
+                line.extend(new_line)
         return value, line
 
 
