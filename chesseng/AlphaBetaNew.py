@@ -7,7 +7,6 @@ SECONDARY_NODE_QTY = 3
 SECONDARY_SEARCH = True
 NUM_PROCESSES = 16
 
-hash_table = {}
 
 #TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node
 def nodeSort(node):
@@ -32,60 +31,67 @@ def nodeSort(node):
 
 
 
+class alphabetaclass:
 
-#todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
-def alphabeta(node, depth, alpha, beta, maximizingplayer):
+    def __init__(self, hash_map=None):
+        if hash_map is None:
+            self.hash_map = {}
+        else:
+            self.hash_map = hash_map
 
-    if depth == 0:
-        return node.getScore(), []
+    #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
+    def alphabeta(self, node, depth, alpha, beta, maximizingplayer):
 
-    if node.next_nodes is None:
-        node.buildNextLayer()
+        if depth == 0:
+            return node.getScore(), []
 
-    if not node.next_nodes:
-        return node.board.getScoreNoMoves(), []
+        if node.next_nodes is None:
+            node.buildNextLayer()
 
-    if maximizingplayer:
-        value = -99999
-        next_nodes = node.next_nodes
-        next_nodes.sort(key = nodeSort)
-        line = []
-        for childnode in next_nodes:
-            key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,childnode.board.enpassant_square)
-            if key in hash_table:
-                new_value, new_line = hash_table[key]
-            else:
-                new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, False)
-                hash_table[key] = (new_value, new_line)
-            value = max(value, new_value)
-            if value >= beta:
-                break
-            if value > alpha:
-                alpha = value
-                line = [childnode]
-                line.extend(new_line)
-        return value, line
+        if not node.next_nodes:
+            return node.board.getScoreNoMoves(), []
 
-    else:
-        value = 99999
-        next_nodes = node.next_nodes
-        next_nodes.sort(key = nodeSort)
-        line = []
-        for childnode in next_nodes:
-            key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle, childnode.board.enpassant_square)
-            if key in hash_table:
-                new_value, new_line = hash_table[key]
-            else:
-                new_value, new_line = alphabeta(childnode, depth-1, alpha, beta, True)
-                hash_table[key] = (new_value, new_line)
-            value = min(value, new_value)
-            if value <= alpha:
-                break
-            if value < beta:
-                beta = value
-                line = [childnode]
-                line.extend(new_line)
-        return value, line
+        if maximizingplayer:
+            value = -99999
+            next_nodes = node.next_nodes
+            next_nodes.sort(key = nodeSort)
+            line = []
+            for childnode in next_nodes:
+                key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,childnode.board.enpassant_square)
+                if key in self.hash_map:
+                    new_value, new_line = self.hash_map[key]
+                else:
+                    new_value, new_line = self.alphabeta(childnode, depth-1, alpha, beta, False)
+                    self.hash_map[key] = (new_value, new_line)
+                value = max(value, new_value)
+                if value >= beta:
+                    break
+                if value > alpha:
+                    alpha = value
+                    line = [childnode]
+                    line.extend(new_line)
+            return value, line
+
+        else:
+            value = 99999
+            next_nodes = node.next_nodes
+            next_nodes.sort(key = nodeSort)
+            line = []
+            for childnode in next_nodes:
+                key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle, childnode.board.enpassant_square)
+                if key in self.hash_map:
+                    new_value, new_line = self.hash_map[key]
+                else:
+                    new_value, new_line = self.alphabeta(childnode, depth-1, alpha, beta, True)
+                    self.hash_map[key] = (new_value, new_line)
+                value = min(value, new_value)
+                if value <= alpha:
+                    break
+                if value < beta:
+                    beta = value
+                    line = [childnode]
+                    line.extend(new_line)
+            return value, line
 
 
 def getBestMoveSingle(node, depth, whiteplayer):
@@ -120,16 +126,20 @@ def getBestMoveSingle(node, depth, whiteplayer):
     return bestnode, bestline
 
 def multiAlphaBetaBlack(node):
-    return alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, False)
+    ab = alphabetaclass()
+    return ab.alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, False), ab.hash_map
 
 def multiAlphaBetaWhite(node):
-    return alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, True)
+    ab = alphabetaclass()
+    return ab.alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, True), ab.hash_map
 
 def multiAlphaBetaBlackSecondary(node):
-    return alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, False)
+    ab = alphabetaclass()
+    return ab.alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, False), ab.hash_map
 
 def multiAlphaBetaWhiteSecondary(node):
-    return alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, True)
+    ab = alphabetaclass()
+    return ab.alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, True), ab.hash_map
 
 #TODO: pass depth to this function and save it as a global or class variable
 #TODO: handle secondary search parameters here as well
@@ -144,7 +154,8 @@ def getBestMoveMulti(node, whiteplayer):
 
     # TODO simplify this, redundant code
     if whiteplayer:
-        outputs = pool.map(multiAlphaBetaBlack, inputs)
+        results = pool.map(multiAlphaBetaBlack, inputs)
+        outputs = results[0]
         sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1][0], reverse=True)
         if SECONDARY_SEARCH:
             inputs = [sorted_outputs[x][0] for x in range(min(SECONDARY_NODE_QTY, len(sorted_outputs)))]
@@ -154,7 +165,8 @@ def getBestMoveMulti(node, whiteplayer):
         bestmove = sorted_outputs[0][0]
         end_node = sorted_outputs[0][1][1]
     else:
-        outputs = pool.map(multiAlphaBetaWhite, inputs)
+        results = pool.map(multiAlphaBetaWhite, inputs)
+        outputs = results[0]
         sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1])
 
         if SECONDARY_SEARCH:
