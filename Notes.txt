@@ -1,3 +1,42 @@
+First tests on new machine, multi threaded single search depth 3
+Average legal move generation time (ms):
+0.56
+Average multithreaded search time (s):
+0.61
+Average singlethreaded search time (s):
+7.31
+
+
+Multithreaded analyze single position, depth 3 single pass
+
+Elapsed time: 1.4463577270507812
+Best move: f1b5
+Best move eval: -0.04624762187532909
+Nodes created: 28
+Boards created: : 30
+num getcheck: 2 time: 6.580352783203125e-05
+num getothercheck: 27 time: 0.0004744529724121094
+num getcheckmate: 3 time: 4.267692565917969e-05
+num getpseudo: 1 time: 0.00011301040649414062
+num getpseudocaptures: 29 time:  0.0005249977111816406
+num getlegal: 2 time: 0.0006117820739746094
+
+Singlethreaded analyze single position, depth 3
+
+Elapsed time: 7.1345508098602295
+Best move: f1b5
+Best move eval: 0.025842704111371878
+Nodes created: 142564
+Boards created: : 330660
+num getcheck: 142564 time: 2.6880011558532715
+num getothercheck: 188095 time: 3.182386636734009
+num getcheckmate: 51148 time: 0.9108271598815918
+num getpseudo: 6007 time: 0.6455166339874268
+num getpseudocaptures: 330659 time:  5.0270094871521
+num getlegal: 6008 time: 3.8942649364471436
+
+-------------------------------------------------------------------
+
 After refactoring getPseudoLegalPawnMoves
 
 Average legal move generation time (ms):

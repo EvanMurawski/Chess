@@ -205,8 +205,40 @@ class TestBoardRep(unittest.TestCase):
         board = FENUtil.fenToBoard("rn2k1nr/pbpqppbp/1p1p2p1/8/8/1P1P1NP1/PBPQPPBP/RN2K2R b KQkq - 3 7")
         self.assertFalse(board.canQueenSideCastle(4))
 
-    # TODO: Test cases for specific edge cases
+    # TODO: Add more test cases for specific edge cases
+    def testEnPassantLogic(self):
 
+        board = FENUtil.fenToBoard("rnbqkbnr/pppppp1p/8/8/2N3p1/3PPP2/PPPP2PR/RNBQKB2 w Qkq - 0 1")
+        noEnPassantBoard = board.getBoard(55, 39)
+        self.assertTrue(noEnPassantBoard.enpassant_square is None)
+
+        board = FENUtil.fenToBoard("rnbqkbnr/p1pppp1p/8/8/1pN3p1/2PPPP2/RPPP2PR/1NBQKB2 w kq - 0 1")
+        noEnPassantBoard = board.getBoard(48, 32)
+        self.assertTrue(noEnPassantBoard.enpassant_square is None)
+
+        board = FENUtil.fenToBoard("rnbqkbnr/p1pppp1p/8/8/1pN3p1/4PP2/PPPP2PP/RNBQKB1R w Qkq - 0 1")
+        enPassantBoard = board.getBoard(55, 39)
+        self.assertEqual(enPassantBoard.enpassant_square, 47)
+
+        board = FENUtil.fenToBoard("rnbqkbnr/p1pppp1p/8/8/1pN3p1/4PP2/PPPP2PP/RNBQKB1R w Qkq - 0 1")
+        enPassantBoard = board.getBoard(48, 32)
+        self.assertEqual(enPassantBoard.enpassant_square, 40)
+
+        board = FENUtil.fenToBoard("rnbqkbnr/pppppppp/8/4P3/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1")
+        enPassantBoard = board.getBoard(11, 27)
+        self.assertEqual(enPassantBoard.enpassant_square, 19)
+
+        board = FENUtil.fenToBoard("rnbqkbnr/pppppppp/8/4P3/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1")
+        noEnPassantBoard = board.getBoard(11, 19)
+        self.assertTrue(noEnPassantBoard.enpassant_square is None)
+
+        board = FENUtil.fenToBoard("rnbqkbnr/ppp1pppp/8/8/3p4/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+        enPassantBoard = board.getBoard(52, 36)
+        self.assertEqual(enPassantBoard.enpassant_square, 44)
+
+        board = FENUtil.fenToBoard("rnbqkbnr/ppp1pppp/8/8/3p4/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+        noEnPassantBoard = board.getBoard(52,44)
+        self.assertTrue(noEnPassantBoard.enpassant_square is None)
 
 if __name__ == '__main__':
     unittest.main()

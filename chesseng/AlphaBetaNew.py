@@ -4,7 +4,7 @@ import chesseng.Node as Node
 MULTI_DEPTH_INITIAL = 3
 MULTI_DEPTH_SECONDARY = 5
 SECONDARY_NODE_QTY = 3
-SECONDARY_SEARCH = True
+SECONDARY_SEARCH = False
 NUM_PROCESSES = 16
 
 #TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node

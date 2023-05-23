@@ -22,7 +22,7 @@ class TestAlphaBeta(unittest.TestCase):
                 break
             solution = file.readline()
             board = FENUtil.fenToBoard(fen)
-            best_node = AlphaBetaNew.getBestMoveMulti(Node(board), board.whitemove)
+            best_node, _ = AlphaBetaNew.getBestMoveMulti(Node(board), board.whitemove)
             best_move = [best_node.board, best_node.move_squares]
             move_string = BoardRep.moveToAlg(best_move)
             try:
