@@ -1,46 +1,59 @@
 import multiprocessing
 import chesseng.Node as Node
 
-MULTI_DEPTH_INITIAL = 3
-MULTI_DEPTH_SECONDARY = 5
+DEPTH_INITIAL = 3
+DEPTH_FINAL = 5
 SECONDARY_NODE_QTY = 3
 SECONDARY_SEARCH = True
 NUM_PROCESSES = 16
 
 
-#TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node
-def nodeSort(node):
-    if node.board.isInCheck():
+class AlphaBeta:
+
+    def __init__(self, last_hash_map=None):
+        if last_hash_map is None:
+            self.last_hash_map = {}
+        else:
+            self.last_hash_map = last_hash_map
+
+        self.hash_map = {}
+
+    # TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node
+    def nodeSort(self, node):
+
+        board = node.board
+        key =tuple (board.array) + (board.whitemove, board.whitecastle, board.blackcastle,board.enpassant_square)
+
+        #First check if there is already a score computed. If so, return this as the sorting value.
+        if key in self.last_hash_map:
+            score, _ = self.last_hash_map[key]
+            return score
+
+        # Not in hash map, use heuristics
+
+        # Need to multiply the score by -1 if minimizing player just moved
+        factor = -1 if node.board.whitemove else 1
+
+        if board.isInCheck():
+            return 0.7 * factor
+
+        if board.is_capture:
+            return 0.5 * factor
+
+        # Black just moved, see if it is a forward move
+        # From square is a lower row number -> is a forward move
+        if board.whitemove and node.move_squares[0] // 8 < node.move_squares[1] // 8:
+            return 0.3 * factor
+
+        # White just moved, see if it is a forward move
+        # From square is a higher row number -> is a forward move
+        if (not board.whitemove) and node.move_squares[0] // 8 > node.move_squares[1] // 8:
+            return 0.3 * factor
+
         return 0
 
-    if node.board.is_capture:
-        return 5
-
-    # Black just moved, see if it is a forward move
-    # From square is a lower row number -> is a forward move
-    if node.board.whitemove and node.move_squares[0] // 8  < node.move_squares[1] // 8:
-        return 8
-
-    # White just moved, see if it is a forward move
-    # From square is a higher row number -> is a forward move
-    if (not node.board.whitemove) and node.move_squares[0] // 8 > node.move_squares[1] // 8:
-        return 8
-
-
-    return 10
-
-
-
-class alphabetaclass:
-
-    def __init__(self, hash_map=None):
-        if hash_map is None:
-            self.hash_map = {}
-        else:
-            self.hash_map = hash_map
-
     #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
-    def alphabeta(self, node, depth, alpha, beta, maximizingplayer):
+    def abSearch(self, node, depth, alpha, beta, maximizingplayer):
 
         if depth == 0:
             return node.getScore(), []
@@ -54,14 +67,15 @@ class alphabetaclass:
         if maximizingplayer:
             value = -99999
             next_nodes = node.next_nodes
-            next_nodes.sort(key = nodeSort)
+            #Sort in descending order, we want to check the highest scoring nodes for maximizing player
+            next_nodes.sort(key = self.nodeSort, reverse= True)
             line = []
             for childnode in next_nodes:
                 key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,childnode.board.enpassant_square)
                 if key in self.hash_map:
                     new_value, new_line = self.hash_map[key]
                 else:
-                    new_value, new_line = self.alphabeta(childnode, depth-1, alpha, beta, False)
+                    new_value, new_line = self.abSearch(childnode, depth - 1, alpha, beta, False)
                     self.hash_map[key] = (new_value, new_line)
                 value = max(value, new_value)
                 if value >= beta:
@@ -75,14 +89,15 @@ class alphabetaclass:
         else:
             value = 99999
             next_nodes = node.next_nodes
-            next_nodes.sort(key = nodeSort)
+            #Sort in ascending order, we want to check the highest scoring nodes for minimizing player
+            next_nodes.sort(key = self.nodeSort)
             line = []
             for childnode in next_nodes:
                 key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle, childnode.board.enpassant_square)
                 if key in self.hash_map:
                     new_value, new_line = self.hash_map[key]
                 else:
-                    new_value, new_line = self.alphabeta(childnode, depth-1, alpha, beta, True)
+                    new_value, new_line = self.abSearch(childnode, depth - 1, alpha, beta, True)
                     self.hash_map[key] = (new_value, new_line)
                 value = min(value, new_value)
                 if value <= alpha:
@@ -95,51 +110,31 @@ class alphabetaclass:
 
 
 def getBestMoveSingle(node, depth, whiteplayer):
-    if node.next_nodes is None:
-        node.buildNextLayer()
+    last_hash_map = None
 
-    if whiteplayer:
-        bestscore = -999999999
-    else:
-        bestscore = 999999999
+    for d in range(5,6):
+        print("Searching depth: " + str(d))
+        ab = AlphaBeta(last_hash_map)
+        score, line = ab.abSearch(node, d, -99999, 99999, whiteplayer)
+        last_hash_map = ab.hash_map
 
-    bestnode = None
-
-    for childnode in node.next_nodes:
-        childscore, line = alphabeta(childnode, depth, -99999, 99999, not whiteplayer)
-
-        if whiteplayer:
-            if childscore > bestscore:
-                bestnode = childnode
-                bestscore = childscore
-                bestline =  line
-        else:
-            if childscore < bestscore:
-                bestnode = childnode
-                bestscore = childscore
-                bestline = line
-
-
-        # childnode.board.print()
-        # print("above value: ", str(childscore))
-
-    return bestnode, bestline
+    return line[0], line
 
 def multiAlphaBetaBlack(node):
-    ab = alphabetaclass()
-    return ab.alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, False), ab.hash_map
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_INITIAL, -99999, 99999, False), ab.hash_map
 
 def multiAlphaBetaWhite(node):
-    ab = alphabetaclass()
-    return ab.alphabeta(node, MULTI_DEPTH_INITIAL, -99999, 99999, True), ab.hash_map
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_INITIAL, -99999, 99999, True), ab.hash_map
 
 def multiAlphaBetaBlackSecondary(node):
-    ab = alphabetaclass()
-    return ab.alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, False), ab.hash_map
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_FINAL, -99999, 99999, False), ab.hash_map
 
 def multiAlphaBetaWhiteSecondary(node):
-    ab = alphabetaclass()
-    return ab.alphabeta(node, MULTI_DEPTH_SECONDARY, -99999, 99999, True), ab.hash_map
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_FINAL, -99999, 99999, True), ab.hash_map
 
 #TODO: pass depth to this function and save it as a global or class variable
 #TODO: handle secondary search parameters here as well
