@@ -18,7 +18,6 @@ class AlphaBeta:
 
         self.hash_map = {}
 
-    # TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node
     def nodeSort(self, node):
 
         board = node.board
@@ -112,7 +111,7 @@ class AlphaBeta:
 def getBestMoveSingle(node, depth, whiteplayer):
     last_hash_map = None
 
-    for d in range(3,6):
+    for d in range(5,6):
         #print("Searching depth: " + str(d))
         ab = AlphaBeta(last_hash_map)
         score, line = ab.abSearch(node, d, -99999, 99999, whiteplayer)
