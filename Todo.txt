@@ -1,6 +1,8 @@
-Re-benchmark latest version on depth 3 and higher depths
 improve move generation speed
 pass starting / ending depth to single / multi search functions
+
+Store king position so I don't have to call isenemyking function so often
+
 
 test:
 Add more metrics to analyzesingleposition.py (boards created per node? Number of cutoffs?)
