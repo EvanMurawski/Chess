@@ -112,7 +112,7 @@ class AlphaBeta:
 def getBestMoveSingle(node, depth, whiteplayer):
     last_hash_map = None
 
-    for d in range(5,6):
+    for d in range(3,6):
         print("Searching depth: " + str(d))
         ab = AlphaBeta(last_hash_map)
         score, line = ab.abSearch(node, d, -99999, 99999, whiteplayer)
@@ -120,21 +120,16 @@ def getBestMoveSingle(node, depth, whiteplayer):
 
     return line[0], line
 
-def multiAlphaBetaBlack(node):
-    ab = AlphaBeta()
-    return ab.abSearch(node, DEPTH_INITIAL, -99999, 99999, False), ab.hash_map
 
-def multiAlphaBetaWhite(node):
-    ab = AlphaBeta()
-    return ab.abSearch(node, DEPTH_INITIAL, -99999, 99999, True), ab.hash_map
+# Takes inputs [node, depth, whiteplayer, old_hash_map]
+def multiAlphaBeta(inputs):
+    ab = AlphaBeta(inputs[3])
+    return ab.abSearch(inputs[0], inputs[1], -99999, 99999, inputs[2]), ab.hash_map
 
-def multiAlphaBetaBlackSecondary(node):
-    ab = AlphaBeta()
-    return ab.abSearch(node, DEPTH_FINAL, -99999, 99999, False), ab.hash_map
+def mergeDicts(dict1, dict2):
+    return dict1.update(dict2)
 
-def multiAlphaBetaWhiteSecondary(node):
-    ab = AlphaBeta()
-    return ab.abSearch(node, DEPTH_FINAL, -99999, 99999, True), ab.hash_map
+
 
 #TODO: pass depth to this function and save it as a global or class variable
 #TODO: handle secondary search parameters here as well
@@ -145,32 +140,32 @@ def getBestMoveMulti(node, whiteplayer):
     if node.next_nodes is None:
         node.buildNextLayer()
 
-    inputs = node.next_nodes
+    sorted_outputs = None
+    first = True
 
-    # TODO simplify this, redundant code
-    if whiteplayer:
-        results = pool.map(multiAlphaBetaBlack, inputs)
-        outputs = results[0]
-        sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1][0], reverse=True)
-        if SECONDARY_SEARCH:
-            inputs = [sorted_outputs[x][0] for x in range(min(SECONDARY_NODE_QTY, len(sorted_outputs)))]
-            outputs = pool.map(multiAlphaBetaBlackSecondary, inputs)
-            sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1], reverse=True)
+    for d in range (2,5):
+        inputs = []
 
-        bestmove = sorted_outputs[0][0]
-        end_node = sorted_outputs[0][1][1]
-    else:
-        results = pool.map(multiAlphaBetaWhite, inputs)
-        outputs = results[0]
-        sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1])
+        if sorted_outputs is None:
+            for n in node.next_nodes:
+                inputs.append([n, d, not whiteplayer, None])
+        else:
+            for n in sorted_outputs:
+                inputs.append([n[0][0],d, not whiteplayer, n[1][1]])
 
-        if SECONDARY_SEARCH:
-            inputs = [sorted_outputs[x][0] for x in range(min(SECONDARY_NODE_QTY, len(sorted_outputs)))]
-            outputs = pool.map(multiAlphaBetaWhiteSecondary, inputs)
-            sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1])
+        print("searching depth: " + str(d))
+        results = pool.map(multiAlphaBeta, inputs)
+        sorted_outputs = sorted(zip(inputs, results), key=lambda x: x[1][0][0], reverse=whiteplayer)
+        # Sorted outputs in form: [([node, depth, whitemove, old_hash_map], ((score, [line...]), hash_map))]
+        # Equivalent to:          [(input, ((return from abSearch), hash_map))]
+        if first:
+            n_remove = len(sorted_outputs) // 2
+            sorted_outputs = sorted_outputs[:-n_remove]
 
-        bestmove = sorted_outputs[0][0]
-        end_node = sorted_outputs[0][1][1]
+        first = False
+
+    bestmove = sorted_outputs[0][0][0]
+    end_node = sorted_outputs[0][1][0][1]
 
 
     return bestmove, end_node
