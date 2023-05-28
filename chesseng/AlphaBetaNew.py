@@ -10,18 +10,13 @@ NUM_PROCESSES = 16
 
 class AlphaBeta:
 
-    def __init__(self, last_hash_map=None, multithreading=None):
+    def __init__(self, last_hash_map=None):
         if last_hash_map is None:
             self.last_hash_map = {}
         else:
             self.last_hash_map = last_hash_map
 
         self.hash_map = {}
-
-        if multithreading is None:
-            self.multithreading = False
-        else:
-            self.multithreading = multithreading
 
     # TODO improve this, e.g. prioritize captures of higher value pieces, maybe consider heuristic value of the node
     def nodeSort(self, node):
@@ -57,9 +52,7 @@ class AlphaBeta:
 
         return 0
 
-    def abSearchMulti(self, inputs):
-        return self.abSearch(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4])
-
+    #todo, try alpha beta search from root node e.g. dont' seperately evaluate all legal moves
     def abSearch(self, node, depth, alpha, beta, maximizingplayer):
 
         if depth == 0:
@@ -77,32 +70,6 @@ class AlphaBeta:
             #Sort in descending order, we want to check the highest scoring nodes for maximizing player
             next_nodes.sort(key = self.nodeSort, reverse= True)
             line = []
-
-            # If we are in the first layer, multithreading will be true, spawn processes
-            if self.multithreading:
-
-                #No need to check if nodes are already in hash map, we are on the first layer
-                inputs = []
-                for node in next_nodes:
-                    inputs.append([node]+ [depth-1, alpha, beta, False])
-                pool = multiprocessing.Pool(processes=NUM_PROCESSES)
-                # make a new object, pass the last hash map, set it to be single-threaded
-                ab = AlphaBeta(self.last_hash_map, False)
-                results = pool.map(ab.abSearchMulti, inputs)
-
-                #TODO: find best node, add all nodes to hash map
-                sorted_results = sorted(zip(inputs, results), key=lambda x: x[1][0], reverse=True)
-
-                for result in sorted_results:
-                    childnode = result[0][0]
-                    key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,childnode.board.enpassant_square)
-                    if not (key in self.hash_map):
-                        self.hash_map[key] = (result[1][0], result[1][0])
-
-                line = [sorted_results[0][0][0]]
-                line.extend(sorted_results[0][1][1])
-                return sorted_results[0][1][0], line
-
             for childnode in next_nodes:
                 key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,childnode.board.enpassant_square)
                 if key in self.hash_map:
@@ -125,35 +92,6 @@ class AlphaBeta:
             #Sort in ascending order, we want to check the highest scoring nodes for minimizing player
             next_nodes.sort(key = self.nodeSort)
             line = []
-
-            # If we are in the first layer, multithreading will be true, spawn processes
-            if self.multithreading:
-
-                # No need to check if nodes are already in hash map, we are on the first layer
-                inputs = []
-                for node in next_nodes:
-                    inputs.append([node] + [depth - 1, alpha, beta, True])
-                pool = multiprocessing.Pool(processes=NUM_PROCESSES)
-                # make a new object, pass the last hash map, set it to be single-threaded
-                ab = AlphaBeta(self.last_hash_map, False)
-                results = pool.map(ab.abSearchMulti, inputs)
-
-                # TODO: find best node, add all nodes to hash map
-                sorted_results = sorted(zip(inputs, results), key=lambda x: x[1][0], reverse=False)
-
-                for result in sorted_results:
-                    childnode = result[0][0]
-                    key = tuple(childnode.board.array) + (
-                    childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle,
-                    childnode.board.enpassant_square)
-                    if not (key in self.hash_map):
-                        self.hash_map[key] = (result[1][0], result[1][0])
-
-                line = [sorted_results[0][0][0]]
-                line.extend(sorted_results[0][1][1])
-
-                return sorted_results[0][1][0], line
-
             for childnode in next_nodes:
                 key = tuple(childnode.board.array) + (childnode.board.whitemove, childnode.board.whitecastle, childnode.board.blackcastle, childnode.board.enpassant_square)
                 if key in self.hash_map:
@@ -174,26 +112,67 @@ class AlphaBeta:
 def getBestMoveSingle(node, depth, whiteplayer):
     last_hash_map = None
 
-    for d in range(3,6):
+    for d in range(5,6):
         print("Searching depth: " + str(d))
-        ab = AlphaBeta(last_hash_map, False)
+        ab = AlphaBeta(last_hash_map)
         score, line = ab.abSearch(node, d, -99999, 99999, whiteplayer)
         last_hash_map = ab.hash_map
 
     return line[0], line
+
+def multiAlphaBetaBlack(node):
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_INITIAL, -99999, 99999, False), ab.hash_map
+
+def multiAlphaBetaWhite(node):
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_INITIAL, -99999, 99999, True), ab.hash_map
+
+def multiAlphaBetaBlackSecondary(node):
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_FINAL, -99999, 99999, False), ab.hash_map
+
+def multiAlphaBetaWhiteSecondary(node):
+    ab = AlphaBeta()
+    return ab.abSearch(node, DEPTH_FINAL, -99999, 99999, True), ab.hash_map
 
 #TODO: pass depth to this function and save it as a global or class variable
 #TODO: handle secondary search parameters here as well
 def getBestMoveMulti(node, whiteplayer):
-    last_hash_map = None
 
-    for d in range(3,7):
-        print("Searching depth: " + str(d))
-        ab = AlphaBeta(last_hash_map, True)
-        score, line = ab.abSearch(node, d, -99999, 99999, whiteplayer)
-        last_hash_map = ab.hash_map
+    pool = multiprocessing.Pool(processes=NUM_PROCESSES)
 
-    return line[0], line
+    if node.next_nodes is None:
+        node.buildNextLayer()
 
+    inputs = node.next_nodes
+
+    # TODO simplify this, redundant code
+    if whiteplayer:
+        results = pool.map(multiAlphaBetaBlack, inputs)
+        outputs = results[0]
+        sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1][0], reverse=True)
+        if SECONDARY_SEARCH:
+            inputs = [sorted_outputs[x][0] for x in range(min(SECONDARY_NODE_QTY, len(sorted_outputs)))]
+            outputs = pool.map(multiAlphaBetaBlackSecondary, inputs)
+            sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1], reverse=True)
+
+        bestmove = sorted_outputs[0][0]
+        end_node = sorted_outputs[0][1][1]
+    else:
+        results = pool.map(multiAlphaBetaWhite, inputs)
+        outputs = results[0]
+        sorted_outputs = sorted(zip(node.next_nodes, outputs), key=lambda x: x[1])
+
+        if SECONDARY_SEARCH:
+            inputs = [sorted_outputs[x][0] for x in range(min(SECONDARY_NODE_QTY, len(sorted_outputs)))]
+            outputs = pool.map(multiAlphaBetaWhiteSecondary, inputs)
+            sorted_outputs = sorted(zip(inputs, outputs), key=lambda x: x[1])
+
+        bestmove = sorted_outputs[0][0]
+        end_node = sorted_outputs[0][1][1]
+
+
+    return bestmove, end_node
 
 
