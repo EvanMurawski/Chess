@@ -1,3 +1,6 @@
+Re-benchmark latest version on depth 3 and higher depths
+improve move generation speed
+
 
 test:
 Add more metrics to analyzesingleposition.py (boards created per node? Number of cutoffs?)
