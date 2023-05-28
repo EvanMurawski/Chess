@@ -113,7 +113,7 @@ def getBestMoveSingle(node, depth, whiteplayer):
     last_hash_map = None
 
     for d in range(3,6):
-        print("Searching depth: " + str(d))
+        #print("Searching depth: " + str(d))
         ab = AlphaBeta(last_hash_map)
         score, line = ab.abSearch(node, d, -99999, 99999, whiteplayer)
         last_hash_map = ab.hash_map
@@ -128,7 +128,6 @@ def multiAlphaBeta(inputs):
 
 def mergeDicts(dict1, dict2):
     return dict1.update(dict2)
-
 
 
 #TODO: pass depth to this function and save it as a global or class variable
@@ -153,7 +152,7 @@ def getBestMoveMulti(node, whiteplayer):
             for n in sorted_outputs:
                 inputs.append([n[0][0],d, not whiteplayer, n[1][1]])
 
-        print("searching depth: " + str(d))
+        #print("searching depth: " + str(d))
         results = pool.map(multiAlphaBeta, inputs)
         sorted_outputs = sorted(zip(inputs, results), key=lambda x: x[1][0][0], reverse=whiteplayer)
         # Sorted outputs in form: [([node, depth, whitemove, old_hash_map], ((score, [line...]), hash_map))]
@@ -166,8 +165,6 @@ def getBestMoveMulti(node, whiteplayer):
 
     bestmove = sorted_outputs[0][0][0]
     end_node = sorted_outputs[0][1][0][1]
-
-
     return bestmove, end_node
 
 
